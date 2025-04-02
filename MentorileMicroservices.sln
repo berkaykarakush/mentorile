@@ -3,6 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{C3CBC960-F897-459C-AD92-015D260C63F4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Course", "Course", "{B0672021-4893-4FC5-A595-4AFA52DE8A36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.Course", "Services\Course\Mentorile.Services.Course\Mentorile.Services.Course.csproj", "{CD6B8C7B-1B7E-472E-8032-08F64C81B981}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{17685D4D-985A-4D1C-A231-75F399BA918F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Shared", "Shared\Mentorile.Shared\Mentorile.Shared.csproj", "{6616193D-6F88-4809-870A-75DFF8FB5250}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -10,5 +20,20 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CD6B8C7B-1B7E-472E-8032-08F64C81B981}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD6B8C7B-1B7E-472E-8032-08F64C81B981}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD6B8C7B-1B7E-472E-8032-08F64C81B981}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD6B8C7B-1B7E-472E-8032-08F64C81B981}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6616193D-6F88-4809-870A-75DFF8FB5250}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6616193D-6F88-4809-870A-75DFF8FB5250}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6616193D-6F88-4809-870A-75DFF8FB5250}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6616193D-6F88-4809-870A-75DFF8FB5250}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B0672021-4893-4FC5-A595-4AFA52DE8A36} = {C3CBC960-F897-459C-AD92-015D260C63F4}
+		{CD6B8C7B-1B7E-472E-8032-08F64C81B981} = {B0672021-4893-4FC5-A595-4AFA52DE8A36}
+		{6616193D-6F88-4809-870A-75DFF8FB5250} = {17685D4D-985A-4D1C-A231-75F399BA918F}
 	EndGlobalSection
 EndGlobal
