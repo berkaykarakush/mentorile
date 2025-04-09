@@ -1,12 +1,15 @@
 using Mentorile.Services.Course.Models;
 using Mentorile.Services.Course.Services;
 using Mentorile.Services.Course.Settings;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers(); // required for controllers/swagger
+
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -44,6 +47,18 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Course API", Version = "v1" });
 });
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => 
+{
+    options.Authority = builder.Configuration["Authority"];
+    options.Audience = builder.Configuration["Audience"];
+    options.RequireHttpsMetadata = false;
+});
+
+// required for controllers/swagger
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add(new AuthorizeFilter());
+}); 
 
 var app = builder.Build();
 
@@ -57,7 +72,11 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+
 // app.UseHttpsRedirection();
 app.MapControllers(); // required for controllers/swagger
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();
