@@ -1,6 +1,5 @@
 ﻿using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
-using Microsoft.CodeAnalysis.Differencing;
 
 namespace Mentorile.IdentityServer;
 
@@ -10,6 +9,7 @@ public static class Config
     {
         new ApiResource("resource_course"){Scopes = {"course_fullpermission"}},
         new ApiResource("resource_topic"){Scopes = {"topic_fullpermission"}},
+        new ApiResource("resource_photo_stock") {Scopes = {"photo_stock_fullpermission"}},
         new ApiResource(IdentityServerConstants.LocalApi.ScopeName),
     };
     public static IEnumerable<IdentityResource> IdentityResources =>
@@ -32,6 +32,7 @@ public static class Config
         {
             new ApiScope("course_fullpermission", "Course API full access"),
             new ApiScope("topic_fullpermission", "Topic API full access"),
+            new ApiScope("photo_stock_fullpermission", "Photo Stock API full access"),
             new ApiScope(IdentityServerConstants.LocalApi.ScopeName),
         };
 
@@ -47,6 +48,7 @@ public static class Config
                 AllowedScopes = {
                     "course_fullpermission",
                     "topic_fullpermission",
+                    "photo_stock_fullpermission",
                     IdentityServerConstants.LocalApi.ScopeName
                 }
             },

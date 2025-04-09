@@ -1,2 +1,5 @@
+IdentityServer: 5001 /http 5010 / https
+
 Services
-    - Course: 5010 /http
+    - Course: 5010 /http 5110 /https
+    - PhotoStock: 5011 / http 5111 /https
