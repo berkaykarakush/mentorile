@@ -1,9 +1,11 @@
 using Duende.IdentityServer;
 using Mentorile.IdentityServer.Data;
 using Mentorile.IdentityServer.Models;
+using Mentorile.IdentityServer.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using static Duende.IdentityServer.IdentityServerConstants;
 
 namespace Mentorile.IdentityServer;
 
@@ -11,12 +13,23 @@ internal static class HostingExtensions
 {
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
+        builder.Services.AddControllers();
         builder.Services.AddRazorPages();
+        builder.Services.AddLocalApiAuthentication();
 
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-        builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+        builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                // Şifre politikalarını burada yapılandırıyoruz
+                options.Password.RequireDigit = true;            // En az bir rakam olmalı
+                options.Password.RequireLowercase = true;       // En az bir küçük harf olmalı
+                options.Password.RequireUppercase = true;       // En az bir büyük harf olmalı
+                options.Password.RequireNonAlphanumeric = true; // En az bir özel karakter olmalı
+                options.Password.RequiredLength = 8;                    // En az 8 karakter uzunluğunda olmalı
+                options.Password.RequiredUniqueChars = 1;       // Benzersiz karakter sayısı
+            })
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
@@ -32,10 +45,13 @@ internal static class HostingExtensions
                 options.EmitStaticAudienceClaim = true;
             })
             .AddInMemoryIdentityResources(Config.IdentityResources)
+            .AddInMemoryApiResources(Config.ApiResources)
             .AddInMemoryApiScopes(Config.ApiScopes)
             .AddInMemoryClients(Config.Clients)
-            .AddAspNetIdentity<ApplicationUser>();
-        
+            .AddAspNetIdentity<ApplicationUser>()
+            .AddResourceOwnerValidator<IdentityResourceOwnerPasswordValidator>();
+
+
         builder.Services.AddAuthentication()
             .AddGoogle(options =>
             {
@@ -61,8 +77,10 @@ internal static class HostingExtensions
         }
 
         app.UseStaticFiles();
+        app.MapControllers();
         app.UseRouting();
         app.UseIdentityServer();
+        app.UseAuthentication();
         app.UseAuthorization();
         
         app.MapRazorPages()
