@@ -4,3 +4,4 @@ Services
     - Course: 5010 /http 5110 /https
     - PhotoStock: 5011 /http 5111 /https
     - Basket: 5012 /http 5112 /https
+    - Discount: 5013 /http 5113 /https
