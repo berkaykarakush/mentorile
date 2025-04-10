@@ -10,6 +10,7 @@ public static class Config
         new ApiResource("resource_course"){Scopes = {"course_fullpermission"}},
         new ApiResource("resource_topic"){Scopes = {"topic_fullpermission"}},
         new ApiResource("resource_photo_stock") {Scopes = {"photo_stock_fullpermission"}},
+        new ApiResource("resource_basket") {Scopes = {"basket_fullpermission"}},
         new ApiResource(IdentityServerConstants.LocalApi.ScopeName),
     };
     public static IEnumerable<IdentityResource> IdentityResources =>
@@ -33,6 +34,7 @@ public static class Config
             new ApiScope("course_fullpermission", "Course API full access"),
             new ApiScope("topic_fullpermission", "Topic API full access"),
             new ApiScope("photo_stock_fullpermission", "Photo Stock API full access"),
+            new ApiScope("basket_fullpermission", "Basket API full access"),
             new ApiScope(IdentityServerConstants.LocalApi.ScopeName),
         };
 
@@ -60,6 +62,7 @@ public static class Config
                 AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                 AllowOfflineAccess = true,
                 AllowedScopes = {
+                    "basket_fullpermission",
                     IdentityServerConstants.StandardScopes.Email,
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
