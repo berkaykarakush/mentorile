@@ -6,3 +6,4 @@ Services
     - Basket: 5012 /http 5112 /https
     - Discount: 5013 /http 5113 /https
     - Order: 5014 /http 5114 /https
+    - Payment: 5015 /http 5115 /https

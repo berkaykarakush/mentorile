@@ -41,6 +41,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.Order.Do
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.Order.Infrastructure", "Services\Order\Mentorile.Services.Order.Infrastructure\Mentorile.Services.Order.Infrastructure.csproj", "{2521426E-1984-42A9-A0F2-A75F6795EBE4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Payment", "Payment", "{0FB1AE73-FD7F-43D3-9E76-CCF3ABD34898}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.Payment.API", "Services\Payment\Mentorile.Services.Payment.API\Mentorile.Services.Payment.API.csproj", "{869A1659-8D92-4B69-8379-7BCA25C0FD8B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -94,6 +98,10 @@ Global
 		{2521426E-1984-42A9-A0F2-A75F6795EBE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2521426E-1984-42A9-A0F2-A75F6795EBE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2521426E-1984-42A9-A0F2-A75F6795EBE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{869A1659-8D92-4B69-8379-7BCA25C0FD8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{869A1659-8D92-4B69-8379-7BCA25C0FD8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{869A1659-8D92-4B69-8379-7BCA25C0FD8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{869A1659-8D92-4B69-8379-7BCA25C0FD8B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B0672021-4893-4FC5-A595-4AFA52DE8A36} = {C3CBC960-F897-459C-AD92-015D260C63F4}
@@ -112,5 +120,7 @@ Global
 		{DB315C75-58E2-4D0F-B7A1-D12599EFE200} = {1782FEBF-8D45-47B2-993C-3EB254E812F4}
 		{468D891A-AC82-4650-AB86-5B8B8D63A754} = {1782FEBF-8D45-47B2-993C-3EB254E812F4}
 		{2521426E-1984-42A9-A0F2-A75F6795EBE4} = {1782FEBF-8D45-47B2-993C-3EB254E812F4}
+		{0FB1AE73-FD7F-43D3-9E76-CCF3ABD34898} = {C3CBC960-F897-459C-AD92-015D260C63F4}
+		{869A1659-8D92-4B69-8379-7BCA25C0FD8B} = {0FB1AE73-FD7F-43D3-9E76-CCF3ABD34898}
 	EndGlobalSection
 EndGlobal
