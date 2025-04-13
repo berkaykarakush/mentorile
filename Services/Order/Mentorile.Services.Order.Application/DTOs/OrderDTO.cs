@@ -1,0 +1,9 @@
+namespace Mentorile.Services.Order.Application.DTOs;
+public class OrderDTO
+{
+    public string Id { get; set; }
+    public DateTime CreatedDate { get; set; }
+    public AddressDTO Address { get; set; }
+    public string BuyerId { get; set; }
+    public List<OrderItemDTO> OrderItems { get; set; }
+}   

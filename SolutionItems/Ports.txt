@@ -5,3 +5,4 @@ Services
     - PhotoStock: 5011 /http 5111 /https
     - Basket: 5012 /http 5112 /https
     - Discount: 5013 /http 5113 /https
+    - Order: 5014 /http 5114 /https
