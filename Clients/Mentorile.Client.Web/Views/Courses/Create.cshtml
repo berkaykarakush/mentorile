@@ -1,0 +1,37 @@
+@{
+    ViewData["Title"] = "Create";
+}
+@model CreateCourseInput
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"></h5>
+                <form asp-controller="Courses" asp-action="Create" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="UserId" value="@User.FindFirst("sub")?.Value" />
+                @* Select list kismi *@
+                    @* <div class="mb-3"> *@
+                        @* <label asp-for="CategoryId" for="exampleFormControlInput1" class="form-label"></label> *@
+                        @* <select class="form-select" asp-items="@ViewBag.categoryList"></select> *@
+                    @* </div> *@
+                    @* <span class="text-danger" asp-validation-for="CategoryId"></span> *@
+
+                <div class="mb-3">
+                    <label asp-for="Name" for="Name" class="form-label"></label>
+                    <input asp-for="Name" class="form-control" id="Name">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="PhotoFormFile" class="form-label"></label>
+                    <input asp-for="PhotoFormFile" type="file" class="form-control">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Kurs Kaydet</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

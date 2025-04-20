@@ -1,5 +1,6 @@
 Gateway: 5000 /http 5100 /https
 IdentityServer: 5001 /http 5010 / https
+WebApp: 5002 /http 5102 /https
 Services
     - Course: 5010 /http 5110 /https
     - PhotoStock: 5011 /http 5111 /https

@@ -1,0 +1,14 @@
+namespace Mentorile.Client.Web.ViewModels.Courses;
+public class CourseViewModel
+{
+    public string Id { get; set; }
+    
+    public string Name { get; set; }
+
+    public string UserId { get; set; }
+    public string PhotoUri { get; set; }
+
+    public DateTime CreatedTime { get; set; }
+
+    public List<string> TopicIds { get; set; } = new List<string>();
+}

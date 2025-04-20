@@ -8,16 +8,16 @@ public class Result<T>
     public bool IsSuccess => StatusCode >= 200 && StatusCode < 300;
 
     // Http kodu
-    public int StatusCode { get; }
+    public int StatusCode { get; set;}
 
     // Genel mesaj
-    public string Message { get; }
+    public string Message { get; set;}
 
     // Dondurulen veri
-    public T Data { get; }
+    public T Data { get; set; }
 
     // Hata detaylari
-    public List<string> ErrorDetails { get;}
+    public List<string> ErrorDetails { get; set;}
 
     public Result(int statusCode, string message, T data, List<string> errorDetails)
     {

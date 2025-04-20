@@ -1,0 +1,50 @@
+@{
+    ViewData["Title"] = "Update";
+}
+@model UpdateCourseInput
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"></h5>
+                <form asp-controller="Courses" asp-action="Update" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="UserId" value="@User.FindFirst("sub")?.Value" />
+                <input type="hidden" asp-for="Id"/>
+                <input type="hidden" asp-for="PhotoUri"/>
+                @* Select list kismi *@
+                    @* <div class="mb-3"> *@
+                        @* <label asp-for="CategoryId" for="exampleFormControlInput1" class="form-label"></label> *@
+                        @* <select class="form-select" asp-items="@ViewBag.categoryList"></select> *@
+                    @* </div> *@
+                    @* <span class="text-danger" asp-validation-for="CategoryId"></span> *@
+
+                <div class="mb-3">
+                    <label asp-for="Name" for="Name" class="form-label"></label>
+                    <input asp-for="Name" class="form-control" id="Name">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                @if (ViewBag.Topics != null)
+                    {
+                        var topics = ((SelectList)ViewBag.Topics).ToList();  // SelectList'i List<SelectListItem>'e dönüştür
+                        foreach (var topic in topics)
+                        {
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="TopicIds" value="@topic.Value"
+                                        @(Model.TopicIds.Contains(topic.Value) ? "checked" : "") />
+                                <label class="form-check-label">@topic.Text</label>
+                            </div>
+                        }
+                    }
+
+                <div class="mb-3">
+                    <label asp-for="PhotoFormFile" class="form-label"></label>
+                    <input asp-for="PhotoFormFile" type="file" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary">Kurs Güncelle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

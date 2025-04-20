@@ -1,0 +1,116 @@
+@{
+    ViewData["Title"] = "Checkout";
+}
+@model CheckoutInfoInput
+
+<form asp-controller="Orders" asp-action="Checkout" method="post">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Adres Bilgileri</h5>
+
+                    <div class="mb-3">
+                        <label asp-for="Province" class="form-label"></label>
+                        <input asp-for="Province" class="form-control">
+                        <span asp-validation-for="Province" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="District" class="form-label"></label>
+                        <input asp-for="District" class="form-control">
+                        <span asp-validation-for="District" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Street" class="form-label"></label>
+                        <input asp-for="Street" class="form-control">
+                        <span asp-validation-for="Street" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="ZipCode" class="form-label"></label>
+                        <input asp-for="ZipCode" class="form-control">
+                        <span asp-validation-for="ZipCode" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Line" class="form-label"></label>
+                        <input asp-for="Line" class="form-control">
+                        <span asp-validation-for="Line" class="text-danger"></span>
+                    </div>
+
+                    <h5 class="card-title">Ödeme Bilgileri</h5>
+
+                    <div class="mb-3">
+                        <label asp-for="CardName" class="form-label"></label>
+                        <input asp-for="CardName" class="form-control">
+                        <span asp-validation-for="CardName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="CardNumber" class="form-label"></label>
+                        <input asp-for="CardNumber" class="form-control">
+                        <span asp-validation-for="CardNumber" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Expiration" class="form-label"></label>
+                        <input asp-for="Expiration" class="form-control">
+                        <span asp-validation-for="Expiration" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="CVV" class="form-label"></label>
+                        <input asp-for="CVV" class="form-control">
+                        <span asp-validation-for="CVV" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Ödeme Özeti</h5>
+                    <table class="table table-striped">
+                        @if (ViewBag.basket != null && ViewBag.basket.Items != null)
+                        {
+                            foreach (var item in ViewBag.basket.Items as List<Mentorile.Client.Web.ViewModels.Baskets.BasketItemViewModel>)
+                            {
+                                <p>@item.ItemName - @item.Price</p>
+                            }
+                        }
+                        else
+                        {
+                            <p>Sepetiniz boş.</p>
+                        }
+
+                        @if (ViewBag.basket?.HasDiscount == true)
+                        {
+                            <tr>
+                                <td>Toplam Fiyat</td>
+                                <td>@ViewBag.basket.TotalAmount TL</td>
+                            </tr>
+                            <tr>
+                                <td>İndirim Oranı</td>
+                                <td>@ViewBag.basket.DiscountPercentage %</td>
+                            </tr>
+                            <tr>
+                                <td>İndirimli Toplam Fiyat</td>
+                                <td>@ViewBag.basket.FinalAmount TL</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td>Toplam Fiyat</td>
+                                <td>@ViewBag.basket.FinalAmount TL</td>
+                            </tr>
+                        }
+                    </table>
+                    <button type="submit" class="btn btn-success">Ödemeyi Tamamla</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
