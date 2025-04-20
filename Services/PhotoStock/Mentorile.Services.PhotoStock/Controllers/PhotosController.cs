@@ -18,8 +18,8 @@ public class PhotosController : CustomControllerBase
         using var stream = new FileStream(path, FileMode.Create);
         await photo.CopyToAsync(stream, cancellationToken);
         
-        var returnPath = $"photos/{photo.FileName}";
-        var photoDTO = new PhotoDTO() { Uri = returnPath };
+        var returnPath = photo.FileName;
+        var photoDTO = new PhotoDTO() { PhotoUri = returnPath };
         return CreateActionResultInstance(Result<PhotoDTO>.Success(photoDTO));
     }    
 
