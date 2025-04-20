@@ -23,5 +23,8 @@ public class Discount
     [BsonElement("createdDate")]
     [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
     public DateTime CreatedDate { get; set; }
-
+    
+    [BsonElement("expirationDate")]
+    [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
+    public DateTime ExpirationDate { get; set; }
 }

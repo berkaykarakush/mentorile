@@ -28,8 +28,8 @@ public class DiscountsController : CustomControllerBase
         return CreateActionResultInstance(result);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Create(CreateDiscountDTO createDiscountDTO)
+    [HttpPost("create")]
+    public async Task<IActionResult> Create([FromBody] CreateDiscountDTO createDiscountDTO)
     {
         var result = await _discountService.CreateAsync(createDiscountDTO);
         return CreateActionResultInstance(result);
@@ -41,4 +41,19 @@ public class DiscountsController : CustomControllerBase
         var result = await _discountService.DeleteAsync(discountId);
         return CreateActionResultInstance(result);
     }
+
+    [HttpPost("apply")]
+    public async Task<IActionResult> ApplyDiscount([FromBody] ApplyDiscountDTO applyDiscountDTO)
+    {
+        var result = await _discountService.ApplyDiscountAsync(applyDiscountDTO.Code, applyDiscountDTO.TotalPrice);
+        return CreateActionResultInstance(result);
+    }
+
+    [HttpPost("cancel/{code}")]
+    public async Task<IActionResult> CancelApplyDiscount(string code)
+    {
+        var result = await _discountService.CancelDiscountAsync(code);
+        return CreateActionResultInstance(result);
+    }
+    
 }

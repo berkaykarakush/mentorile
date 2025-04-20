@@ -8,4 +8,6 @@ public interface IDiscountService
     Task<Result<DiscountDTO>> GetByCodeAndUserIdAsync(string code, string userId);
     Task<Result<DiscountDTO>> CreateAsync(CreateDiscountDTO createDiscountDTO);
     Task<Result<bool>> DeleteAsync(string discountId);
+    Task<Result<decimal>> ApplyDiscountAsync(string code, decimal totalPrice);
+    Task<Result<bool>> CancelDiscountAsync(string code);
 }

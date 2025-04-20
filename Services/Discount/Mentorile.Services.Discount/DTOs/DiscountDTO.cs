@@ -7,4 +7,5 @@ public class DiscountDTO
     public string Code { get; set; }
     public bool IsActive { get; set; } = true;
     public DateTime CreatedDate { get; set; }    
+    public DateTime ExpirationDate { get; set; }
 }

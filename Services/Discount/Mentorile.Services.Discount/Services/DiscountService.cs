@@ -3,6 +3,7 @@ using DnsClient.Protocol;
 using Mentorile.Services.Discount.DTOs;
 using Mentorile.Services.Discount.Settings;
 using Mentorile.Shared.Common;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Mentorile.Services.Discount.Services;
@@ -38,6 +39,7 @@ public class DiscountService : IDiscountService
     {
         var discount = _mapper.Map<Models.Discount>(createDiscountDTO);
         discount.CreatedDate = DateTime.UtcNow;
+        discount.ExpirationDate = DateTime.UtcNow.AddDays(10);
         await _discountCollection.InsertOneAsync(discount);
         var discountDTO =_mapper.Map<DiscountDTO>(discount);
         return Result<DiscountDTO>.Success(discountDTO);
@@ -47,5 +49,34 @@ public class DiscountService : IDiscountService
     {
         var result = await _discountCollection.DeleteOneAsync(d => d.Id == discountId);
         return result.DeletedCount > 0 ? Result<bool>.Success(true) : Result<bool>.Failure("Failed to deleting");
+    }
+
+    public async Task<Result<decimal>> ApplyDiscountAsync(string code, decimal totalPrice)
+    {
+        var discount = await _discountCollection
+            .Find(d => d.Code == code && d.IsActive && d.ExpirationDate >= DateTime.UtcNow)
+            .FirstOrDefaultAsync();
+        
+        if(discount == null) return Result<decimal>.Failure("Invalid or expired discount code.");
+
+        // indirim oranini al
+        var discountAmount = discount.Rate / 100 * totalPrice;
+        var discountedPrice = totalPrice - discountAmount;
+
+        return Result<decimal>.Success(discountedPrice);
+
+    }
+
+    public async Task<Result<bool>> CancelDiscountAsync(string code)
+    {
+        var discount = await _discountCollection
+            .Find(d => d.Code == code && d.IsActive)
+            .FirstOrDefaultAsync();
+        if(discount == null) return Result<bool>.Failure("Discount not found or already cancelled.");
+
+        // indirim kodunu gecersiz hale getirme
+        discount.IsActive = false;
+        var result = await _discountCollection.ReplaceOneAsync(d => d.Id == discount.Id, discount);
+        return result.ModifiedCount > 0 ? Result<bool>.Success(true) : Result<bool>.Failure("Failed to cancel the discount.");
     }
 }
