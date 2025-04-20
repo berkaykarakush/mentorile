@@ -1,0 +1,33 @@
+using MassTransit;
+using Mentorile.Services.Order.Infrastructure.Contexts;
+using Mentorile.Shared.Messages.Commands;
+
+namespace Mentorile.Services.Order.Application.Consumers;
+public class CreateOrderMessageCommandConsumer : IConsumer<CreateOrderMessageCommand>
+{
+    private readonly OrderDbContext _orderDbContext;
+
+    public CreateOrderMessageCommandConsumer(OrderDbContext orderDbContext)
+    {
+        _orderDbContext = orderDbContext;
+    }
+
+    public async Task Consume(ConsumeContext<CreateOrderMessageCommand> context)
+    {
+        var newAddress = new Domain.OrderAggreagate.Address(
+            context.Message.Address.Province,
+            context.Message.Address.District,
+            context.Message.Address.Street,
+            context.Message.Address.Line,
+            context.Message.Address.ZipCode
+        );
+
+        var order = new Domain.OrderAggreagate.Order(context.Message.BuyerId, newAddress);
+        context.Message.OrderItems.ForEach(x => {
+            order.AddOrderItem(x.ItemId, x.ItemName, x.Price, x.PictureUri);
+        });
+
+        await _orderDbContext.Orders.AddAsync(order);
+        await _orderDbContext.SaveChangesAsync();
+    }
+}

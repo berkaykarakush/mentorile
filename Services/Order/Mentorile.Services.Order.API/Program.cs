@@ -1,9 +1,10 @@
+using MassTransit;
+using Mentorile.Services.Order.Application.Consumers;
 using Mentorile.Services.Order.Infrastructure.Contexts;
 using Mentorile.Shared.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.JsonWebTokens;
 
@@ -47,6 +48,30 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     options.RequireHttpsMetadata = false;
 });
 
+builder.Services.AddMassTransit(x => 
+{
+    x.AddConsumer<CreateOrderMessageCommandConsumer>();
+    x.AddConsumer<CourseNameChangedEventConsumer>();
+
+    // default port 5672
+    x.UsingRabbitMq((context, configuration) => 
+    {
+        configuration.Host(builder.Configuration["RabbitMQUri"], "/", host => 
+        {
+            // default settings
+            host.Username("guest");
+            host.Password("guest");
+        });
+
+        configuration.ReceiveEndpoint("create-order-service", e => {
+            e.ConfigureConsumer<CreateOrderMessageCommandConsumer>(context);
+        });
+
+        configuration.ReceiveEndpoint("course-name-changed-event-queue", e => {
+            e.ConfigureConsumer<CourseNameChangedEventConsumer>(context);
+        });
+    });
+});
 
 var app = builder.Build();
 

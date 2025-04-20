@@ -1,3 +1,4 @@
+using MassTransit;
 using Mentorile.Shared.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -37,6 +38,20 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 // Automapper
 builder.Services.AddAutoMapper(typeof(Program));
+
+builder.Services.AddMassTransit(x => 
+{
+    // default port 5672
+    x.UsingRabbitMq((contex, configuration) => 
+    {
+        configuration.Host(builder.Configuration["RabbitMQUri"], "/", host => 
+        {
+            // default settings
+            host.Username("guest");
+            host.Password("guest");
+        });
+    });
+});
 
 var app = builder.Build();
 

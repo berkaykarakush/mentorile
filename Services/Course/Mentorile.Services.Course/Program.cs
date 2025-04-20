@@ -1,6 +1,8 @@
+using MassTransit;
 using Mentorile.Services.Course.Models;
 using Mentorile.Services.Course.Services;
 using Mentorile.Services.Course.Settings;
+using Mentorile.Shared.Messages.Events;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Options;
@@ -60,6 +62,19 @@ builder.Services.AddControllers(options =>
     options.Filters.Add(new AuthorizeFilter());
 }); 
 
+builder.Services.AddMassTransit(x => 
+{
+    // default port 5672
+    x.UsingRabbitMq((context, configuration) => 
+    {
+        configuration.Host(builder.Configuration["RabbitMQUri"], "/", host => 
+        {
+            // default settings
+            host.Username("guest");
+            host.Password("guest");
+        });
+    });
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

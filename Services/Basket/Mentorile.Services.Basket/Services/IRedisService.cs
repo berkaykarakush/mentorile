@@ -8,4 +8,5 @@ public interface IRedisService
     Task<Result<string>> GetStringAsync(string key);
     Task<Result<bool>> RemoveKeyAsync(string key);
     Task<Result<bool>> KeyExistAsync(string key);
+    Task<List<string>> GetKeysAsync(string pattern);
 }

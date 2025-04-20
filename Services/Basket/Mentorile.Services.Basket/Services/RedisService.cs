@@ -86,4 +86,14 @@ public class RedisService : IRedisService
             return Result<bool>.Failure($"Error checking if key exists: {ex.Message}");
         }
     }
+
+    public async Task<List<string>> GetKeysAsync(string pattern)
+    {
+        var endpoints = _connectionMultiplexer.GetEndPoints();
+        var server = _connectionMultiplexer.GetServer(endpoints.First());
+
+        var keys = server.Keys(pattern: pattern).Select(k => k.ToString()).ToList();
+        return await Task.FromResult(keys);
+    }
+
 }

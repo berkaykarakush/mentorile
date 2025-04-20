@@ -17,4 +17,6 @@ public class PaymentDTO
 
     [Required]
     public decimal TotalPrice { get; set; }    
+
+    public OrderDTO Order { get; set; }
 }

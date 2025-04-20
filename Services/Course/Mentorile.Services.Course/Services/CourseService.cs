@@ -1,7 +1,9 @@
 using AutoMapper;
+using MassTransit;
 using Mentorile.Services.Course.DTOs.Course;
 using Mentorile.Services.Course.Settings;
 using Mentorile.Shared.Common;
+using Mentorile.Shared.Messages.Events;
 using MongoDB.Driver;
 
 namespace Mentorile.Services.Course.Services;
@@ -9,13 +11,15 @@ public class CourseService : ICourseService
 {
     private readonly IMongoCollection<Models.Course> _courseCollection;   
     private readonly IMapper _mapper;
+    private readonly IPublishEndpoint _publishEndpoint;
 
-    public CourseService(IMongoCollection<Models.Course> courseCollection, IMapper mapper, IDatabaseSettings databaseSettings)
+    public CourseService(IMongoCollection<Models.Course> courseCollection, IMapper mapper, IDatabaseSettings databaseSettings, IPublishEndpoint publishEndpoint)
     {
         var client = new MongoClient(databaseSettings.ConnectionString);
-        var database = client.GetDatabase(databaseSettings.DatabaseName);        
+        var database = client.GetDatabase(databaseSettings.DatabaseName);
         _courseCollection = database.GetCollection<Models.Course>(databaseSettings.CourseCollectionName);
         _mapper = mapper;
+        _publishEndpoint = publishEndpoint;
     }
 
     public async Task<Result<List<CourseDTO>>> GetAllAsync(PagingParams pagingParams)
@@ -55,6 +59,11 @@ public class CourseService : ICourseService
 
         if (result == null) return Result<CourseDTO>.Failure("Course not found.");
 
+        await _publishEndpoint.Publish<CourseNameChangedEvent>(new CourseNameChangedEvent()
+        {
+            CourseId = updateCourseDTO.Id,
+            UpdatedName = updateCourseDTO.Name
+        });
         return Result<CourseDTO>.Success(null, "Course successfully updated.");
     }
 

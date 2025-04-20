@@ -29,14 +29,21 @@ public class OrdersController : Controller
     [HttpPost("checkout")]
     public async Task<IActionResult> Checkout(CheckoutInfoInput checkoutInfoInput)
     {
-        var orderStatus = await _orderService.CreateOrderAsync(checkoutInfoInput);
-        if(!orderStatus.IsSuccessful){
+        // 1. yol senkron iletisim
+        // var orderStatus = await _orderService.CreateOrderAsync(checkoutInfoInput);
+        // 2. yol asenkron iletisim
+        var orderSuspend = await _orderService.SuspenOrderAsnyc(checkoutInfoInput);
+        if(!orderSuspend.IsSuccessful){
             var basket = await _basketService.GetBasketAsync();
             ViewBag.basket = basket;
-            ViewBag.error = orderStatus.Error;
+            ViewBag.error = orderSuspend.Error;
             return View();
         }
-        return RedirectToAction(nameof(SuccessfulCheckout), new {orderId = orderStatus.OrderId});
+
+        // 1. yol senkron iletisim
+        // return RedirectToAction(nameof(SuccessfulCheckout), new {orderId = orderStatus.OrderId});
+        // TODO: Burada daha sonra OrderId degerini donecegiz
+        return RedirectToAction(nameof(SuccessfulCheckout), new {orderId = Guid.NewGuid().ToString()});
     }
 
     [HttpGet("successful-checkout")]
@@ -57,4 +64,8 @@ public class OrdersController : Controller
     {
         return View("Error!");
     }
+
+    [HttpGet("checkout-history")]
+    public async Task<IActionResult> CheckoutHistory() 
+        => View(await _orderService.GetOrdersAsync());
 }

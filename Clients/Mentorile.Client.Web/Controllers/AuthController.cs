@@ -15,9 +15,6 @@ public class AuthController : Controller
         _identityService = identityService;
     }
 
-    [HttpGet("")]
-    public IActionResult Index() => View();
-
     [HttpGet("signin")]
     public IActionResult SignIn() => View();
 
@@ -39,11 +36,11 @@ public class AuthController : Controller
     [HttpGet("error")]
     public IActionResult Error() => View();
 
-    [HttpPost]
+    [HttpGet("logout")]
     public async Task<IActionResult> Logout()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         await _identityService.RevokeRefreshToken();
-        return RedirectToAction(nameof(HomeController.SignIn), "Home");
+        return RedirectToAction(nameof(SignIn), "Auth");
     }
 }

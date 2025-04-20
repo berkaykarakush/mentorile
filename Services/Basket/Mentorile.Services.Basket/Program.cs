@@ -1,3 +1,5 @@
+using MassTransit;
+using Mentorile.Services.Basket.Consumers;
 using Mentorile.Services.Basket.Services;
 using Mentorile.Services.Basket.Settings;
 using Mentorile.Shared.Services;
@@ -57,6 +59,25 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     options.RequireHttpsMetadata = false;
 });
 
+builder.Services.AddMassTransit(x => 
+{
+    x.AddConsumer<CourseNameChangedEventConsumer>();
+
+    // default port 5672
+    x.UsingRabbitMq((context, configuration) => 
+    {
+        configuration.Host(builder.Configuration["RabbitMQUri"], "/", host => 
+        {
+            // default settings
+            host.Username("guest");
+            host.Password("guest");
+        });
+
+        configuration.ReceiveEndpoint("course-name-changed-event-queue", e => {
+            e.ConfigureConsumer<CourseNameChangedEventConsumer>(context);
+        });
+    });
+});
 var app = builder.Build();
 
 // Middlewares

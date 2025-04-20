@@ -67,24 +67,11 @@ public class OrderService : IOrderService
         // API'den gelen yanıtı Result<OrderCreatedDTO> formatında alıyoruz
         var result = await response.Content.ReadFromJsonAsync<Result<OrderCreatedViewModel>>();
 
-        if (result != null && result.IsSuccess && result.Data != null)
-        {
-            // orderId'yi result.Data.Id'den alıyoruz ve ViewModel'e set ediyoruz
-            var orderCreatedViewModel = new OrderCreatedViewModel
-            {
-                IsSuccessful = true,
-                OrderId = result.Data.OrderId // Burada gelen ID'yi orderCreatedViewModel.OrderId'ye set ediyoruz
-            };
-            await _basketService.ClearBasketAsync();
-            return orderCreatedViewModel;
-        }
-
         // Eğer hata varsa, error mesajı ile birlikte view model döndürüyoruz
-        return new OrderCreatedViewModel
-        {
-            Error = "Sipariş oluşturulurken bir hata oluştu.",
-            IsSuccessful = false
-        };
+        if (result == null && result.IsSuccess && result.Data == null) return new OrderCreatedViewModel{ Error = "Sipariş oluşturulurken bir hata oluştu.", IsSuccessful = false};
+        
+        await _basketService.ClearBasketAsync();
+        return new OrderCreatedViewModel {IsSuccessful = true, OrderId = result.Data.OrderId};;
     }
 
     public async Task<List<OrderViewModel>> GetOrdersAsync()
@@ -93,8 +80,40 @@ public class OrderService : IOrderService
         return response.Data;
     }
 
-    public Task SuspenOrderAsnyc(CheckoutInfoInput checkoutInfoInput)
+    public async Task<OrderSuspendViewModel> SuspenOrderAsnyc(CheckoutInfoInput checkoutInfoInput)
     {
-        throw new NotImplementedException();
+        var basket = await _basketService.GetBasketAsync();
+
+        var addressCreateInput = new AddressCreateInput(){
+            Province = checkoutInfoInput.Province,
+            District = checkoutInfoInput.District,
+            Street = checkoutInfoInput.Street,
+            ZipCode = checkoutInfoInput.ZipCode,
+            Line = checkoutInfoInput.Line
+        };
+
+        var orderCreateInput = new OrderCreateInput(){
+            BuyerId = _sharedIdentityService.GetUserId,
+            Address = addressCreateInput,
+        };
+
+        basket.Items.ForEach(x => {
+            var orderItem = new OrderItemCreateInput() { ItemId = x.ItemId, ItemName = x.ItemName, PictureUri = "", Price = x.Price};
+            orderCreateInput.OrderItems.Add(orderItem);
+        });
+
+        var paymentInfoInput = new PaymentInfoInput(){
+            CardName = checkoutInfoInput.CardName,
+            CardNumber = checkoutInfoInput.CardNumber,
+            Expiration = checkoutInfoInput.Expiration,
+            CVV = checkoutInfoInput.CVV,
+            TotalPrice = basket.FinalAmount,
+            Order = orderCreateInput
+        };
+        var responsePayment = await _paymentService.ReceivePaymentAsync(paymentInfoInput);
+        if(!responsePayment) return new OrderSuspendViewModel() { Error = "Ödeme alınamadı.", IsSuccessful = false};
+        
+        await _basketService.ClearBasketAsync();
+        return new OrderSuspendViewModel() { Error = "Ödeme başarılı.", IsSuccessful = true};
     }
 }

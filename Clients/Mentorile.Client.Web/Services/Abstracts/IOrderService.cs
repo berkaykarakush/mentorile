@@ -6,6 +6,6 @@ public interface IOrderService
     // senkron iletisim direkt olarak microservice istek yapilacak
     Task<OrderCreatedViewModel> CreateOrderAsync(CheckoutInfoInput checkoutInfoInput);    
     // asenkron iletisim siparis bilgileri rabbitmq ya gonderilecek
-    Task SuspenOrderAsnyc(CheckoutInfoInput checkoutInfoInput);
+    Task<OrderSuspendViewModel> SuspenOrderAsnyc(CheckoutInfoInput checkoutInfoInput);
     Task<List<OrderViewModel>> GetOrdersAsync();
 }

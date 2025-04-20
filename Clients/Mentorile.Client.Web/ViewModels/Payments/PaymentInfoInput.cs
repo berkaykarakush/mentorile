@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Mentorile.Client.Web.ViewModels.Orders;
 
 namespace Mentorile.Client.Web.ViewModels.Payments;
 public class PaymentInfoInput
@@ -22,4 +23,6 @@ public class PaymentInfoInput
 
     [Required, Range(0.01, double.MaxValue, ErrorMessage = "Toplam tutar geçerli olmalıdır")]
     public decimal TotalPrice { get; set; }
+
+    public OrderCreateInput Order { get; set; }
 }
