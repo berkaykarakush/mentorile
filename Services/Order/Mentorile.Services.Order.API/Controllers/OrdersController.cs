@@ -33,7 +33,4 @@ public class OrdersController : CustomControllerBase
         var response = await _mediator.Send(createOrderCommand);
         return CreateActionResultInstance(response);
     }
-
-    
-
 }

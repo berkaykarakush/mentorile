@@ -26,8 +26,7 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Res
 
         await _context.Orders.AddAsync(newOrder);
         await _context.SaveChangesAsync();
-        return Result<CreatedOrderDTO>.Success(new CreatedOrderDTO{ 
-            Id = newOrder.Id
-         });
+        var createdOrderDTO = new CreatedOrderDTO() { OrderId = newOrder.Id}; 
+        return Result<CreatedOrderDTO>.Success(createdOrderDTO);
     }
 }
