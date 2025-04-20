@@ -8,6 +8,7 @@ public interface IBasketService
     Task<Result<bool>> RemoveItemFromBasketAsync(string itemId);
     Task<Result<bool>> ClearBasketAsync();
     Task<Result<decimal>> GetTotalAmountAsync();
-    Task<Result<bool>> ApplyCouponAsync(string couponCode);
+    Task<Result<bool>> ApplyDiscountAsync(string discountCode);
+    Task<Result<bool>> CancelDiscountAsync(string discountCode);
     Task<Result<BasketDTO>> GetBasketAsync();
 }

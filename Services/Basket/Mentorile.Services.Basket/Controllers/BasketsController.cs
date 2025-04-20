@@ -23,7 +23,7 @@ public class BasketsController : CustomControllerBase
         return CreateActionResultInstance(result);
     }
 
-    [HttpDelete("delete-item")]
+    [HttpDelete("delete-item/{itemId}")]
     public async Task<IActionResult> RemoveItemFromBasket(string itemId)
     {
         var result = await _basketService.RemoveItemFromBasketAsync(itemId);
@@ -34,6 +34,20 @@ public class BasketsController : CustomControllerBase
     public async Task<IActionResult> GetBasket()
     {
         var result = await _basketService.GetBasketAsync();
+        return CreateActionResultInstance(result);
+    }
+
+    [HttpPost("apply-discount/{discountCode}")]
+    public async Task<IActionResult> ApplyDiscount(string discountCode)
+    {
+        var result = await _basketService.ApplyDiscountAsync(discountCode);
+        return CreateActionResultInstance(result);
+    }
+
+    [HttpPost("cancel-discount/{discountCode}")]
+    public async Task<IActionResult> CancelDiscount(string discountCode)
+    {
+        var result = await _basketService.CancelDiscountAsync(discountCode);
         return CreateActionResultInstance(result);
     }
 

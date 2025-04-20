@@ -96,28 +96,50 @@ public class BasketService : IBasketService
         return Result<decimal>.Success(basket.TotalAmount);
     }
 
-    public async Task<Result<bool>> ApplyCouponAsync(string couponCode)
+   public async Task<Result<bool>> ApplyDiscountAsync(string discountCode)
     {
         var (key, basket) = await GetOrCreateBasketAsync();
 
-        if (string.IsNullOrEmpty(couponCode))
-            return Result<bool>.Failure("Invalid coupon code.");
+        if (string.IsNullOrWhiteSpace(discountCode))
+            return Result<bool>.Failure("Kupon kodu geçersiz.");
 
-        decimal discount = 0;
-        if (couponCode == "DISCOUNT10")
-            discount = 0.10m;
+        // Örnek sabit kuponlar (ileride bu DiscountAPI'den çekilebilir)
+        var availableCoupons = new Dictionary<string, decimal>(StringComparer.OrdinalIgnoreCase)
+        {
+            { "DISCOUNT10", 10 },
+            { "DISCOUNT20", 20 },
+            { "SPRING25", 25 }
+        };
 
-        basket.DiscountAmount = basket.TotalAmount * discount;
-        basket.CouponCode = couponCode;
+        if (!availableCoupons.TryGetValue(discountCode, out var discountPercentage))
+            return Result<bool>.Failure("Kupon kodu bulunamadı veya geçersiz.");
+
+        basket.DiscountCode = discountCode;
+        basket.DiscountPercentage = discountPercentage;
 
         var json = JsonSerializer.Serialize(basket);
         var success = await _redisService.SetStringAsync(key, json, TimeSpan.FromDays(1));
-        return success.IsSuccess ? Result<bool>.Success(true) : Result<bool>.Failure("Failed to apply coupon.");
+        
+        return success.IsSuccess 
+            ? Result<bool>.Success(true) 
+            : Result<bool>.Failure("İndirim uygulanırken bir hata oluştu.");
     }
 
     public async Task<Result<BasketDTO>> GetBasketAsync()
     {
         var (_, basket) = await GetOrCreateBasketAsync();
         return Result<BasketDTO>.Success(basket);
+    }
+
+    public async Task<Result<bool>> CancelDiscountAsync(string discountCode)
+    {
+        var (key, basket) = await GetOrCreateBasketAsync();
+        if(string.IsNullOrEmpty(basket.DiscountCode) || !string.Equals(basket.DiscountCode, discountCode, StringComparison.OrdinalIgnoreCase)) return Result<bool>.Failure("İndirim kodu bulunamadı veya eşleşmiyor.");
+        basket.DiscountCode = null;
+        basket.DiscountPercentage = 0;
+
+        var json = JsonSerializer.Serialize(basket);
+        var success = await _redisService.SetStringAsync(key, json, TimeSpan.FromDays(1));
+        return success.IsSuccess ? Result<bool>.Success(true) : Result<bool>.Failure("İndirim kaldırılırken bir hata oluştu.");
     }
 }

@@ -2,22 +2,21 @@ namespace Mentorile.Services.Basket.DTOs;
 public class BasketDTO
 {
     public string Id { get; set; }  // Sepet kimliği
-    public string BuyerId { get; set; }  // Kullanıcı kimliği (BuyerId)
+    public string BuyerId { get; set; }  // Kullanıcı kimliği
     public List<BasketItemDTO> Items { get; set; } = new List<BasketItemDTO>();
-    public decimal DiscountAmount { get; set; }  // İndirim miktarı
-    public decimal FinalAmount => TotalAmount - DiscountAmount;  // İndirimli toplam
-    public string CouponCode { get; set; }  // Uygulanan kupon kodu
+    public decimal DiscountPercentage { get; set; }  // İndirim yüzdesi (örneğin: 10)
+    public string DiscountCode { get; set; }  // Uygulanan kupon kodu
 
-    // Sepetin toplam tutarını hesaplamak için yardımcı metod
+    // Toplam tutar
     public decimal TotalAmount => CalculateTotalAmount();
+
+    // İndirimli toplam tutar (final)
+    public decimal FinalAmount => TotalAmount * (1 - DiscountPercentage / 100m);
 
     private decimal CalculateTotalAmount()
     {
         decimal total = 0;
-        foreach (var item in Items)
-        {
-            total += item.TotalPrice;
-        }
+        foreach (var item in Items) total += item.TotalPrice;
         return total;
     }
 }
