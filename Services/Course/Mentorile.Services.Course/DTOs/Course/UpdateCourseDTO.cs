@@ -4,6 +4,7 @@ public class UpdateCourseDTO
     public string Id { get; set; }
     
     public string Name { get; set; }
+    public string PhotoUri { get; set; }
 
     public string UserId { get; set; }
 

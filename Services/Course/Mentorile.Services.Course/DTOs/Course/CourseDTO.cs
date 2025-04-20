@@ -6,6 +6,7 @@ public class CourseDTO
     public string Name { get; set; }
 
     public string UserId { get; set; }
+    public string PhotoUri { get; set; }
 
     public DateTime CreatedTime { get; set; }
 

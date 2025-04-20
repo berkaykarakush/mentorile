@@ -1,7 +1,5 @@
-using System.Reflection;
 using AutoMapper;
 using Mentorile.Services.Course.DTOs.Course;
-using Mentorile.Services.Course.Models;
 using Mentorile.Services.Course.Settings;
 using Mentorile.Shared.Common;
 using MongoDB.Driver;
@@ -33,7 +31,9 @@ public class CourseService : ICourseService
 
     public async Task<Result<CourseDTO>> GetByIdAsync(string id)
     {
-        var course = await _courseCollection.FindAsync<Models.Course>(c => c.Id == id);
+        var courseCursor = await _courseCollection.FindAsync<Models.Course>(c => c.Id == id);
+        var course = await courseCursor.FirstOrDefaultAsync(); // İlk öğeyi al
+
         if (course == null) return Result<CourseDTO>.Failure("Category not found.");
 
         return Result<CourseDTO>.Success(_mapper.Map<CourseDTO>(course));

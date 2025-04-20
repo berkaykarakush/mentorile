@@ -17,6 +17,8 @@ public class Course
 
     [BsonRepresentation(BsonType.DateTime)]
     public DateTime CreatedTime { get; set; }
+    [BsonRepresentation(BsonType.String)]
+    public string PhotoUri { get; set; }
 
     // Sadece Topic ID'leri tutar
     public List<string> TopicIds { get; set; } = new List<string>();
