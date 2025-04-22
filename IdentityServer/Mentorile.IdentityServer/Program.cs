@@ -20,6 +20,8 @@ try
         .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
         .Enrich.FromLogContext()
         .ReadFrom.Configuration(ctx.Configuration));
+    
+    builder.WebHost.UseUrls("http://+:80");
 
     var app = builder
         .ConfigureServices()

@@ -51,6 +51,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     opts.Cookie.Name = "mentorile.web.cookie";
 });
 
+builder.WebHost.UseUrls("http://+:80");
 
 var app = builder.Build();
 

@@ -1,0 +1,159 @@
+services:
+  coursedb:
+    container_name: coursedb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=Password12
+    volumes:
+      - coursedb_data:/data/db
+  basketdb:
+    container_name: basketdb
+    restart: always
+    ports:
+      - "6379:6379"
+  discountdb:
+    container_name: discountdb
+    restart: always
+    ports:
+      - "27018:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=Password12
+    volumes:
+      - discountdb_data:/data/db
+  identitydb:
+    container_name: identitydb
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - identitydb_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=Password12
+      - POSTGRES_DB=identitydb
+  orderdb:
+    container_name: orderdb
+    restart: always
+    ports:
+      - "5433:5432"
+    volumes:
+      - orderdb_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=Password12
+      - POSTGRES_DB=orderdb
+  rabbitmq: 
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  course.api:
+    container_name: course.api
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - RabbitMQUri=rabbitmq
+      - Authority=http://identityserver.api
+      - DatabaseSettings:ConnectionString=mongodb://admin:Password12@coursedb:27017
+    ports:
+      - "5010:80"
+    depends_on:
+      - coursedb
+  identityserver.api:
+    container_name: identityserver.api
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings:DefaultConnection=User ID=admin;Password=Password12;Host=identitydb;Port=5432;Database=identitydb
+    ports:
+      - "5001:80"
+    depends_on:
+      - identitydb
+  basket.api:
+    container_name: basket.api
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - RedisSettings:Host=basketdb
+      - RedisSettings:Port=6379
+      - RabbitMQUri=rabbitmq
+      - Authority=http://identityserver.api
+    ports:
+      - "5012:80"
+    depends_on:
+      - basketdb
+  photostock.api:
+    container_name: photostock.api
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Authority=http://identityserver.api
+    ports:
+      - "5011:80"
+    volumes:
+      - type: bind
+        source: /home/karakus/photos
+        target: /app/wwwroot/photos
+  discount.api:
+    container_name: discount.api
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Authority=http://identityserver.api
+      - DatabaseSettings:ConnectionString=mongodb://admin:Password12@discountdb:27018/
+    ports:
+      - "5013:80"
+    depends_on:
+      - discountdb
+  payment.api:
+    container_name: payment.api
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Authority=http://identityserver.api
+      - RabbitMQUri=rabbitmq
+    ports:
+      - "5015:80"
+  order.api:
+    container_name: order.api
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Authority=http://identityserver.api
+      - RabbitMQUri=rabbitmq
+      - ConnectionStrings:DefaultConnection=User ID=admin;Password=Password12;Host=orderdb;Port=5432;Database=orderdb
+    ports:
+      - "5014:80"
+    depends_on:
+      - orderdb
+  gateway.api:
+    container_name: gateway.api
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - Authority=http://identityserver.api
+    ports:
+      - "5000:80"
+  web.api:
+    container_name: web.api
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ServiceApiSettings:IdentityBaseUri=http://identityserver.api
+      - ServiceApiSettings:GatewayBaseUri=http://gateway.api
+    ports:
+      - "5002:80"
+    depends_on:
+      - course.api
+      - identityserver.api
+      - basket.api
+      - photostock.api
+      - discount.api
+      - payment.api
+      - order.api
+      - gateway.api

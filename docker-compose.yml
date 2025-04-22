@@ -1,0 +1,64 @@
+services:
+  coursedb:
+    image: mongo:latest
+  basketdb:
+    image: redis:latest
+  discountdb:
+    image: mongo:latest
+  identitydb:
+    image: postgres
+  orderdb:
+    image: postgres
+  rabbitmq: 
+    image: rabbitmq:4.1.0-management
+  course.api:
+    image: course.api.image
+    build:
+      context: .
+      dockerfile: Services/Course/Mentorile.Services.Course/Dockerfile
+  identityserver.api:
+    image: identityserver.api.image
+    build:
+      context: .
+      dockerfile: IdentityServer/Mentorile.IdentityServer/Dockerfile
+  basket.api:
+    image: basket.api.image
+    build: 
+      context: .
+      dockerfile: Services/Basket/Mentorile.Services.Basket/Dockerfile
+  photostock.api:
+    image: photostock.api.image
+    build:
+      context: .
+      dockerfile: Services/PhotoStock/Mentorile.Services.PhotoStock/Dockerfile
+  discount.api:
+    image: discount.api.image
+    build:
+      context: .
+      dockerfile: Services/Discount/Mentorile.Services.Discount/Dockerfile
+  payment.api:
+    image: payment.api.image
+    build: 
+      context: .
+      dockerfile: Services/Payment/Mentorile.Services.Payment.API/Dockerfile
+  order.api:
+    image: order.api.image
+    build: 
+      context: .
+      dockerfile: Services/Order/Mentorile.Services.Order.API/Dockerfile
+  gateway.api:
+    image: gateway.api.image
+    build: 
+      context: .
+      dockerfile: Gateways/Mentorile.Gateway.API/Dockerfile
+  web.api:
+    image: web.api.image
+    build: 
+      context: .
+      dockerfile: Clients/Mentorile.Client.Web/Dockerfile
+volumes:
+  coursedb_data:
+  basketdb_data:
+  discountdb_data:
+  identitydb_data:
+  orderdb_data:

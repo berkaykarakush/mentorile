@@ -38,6 +38,7 @@ builder.Services
         options.RequireHttpsMetadata = false;
     });
 
+builder.WebHost.UseUrls("http://+:80");
 
 var app = builder.Build();
 

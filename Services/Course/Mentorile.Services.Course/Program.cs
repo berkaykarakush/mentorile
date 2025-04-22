@@ -75,6 +75,9 @@ builder.Services.AddMassTransit(x =>
         });
     });
 });
+
+builder.WebHost.UseUrls("http://+:80");
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

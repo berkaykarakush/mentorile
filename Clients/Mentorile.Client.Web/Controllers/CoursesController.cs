@@ -22,7 +22,11 @@ public class CoursesController : Controller
         _sharedIdentityService = sharedIdentityService;
     }
     [HttpGet("index")]
-    public async Task<IActionResult> Index() => View(await _courseService.GetAllCourseByUserIdAsync(_sharedIdentityService.GetUserId));
+    public async Task<IActionResult> Index()
+    {
+        var courses = await _courseService.GetAllCourseByUserIdAsync(_sharedIdentityService.GetUserId);
+        return View(courses ?? new List<CourseViewModel>());
+    }
 
     [HttpGet("create")]
     public async Task<IActionResult> Create() => View();

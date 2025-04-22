@@ -25,6 +25,8 @@ builder.Services.AddControllers(options =>
     options.Filters.Add(new AuthorizeFilter());
 }); 
 
+builder.WebHost.UseUrls("http://+:80");
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

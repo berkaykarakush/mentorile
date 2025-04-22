@@ -44,6 +44,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 // Automapper
 builder.Services.AddAutoMapper(typeof(Program));
 
+builder.WebHost.UseUrls("http://+:80");
+
 var app = builder.Build();
 // Middlewares
 if (app.Environment.IsDevelopment())

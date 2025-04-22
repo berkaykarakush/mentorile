@@ -5,8 +5,8 @@
         "DownstreamScheme": "http",
         "DownstreamHostAndPorts": [
             {
-                "Host": "localhost",
-                "Port": 5010
+                "Host": "course.api",
+                "Port": 80
             }
         ],
         "UpstreamPathTemplate": "/services/course/{everything}",
@@ -21,8 +21,8 @@
         "DownstreamScheme": "http",
         "DownstreamHostAndPorts": [
             {
-                "Host": "localhost",
-                "Port": 5011
+                "Host": "photostock.api",
+                "Port": 80
             }
         ],
         "UpstreamPathTemplate": "/services/photostock/{everything}",
@@ -37,8 +37,8 @@
         "DownstreamScheme": "http",
         "DownstreamHostAndPorts": [
             {
-                "Host": "localhost",
-                "Port": 5012
+                "Host": "basket.api",
+                "Port": 80
             }
         ],
         "UpstreamPathTemplate": "/services/basket/{everything}",
@@ -53,8 +53,8 @@
         "DownstreamScheme": "http",
         "DownstreamHostAndPorts": [
             {
-                "Host": "localhost",
-                "Port": 5013
+                "Host": "discount.api",
+                "Port": 80
             }
         ],
         "UpstreamPathTemplate": "/services/discount/{everything}",
@@ -69,8 +69,8 @@
         "DownstreamScheme": "http",
         "DownstreamHostAndPorts": [
             {
-                "Host": "localhost",
-                "Port": 5014
+                "Host": "order.api",
+                "Port": 80
             }
         ],
         "UpstreamPathTemplate": "/services/order/{everything}",
@@ -85,8 +85,8 @@
         "DownstreamScheme": "http",
         "DownstreamHostAndPorts": [
             {
-                "Host": "localhost",
-                "Port": 5015
+                "Host": "payment.api",
+                "Port": 80
             }
         ],
         "UpstreamPathTemplate": "/services/payment/{everything}",
@@ -98,6 +98,6 @@
         }
     ],
     "GlobalConfiguration": {
-        "BaseUrl": "http://localhost:5000"
+        "BaseUrl": "http://gateway.api:80"
     }
 }
