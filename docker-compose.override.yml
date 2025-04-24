@@ -55,6 +55,7 @@ services:
   course.api:
     container_name: course.api
     restart: on-failure
+    command: ["dotnet", "watch", "--project", "Services/Course/Mentorile.Services.Course/Mentorile.Services.Course.csproj", "run", "--no-launch-profile", "--urls", "http://0.0.0.0:5010"]
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - RabbitMQUri=rabbitmq
@@ -67,6 +68,7 @@ services:
   identityserver.api:
     container_name: identityserver.api
     restart: on-failure
+    command: ["dotnet", "watch", "--project", "IdentityServer/Mentorile.IdentityServer/Mentorile.IdentityServer.csproj", "run", "--no-launch-profile", "--urls", "http://0.0.0.0:5001"]
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings:DefaultConnection=User ID=admin;Password=Password12;Host=identitydb;Port=5432;Database=identitydb
@@ -77,6 +79,7 @@ services:
   basket.api:
     container_name: basket.api
     restart: on-failure
+    command: ["dotnet", "watch", "--project", "Services/Basket/Mentorile.Services.Basket/Mentorile.Services.Basket.csproj", "run", "--no-launch-profile", "--urls", "http://0.0.0.0:5012"]
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - RedisSettings:Host=basketdb
@@ -90,6 +93,7 @@ services:
   photostock.api:
     container_name: photostock.api
     restart: on-failure
+    command: ["dotnet", "watch", "--project", "Services/PhotoStock/Mentorile.Services.PhotoStock/Mentorile.Services.PhotoStock.csproj", "run", "--no-launch-profile", "--urls", "http://0.0.0.0:5011"]
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - Authority=http://identityserver.api
@@ -102,10 +106,11 @@ services:
   discount.api:
     container_name: discount.api
     restart: on-failure
+    command: ["dotnet", "watch", "--project", "Services/Discount/Mentorile.Services.Discount/Mentorile.Services.Discount.csproj", "run", "--no-launch-profile", "--urls", "http://0.0.0.0:5013"]
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - Authority=http://identityserver.api
-      - DatabaseSettings:ConnectionString=mongodb://admin:Password12@discountdb:27018/
+      - DatabaseSettings:ConnectionString=mongodb://admin:Password12@discountdb:27017/
     ports:
       - "5013:80"
     depends_on:
@@ -113,6 +118,7 @@ services:
   payment.api:
     container_name: payment.api
     restart: on-failure
+    command: ["dotnet", "watch", "--project", "Services/Payment/Mentorile.Services.Payment.API/Mentorile.Services.Payment.API.csproj", "run", "--no-launch-profile", "--urls", "http://0.0.0.0:5015"]
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - Authority=http://identityserver.api
@@ -122,6 +128,7 @@ services:
   order.api:
     container_name: order.api
     restart: on-failure
+    command: ["dotnet", "watch", "--project", "Services/Order/Mentorile.Services.Order.API/Mentorile.Services.Order.API.csproj", "run", "--no-launch-profile", "--urls", "http://0.0.0.0:5014"]
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - Authority=http://identityserver.api
@@ -134,6 +141,7 @@ services:
   gateway.api:
     container_name: gateway.api
     restart: on-failure
+    command: ["dotnet", "watch", "--project", "Gateways/Mentorile.Gateway.API/Mentorile.Gateway.API.csproj", "run", "--no-launch-profile", "--urls", "http://0.0.0.0:5000"]
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - Authority=http://identityserver.api
@@ -142,12 +150,14 @@ services:
   web.api:
     container_name: web.api
     restart: on-failure
+    command: ["dotnet", "watch", "--project", "Clients/Mentorile.Client.Web/Mentorile.Client.Web.csproj", "run", "--no-launch-profile", "--urls", "http://0.0.0.0:5002"]
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ServiceApiSettings:IdentityBaseUri=http://identityserver.api
       - ServiceApiSettings:GatewayBaseUri=http://gateway.api
     ports:
       - "5002:80"
+      - "9229:9229"      # Debugger port
     depends_on:
       - course.api
       - identityserver.api
