@@ -1,9 +1,7 @@
 using AutoMapper;
-using DnsClient.Protocol;
 using Mentorile.Services.Discount.DTOs;
 using Mentorile.Services.Discount.Settings;
 using Mentorile.Shared.Common;
-using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Mentorile.Services.Discount.Services;
@@ -20,7 +18,7 @@ public class DiscountService : IDiscountService
         _mapper = mapper;
     }
 
-    public async Task<Result<List<DiscountDTO>>> GetAllAsync()
+    public async Task<Result<List<DiscountDTO>>> GetAllDiscountAsync()
     {
         var discounts = await _discountCollection.Find(_ => true).ToListAsync();
         var dtoList = _mapper.Map<List<DiscountDTO>>(discounts);
@@ -29,8 +27,13 @@ public class DiscountService : IDiscountService
 
     public async Task<Result<DiscountDTO>> GetByCodeAndUserIdAsync(string code, string userId)
     {
-        var discount = await _discountCollection.Find(d => d.Code == code && d.UserId == userId).FirstOrDefaultAsync();
-        if (discount is null) return Result<DiscountDTO>.Failure("Discount not found");
+        var discount = await _discountCollection.Find(d =>
+            d.Code == code &&
+            d.UserIds.Contains(userId) &&
+            d.IsActive &&
+            d.ExpirationDate >= DateTime.UtcNow    
+        ).FirstOrDefaultAsync();
+        if (discount is null) return Result<DiscountDTO>.Failure("Discount not found or not valid for this user.");
         var discountDTO = _mapper.Map<DiscountDTO>(discount); 
         return Result<DiscountDTO>.Success(discountDTO);
     }
@@ -78,5 +81,38 @@ public class DiscountService : IDiscountService
         discount.IsActive = false;
         var result = await _discountCollection.ReplaceOneAsync(d => d.Id == discount.Id, discount);
         return result.ModifiedCount > 0 ? Result<bool>.Success(true) : Result<bool>.Failure("Failed to cancel the discount.");
+    }
+
+    public async Task<Result<DiscountDTO>> UpdateAsync(UpdateDiscountDTO updateDiscountDTO)
+    {
+        var existingDiscount = await _discountCollection.Find(x => x.Id == updateDiscountDTO.Id).FirstOrDefaultAsync();
+
+        if(existingDiscount == null) return Result<DiscountDTO>.Failure("Discount not found.");
+
+        existingDiscount.Code = updateDiscountDTO.Code;
+        existingDiscount.Rate = updateDiscountDTO.Rate;
+        existingDiscount.ExpirationDate = updateDiscountDTO.ExpirationDate;
+        existingDiscount.IsActive = updateDiscountDTO.IsActive;
+
+        var result = await _discountCollection.ReplaceOneAsync(x => x.Id == updateDiscountDTO.Id, existingDiscount);
+        if(!result.IsAcknowledged || result.ModifiedCount == 0) return Result<DiscountDTO>.Failure("Failed to update discount.");
+        
+        var discountDTO = _mapper.Map<DiscountDTO>(existingDiscount);
+        return Result<DiscountDTO>.Success(discountDTO);
+    }
+
+    public async Task<Result<List<DiscountDTO>>> GetAllDiscountByUserIdAsync(string userId)
+    {
+        var discountCodes = await _discountCollection.Find(x => x.UserIds.Contains(userId)).ToListAsync();
+        var dtoList = _mapper.Map<List<DiscountDTO>>(discountCodes);
+        return Result<List<DiscountDTO>>.Success(dtoList);
+    }
+
+    public async Task<Result<DiscountDTO>> GetDiscountByIdAsync(string discountId)
+    {
+        var discount = await _discountCollection.Find(x => x.Id == discountId).FirstOrDefaultAsync();
+        if(discount == null) return Result<DiscountDTO>.Failure("Discount not found.");
+        var discountDTO = _mapper.Map<DiscountDTO>(discount);
+        return Result<DiscountDTO>.Success(discountDTO);
     }
 }

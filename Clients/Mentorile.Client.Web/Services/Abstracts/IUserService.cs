@@ -4,4 +4,5 @@ namespace Mentorile.Client.Web.Services.Abstracts;
 public interface IUserService
 {
     Task<UserViewModel> GetUser();
+    Task<List<UserViewModel>> GetAllUsers();
 }

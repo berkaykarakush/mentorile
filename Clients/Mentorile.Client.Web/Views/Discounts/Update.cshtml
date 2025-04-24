@@ -1,0 +1,64 @@
+@{
+    ViewData["Title"] = "Update";
+}
+@model UpdateDiscountInput
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"></h5>
+                <form asp-controller="Courses" asp-action="Update" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id"/>
+
+                @* Select list kismi *@
+                    @* <div class="mb-3"> *@
+                        @* <label asp-for="CategoryId" for="exampleFormControlInput1" class="form-label"></label> *@
+                        @* <select class="form-select" asp-items="@ViewBag.categoryList"></select> *@
+                    @* </div> *@
+                    @* <span class="text-danger" asp-validation-for="CategoryId"></span> *@
+
+                 <div class="mb-3">
+                    <label asp-for="Code" for="Code" class="form-label"></label>
+                    <input asp-for="Code" class="form-control" id="Code">
+                    <span asp-validation-for="Code" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Rate" for="Rate" class="form-label"></label>
+                    <input asp-for="Rate" class="form-control" id="Rate">
+                    <span asp-validation-for="Rate" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="IsActive" for="IsActive" class="form-label"></label>
+                    <input asp-for="IsActive" class="form-control" id="IsActive">
+                    <span asp-validation-for="IsActive" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ExpirationDate" for="ExpirationDate" class="form-label"></label>
+                    <input asp-for="ExpirationDate" class="form-control" id="ExpirationDate">
+                    <span asp-validation-for="ExpirationDate" class="text-danger"></span>
+                </div>
+
+                @* @if (ViewBag.Topics != null)
+                    {
+                        var topics = ((SelectList)ViewBag.Topics).ToList();  // SelectList'i List<SelectListItem>'e dönüştür
+                        foreach (var topic in topics)
+                        {
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="TopicIds" value="@topic.Value"
+                                        @(Model.TopicIds.Contains(topic.Value) ? "checked" : "") />
+                                <label class="form-check-label">@topic.Text</label>
+                            </div>
+                        }
+                    } *@
+
+                <button type="submit" class="btn btn-primary">Kupon Kodunu Güncelle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

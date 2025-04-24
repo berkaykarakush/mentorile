@@ -6,6 +6,7 @@ using Mentorile.Shared.ControllerBases;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using static Duende.IdentityServer.IdentityServerConstants;
 
 namespace Mentorile.IdentityServer.Controllers;
@@ -77,4 +78,19 @@ public class UsersController : CustomControllerBase
             PhoneNumber = user.PhoneNumber
         });
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllUsers()
+    {
+        var users = await _userManager.Users
+        .Select(x => new {
+            x.Id,
+            x.Email,
+            x.UserName,
+            x.PhoneNumber
+        })
+        .ToListAsync();
+        return Ok(users);
+    }
+
 }

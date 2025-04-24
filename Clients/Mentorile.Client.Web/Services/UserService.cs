@@ -11,6 +11,9 @@ public class UserService : IUserService
         _httpClient = httpClient;
     }
 
+    [HttpGet("get-all-users")]
+    public async Task<List<UserViewModel>> GetAllUsers() => await _httpClient.GetFromJsonAsync<List<UserViewModel>>("/api/users/GetAllUsers");
+
     [HttpGet]
     public async Task<UserViewModel> GetUser() => await _httpClient.GetFromJsonAsync<UserViewModel>("/api/users/GetUser");
 }

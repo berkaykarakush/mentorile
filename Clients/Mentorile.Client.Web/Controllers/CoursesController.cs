@@ -30,12 +30,6 @@ public class CoursesController : Controller
 
     [HttpGet("create")]
     public async Task<IActionResult> Create() => View();
-    // select list olusturmak icin //
-    // {
-    //     var categories = await _courseService.GetAllCourseAsync();
-    //     ViewBag.categoryList = new SelectList(categories, "Id", "Name");
-    //     return View(categories);
-    // }
 
     [HttpPost("create")]
     public async Task<IActionResult> Create(CreateCourseInput createCourseInput)
