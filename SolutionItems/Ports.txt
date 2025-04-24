@@ -8,4 +8,4 @@ Services
     - Discount: 5013 /http 5113 /https
     - Order: 5014 /http 5114 /https
     - Payment: 5015 /http 5115 /https
-    - User: 5016 /http 5116 /https
+    - Study: 5016 /http 5116 /https
