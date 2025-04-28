@@ -11,6 +11,8 @@ services:
     image: postgres
   rabbitmq: 
     image: rabbitmq:4.1.0-management
+  studydb:
+    image: postgres
   course.api:
     image: course.api.image
     build:
@@ -56,9 +58,15 @@ services:
     build: 
       context: .
       dockerfile: Clients/Mentorile.Client.Web/Dockerfile
+  study.api:
+    image: study.api.image
+    build: 
+      context: .
+      dockerfile: Services/Study/Mentorile.Services.Study.API/Dockerfile
 volumes:
   coursedb_data:
   basketdb_data:
   discountdb_data:
   identitydb_data:
   orderdb_data:
+  studydb_data:

@@ -1,4 +1,8 @@
-using Mentorile.Services.Study.Infrastructure.Contexts;
+using Mentorile.Services.Study.Application.Interfaces;
+using Mentorile.Services.Study.Application.Services;
+using Mentorile.Services.Study.Domain.Services;
+using Mentorile.Services.Study.Infrastructure.Persistence;
+using Mentorile.Services.Study.Infrastructure.Repositories;
 using Mentorile.Shared.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -12,17 +16,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Order API", Version = "v1" });
+    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Study API", Version = "v1" });
 });
 
-builder.Services.AddDbContext<StudyDbContext>(options =>
+builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"), cfg => {
         cfg.MigrationsAssembly("Mentorile.Services.Study.Infrastructure");
     }));
 
-// builder.Services.AddMediatR(cfg => {
-//     cfg.RegisterServicesFromAssembly(typeof(Mentorile.Services.Order.Application.Handlers.CreateOrderCommandHandler).Assembly);
-// });
+builder.Services.AddMediatR(cfg => {
+    cfg.RegisterServicesFromAssembly(typeof(Mentorile.Services.Study.Application.CommandHandlers.CreateStudyCommandHandler).Assembly);
+});
 
 // Identity ve context
 builder.Services.AddHttpContextAccessor();
@@ -73,11 +77,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 builder.WebHost.UseUrls("http://+:80");
 
+// Dependency Injection
+builder.Services.AddScoped<IStudyAppService, StudyAppService>();
+builder.Services.AddScoped<IStudyService, StudyRepository>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 var app = builder.Build();
 
 // automatic migrate database
 using var scope = app.Services.CreateScope();
-var dbContext = scope.ServiceProvider.GetRequiredService<StudyDbContext>();
+var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 dbContext.Database.Migrate();
 
 

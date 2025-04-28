@@ -52,6 +52,17 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+  studydb:
+    container_name: studydb 
+    restart: always
+    ports:
+      - "5434:5432"
+    volumes:
+      - studydb_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=Password12
+      - POSTGRES_DB=studydb
   course.api:
     container_name: course.api
     restart: on-failure
@@ -167,3 +178,16 @@ services:
       - payment.api
       - order.api
       - gateway.api
+  study.api:
+    container_name: study.api
+    restart: on-failure
+    command: ["dotnet", "watch", "--project", "Services/Study/Mentorile.Services.Study.API/Mentorile.Services.Study.API.csproj", "run", "--no-launch-profile", "--urls", "http://0.0.0.0:5014"]
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Authority=http://identityserver.api
+      - RabbitMQUri=rabbitmq
+      - ConnectionStrings:DefaultConnection=User ID=admin;Password=Password12;Host=studydb;Port=5432;Database=studydb
+    ports:
+      - "5016:80"
+    depends_on:
+      - studydb

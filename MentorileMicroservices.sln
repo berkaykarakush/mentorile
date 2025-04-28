@@ -61,8 +61,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.Study.Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.Study.Domain", "Services\Study\Mentorile.Services.Study.Domain\Mentorile.Services.Study.Domain.csproj", "{DD68B2B6-EAF1-4503-89C7-F7158073C3F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.Study.Domain.Core", "Services\Study\Mentorile.Services.Study.Domain.Core\Mentorile.Services.Study.Domain.Core.csproj", "{B600DD90-B22B-46A7-800A-C0C1EE4214A5}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.Study.Infrastructure", "Services\Study\Mentorile.Services.Study.Infrastructure\Mentorile.Services.Study.Infrastructure.csproj", "{170FA1D6-246F-4258-BAB8-C5156FAEF540}"
 EndProject
 Global
@@ -142,10 +140,6 @@ Global
 		{DD68B2B6-EAF1-4503-89C7-F7158073C3F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD68B2B6-EAF1-4503-89C7-F7158073C3F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD68B2B6-EAF1-4503-89C7-F7158073C3F3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B600DD90-B22B-46A7-800A-C0C1EE4214A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B600DD90-B22B-46A7-800A-C0C1EE4214A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B600DD90-B22B-46A7-800A-C0C1EE4214A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B600DD90-B22B-46A7-800A-C0C1EE4214A5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{170FA1D6-246F-4258-BAB8-C5156FAEF540}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{170FA1D6-246F-4258-BAB8-C5156FAEF540}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{170FA1D6-246F-4258-BAB8-C5156FAEF540}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -176,7 +170,6 @@ Global
 		{97822EE6-6FC5-4CCA-A5D2-666C0D01F1F7} = {3F081514-B192-4E25-BDC5-8C852DC12BAD}
 		{ADCE30BE-49B4-4B65-929C-4A6C4DC8EB4C} = {3F081514-B192-4E25-BDC5-8C852DC12BAD}
 		{DD68B2B6-EAF1-4503-89C7-F7158073C3F3} = {3F081514-B192-4E25-BDC5-8C852DC12BAD}
-		{B600DD90-B22B-46A7-800A-C0C1EE4214A5} = {3F081514-B192-4E25-BDC5-8C852DC12BAD}
 		{170FA1D6-246F-4258-BAB8-C5156FAEF540} = {3F081514-B192-4E25-BDC5-8C852DC12BAD}
 	EndGlobalSection
 EndGlobal
