@@ -42,5 +42,9 @@ public static class ServicesExtension
         services.AddHttpClient<IOrderService, OrderService>((sp, opt) => {
             opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Order.Path}");
         }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+        services.AddHttpClient<IStudyService, StudyService>((sp, opt) => {
+            opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Study.Path}");
+        }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
     }   
 }

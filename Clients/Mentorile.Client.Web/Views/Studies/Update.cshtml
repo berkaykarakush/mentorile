@@ -1,0 +1,27 @@
+@{
+    ViewData["Title"] = "Update";
+}
+@model UpdateStudyInput
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"></h5>
+                <form asp-controller="Studies" asp-action="Update" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="UserId" value="@User.FindFirst("sub")?.Value" />
+                <input type="hidden" asp-for="Id"/>
+
+                 <div class="mb-3">
+                    <label asp-for="Name" for="Name" class="form-label"></label>
+                    <input asp-for="Name" class="form-control" id="Name">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Dersi Güncelle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

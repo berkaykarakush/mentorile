@@ -36,6 +36,9 @@
                                 @if (User.Identity.IsAuthenticated)
                                 {
                                     <li class="nav-item">
+                                    <a class="nav-link" asp-area="Admin" asp-controller="Home" asp-action="Index">Admin Paneli</a>
+                                    </li>
+                                    <li class="nav-item">
                                     <a class="nav-link" asp-controller="Baskets" asp-action="Index">Sepetim</a>
                                     </li>
                                     <li class="nav-item dropdown">
@@ -45,6 +48,7 @@
                                         <ul class="dropdown-menu">
                                             <li><a class="dropdown-item" asp-controller="Users" asp-action="Index">Profil</a></li>
                                             <li><a class="dropdown-item" asp-controller="Courses" asp-action="Index">Kurslarım</a></li>
+                                            <li><a class="dropdown-item" asp-controller="Studies" asp-action="Index">Derslerim</a></li>
                                             <li><a class="dropdown-item" asp-controller="Home" asp-action="Index">Konularım</a></li>
                                             <li><a class="dropdown-item" asp-controller="Home" asp-action="Index">Hafıza Kartlarım</a></li>
                                             <li><a class="dropdown-item" asp-controller="Home" asp-action="Index">Ders Programım</a></li>
