@@ -11,7 +11,7 @@
             <div class="card-body">
                 <h5 class="card-title">Üye Giriş</h5>
                 <div class="text-danger" asp-validation-summary="ModelOnly"></div>
-                <form asp-asp-controller="Auth" asp-action="SignIn" method="Post" >
+                <form asp-controller="Auth" asp-action="SignIn" method="Post" >
                     <div class="mb-3">
                         <label asp-for="Email" for="Email" class="form-label"></label>
                         <input type="email" asp-for="Email" class="form-control" id="Email" aria-describedby="emailHelp">

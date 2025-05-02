@@ -33,6 +33,23 @@ public class AuthController : Controller
         return RedirectToAction(nameof(Index), "Home");
     }
 
+
+    [HttpGet("register")]
+    public IActionResult Register() => View();
+
+    [HttpPost("register")]
+    public async Task<IActionResult> Register(RegisterInput registerInput)
+    {
+        if(!ModelState.IsValid) return View();
+
+        var response = await _identityService.Register(registerInput);
+        if(!response.IsSuccess){
+            response.ErrorDetails.ForEach(x => { ModelState.AddModelError(string.Empty, x); });
+            return View();
+        }
+        return RedirectToAction(nameof(Index), "Home");
+    }
+
     [HttpGet("error")]
     public IActionResult Error() => View();
 

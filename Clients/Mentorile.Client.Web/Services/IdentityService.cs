@@ -181,4 +181,31 @@ public class IdentityService : IIdentityService
         );
         return Result<bool>.Success(true);
     }
+
+    public async Task<Result<Guid>> Register(RegisterInput registerInput)
+    {
+        var response = await _httpClient.PostAsJsonAsync($"{_serviceApiSettings.IdentityBaseUri}/api/users/register", new
+        {
+            Name = registerInput.Name,
+            Surname = registerInput.Surname,
+            Email = registerInput.Email,
+            PhoneNumber = registerInput.PhoneNumber,
+            Password = registerInput.Password,
+            RePassword = registerInput.RePassword
+        });
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var errorContent = await response.Content.ReadAsStringAsync();
+            return Result<Guid>.Failure($"Registration failed: {errorContent}");
+        }
+
+        var result = await response.Content.ReadFromJsonAsync<Result<Guid>>();
+        if (result == null)
+        {
+            return Result<Guid>.Failure("Failed to deserialize registration response.");
+        }
+
+        return result;
+    }
 }
