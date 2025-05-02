@@ -48,6 +48,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     options.Authority = builder.Configuration["Authority"];
     options.Audience = builder.Configuration["Audience"];
     options.RequireHttpsMetadata = false;
+    options.Events = new JwtBearerEvents
+    {
+        OnAuthenticationFailed = context =>
+        {
+            Console.WriteLine($"Authentication failed: {context.Exception}");
+            return Task.CompletedTask;
+        }
+    };
 });
 
 // builder.Services.AddMassTransit(x => 

@@ -111,6 +111,22 @@
             "AuthenticationProviderKey":"GatewayAuthenticationScheme",
             "AllowedScopes":["study_fullpermission"]
         }
+        },
+        {
+        "DownstreamPathTemplate": "/api/{everything}",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+            {
+                "Host": "user.api",
+                "Port": 80
+            }
+        ],
+        "UpstreamPathTemplate": "/services/user/{everything}",
+        "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+        "AuthenticationOptions":{
+            "AuthenticationProviderKey":"GatewayAuthenticationScheme",
+            "AllowedScopes":["user_fullpermission"]
+        }
         }
     ],
     "GlobalConfiguration": {
