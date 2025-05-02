@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Identity;
 namespace Mentorile.IdentityServer.Models;
 
 // Add profile data for application users by adding properties to the ApplicationUser class
-public class ApplicationUser : IdentityUser
+public class ApplicationUser : IdentityUser<Guid>
 {
+    public string Name { get; set; }
+    public string Surname { get; set; }
 }

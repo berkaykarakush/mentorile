@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using Mentorile.IdentityServer;
+﻿using Mentorile.IdentityServer;
 using Mentorile.IdentityServer.Data;
 using Mentorile.IdentityServer.Models;
 using Microsoft.AspNetCore.Identity;
@@ -37,13 +36,14 @@ try
     {
         userManager.CreateAsync(new ApplicationUser
         {
+            Name  = "Admin",
+            Surname = "Mentorile.com",
             UserName = "admin",
             Email = "admin@mentorile.com",
             EmailConfirmed = true,
             PhoneNumber = "05554443322"
         }, "Password12*").Wait();
     }
-    
 
     app.Run();
 }
