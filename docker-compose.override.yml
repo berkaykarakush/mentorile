@@ -63,6 +63,17 @@ services:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=Password12
       - POSTGRES_DB=studydb
+  userdb:
+    container_name: userdb
+    restart: always
+    ports:
+      - "5435:5432"
+    volumes:
+      - userdb_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=Password12
+      - POSTGRES_DB=userdb
   course.api:
     container_name: course.api
     restart: on-failure
@@ -76,17 +87,20 @@ services:
       - "5010:80"
     depends_on:
       - coursedb
+      - rabbitmq
   identityserver.api:
     container_name: identityserver.api
     restart: on-failure
     command: ["dotnet", "watch", "--project", "IdentityServer/Mentorile.IdentityServer/Mentorile.IdentityServer.csproj", "run", "--no-launch-profile", "--urls", "http://0.0.0.0:5001"]
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - RabbitMQUri=rabbitmq
       - ConnectionStrings:DefaultConnection=User ID=admin;Password=Password12;Host=identitydb;Port=5432;Database=identitydb
     ports:
       - "5001:80"
     depends_on:
       - identitydb
+      - rabbitmq
   basket.api:
     container_name: basket.api
     restart: on-failure
@@ -101,6 +115,7 @@ services:
       - "5012:80"
     depends_on:
       - basketdb
+      - rabbitmq
   photostock.api:
     container_name: photostock.api
     restart: on-failure
@@ -191,3 +206,17 @@ services:
       - "5016:80"
     depends_on:
       - studydb
+  user.api:
+    container_name: user.api
+    restart: on-failure
+    command: ["dotnet", "watch", "--project", "Services/User/Mentorile.Services.User.API/Mentorile.Services.User.API.csproj", "run", "--no-launch-profile", "--urls", "http://0.0.0.0:5017"]
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Authority=http://identityserver.api
+      - RabbitMQUri=rabbitmq
+      - ConnectionStrings:DefaultConnection=User ID=admin;Password=Password12;Host=userdb;Port=5432;Database=userdb
+    ports:
+      - "5017:80"
+    depends_on:
+      - userdb
+  

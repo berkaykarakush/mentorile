@@ -63,6 +63,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.Study.Do
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.Study.Infrastructure", "Services\Study\Mentorile.Services.Study.Infrastructure\Mentorile.Services.Study.Infrastructure.csproj", "{170FA1D6-246F-4258-BAB8-C5156FAEF540}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "User", "User", "{8A173AE1-87DF-4428-903C-B91C75CFBD44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.User.Application", "Services\User\Mentorile.Services.User.Application\Mentorile.Services.User.Application.csproj", "{8A3FB436-9FBA-4B41-ADA9-5BD607ED055C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.User.Domain", "Services\User\Mentorile.Services.User.Domain\Mentorile.Services.User.Domain.csproj", "{7D8C820F-FF79-4334-A5E0-788449332A8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.User.Infrastructure", "Services\User\Mentorile.Services.User.Infrastructure\Mentorile.Services.User.Infrastructure.csproj", "{34C585EE-B9D0-4A66-8226-CC625FCEB635}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.User.API", "Services\User\Mentorile.Services.User.API\Mentorile.Services.User.API.csproj", "{117353FD-5100-4875-A8C7-A8DBCEA979CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -144,6 +154,22 @@ Global
 		{170FA1D6-246F-4258-BAB8-C5156FAEF540}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{170FA1D6-246F-4258-BAB8-C5156FAEF540}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{170FA1D6-246F-4258-BAB8-C5156FAEF540}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A3FB436-9FBA-4B41-ADA9-5BD607ED055C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A3FB436-9FBA-4B41-ADA9-5BD607ED055C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A3FB436-9FBA-4B41-ADA9-5BD607ED055C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A3FB436-9FBA-4B41-ADA9-5BD607ED055C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D8C820F-FF79-4334-A5E0-788449332A8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D8C820F-FF79-4334-A5E0-788449332A8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D8C820F-FF79-4334-A5E0-788449332A8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D8C820F-FF79-4334-A5E0-788449332A8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34C585EE-B9D0-4A66-8226-CC625FCEB635}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34C585EE-B9D0-4A66-8226-CC625FCEB635}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34C585EE-B9D0-4A66-8226-CC625FCEB635}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34C585EE-B9D0-4A66-8226-CC625FCEB635}.Release|Any CPU.Build.0 = Release|Any CPU
+		{117353FD-5100-4875-A8C7-A8DBCEA979CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{117353FD-5100-4875-A8C7-A8DBCEA979CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{117353FD-5100-4875-A8C7-A8DBCEA979CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{117353FD-5100-4875-A8C7-A8DBCEA979CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B0672021-4893-4FC5-A595-4AFA52DE8A36} = {C3CBC960-F897-459C-AD92-015D260C63F4}
@@ -171,5 +197,10 @@ Global
 		{ADCE30BE-49B4-4B65-929C-4A6C4DC8EB4C} = {3F081514-B192-4E25-BDC5-8C852DC12BAD}
 		{DD68B2B6-EAF1-4503-89C7-F7158073C3F3} = {3F081514-B192-4E25-BDC5-8C852DC12BAD}
 		{170FA1D6-246F-4258-BAB8-C5156FAEF540} = {3F081514-B192-4E25-BDC5-8C852DC12BAD}
+		{8A173AE1-87DF-4428-903C-B91C75CFBD44} = {C3CBC960-F897-459C-AD92-015D260C63F4}
+		{8A3FB436-9FBA-4B41-ADA9-5BD607ED055C} = {8A173AE1-87DF-4428-903C-B91C75CFBD44}
+		{7D8C820F-FF79-4334-A5E0-788449332A8C} = {8A173AE1-87DF-4428-903C-B91C75CFBD44}
+		{34C585EE-B9D0-4A66-8226-CC625FCEB635} = {8A173AE1-87DF-4428-903C-B91C75CFBD44}
+		{117353FD-5100-4875-A8C7-A8DBCEA979CC} = {8A173AE1-87DF-4428-903C-B91C75CFBD44}
 	EndGlobalSection
 EndGlobal
