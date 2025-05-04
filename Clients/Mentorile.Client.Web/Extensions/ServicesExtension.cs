@@ -30,11 +30,6 @@ public static class ServicesExtension
             opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Discount.Path}"); 
         }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
-        services.AddHttpClient<IUserService, UserService>((sp, opt) =>
-        {
-            opt.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUri);
-        }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
-
         services.AddHttpClient<IPaymentService, PaymentService>((sp, opt) => {
             opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Payment.Path}");
         }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
@@ -45,6 +40,10 @@ public static class ServicesExtension
 
         services.AddHttpClient<IStudyService, StudyService>((sp, opt) => {
             opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Study.Path}");
+        }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+        services.AddHttpClient<IUserService, UserService>((sp, opt) => {
+            opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.User.Path}");
         }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
     }   
 }

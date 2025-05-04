@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using MediatR;
 using Mentorile.Services.User.Application.Commands;
 using Mentorile.Services.User.Application.Queries;
@@ -47,16 +48,25 @@ public class UsersController : CustomControllerBase
         => CreateActionResultInstance(await _mediator.Send(query));
     
     [HttpGet("by-email")]
-    public async Task<IActionResult> GetByEmail(GetUserByEmailQuery query)
-        => CreateActionResultInstance(await _mediator.Send(query));
+    public async Task<IActionResult> GetByEmail([FromQuery] string email)
+    {
+        var query = new GetUserByEmailQuery() { Email = email };
+        return CreateActionResultInstance(await _mediator.Send(query));
+    }
 
     [HttpGet("by-id")]
-    public async Task<IActionResult> GetById(GetUserByIdQuery query)
-        => CreateActionResultInstance(await _mediator.Send(query));
+    public async Task<IActionResult> GetById([FromQuery]Guid userId)
+    {
+        var query =new GetUserByIdQuery() { UserId = userId };
+        return CreateActionResultInstance(await _mediator.Send(query));
+    }
 
     [HttpGet("by-phone-number")]
-    public async Task<IActionResult> GetByPhoneNumber(GetUserByPhoneNumberQuery query)
-        => CreateActionResultInstance(await _mediator.Send(query));
+    public async Task<IActionResult> GetByPhoneNumber([FromQuery] string phoneNumber)
+    {
+        var query = new GetUserByPhoneNumberQuery() { PhoneNumber = phoneNumber};
+        return CreateActionResultInstance(await _mediator.Send(query));
+    }
     
     [HttpGet("search")]
     public async Task<IActionResult> Search(SearchUsersQuery query)

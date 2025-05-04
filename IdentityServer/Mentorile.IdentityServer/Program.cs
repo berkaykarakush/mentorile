@@ -1,7 +1,5 @@
 ﻿using Mentorile.IdentityServer;
 using Mentorile.IdentityServer.Data;
-using Mentorile.IdentityServer.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -30,21 +28,7 @@ try
     var serviceProvider = scope.ServiceProvider;
     var applicationDbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
     applicationDbContext.Database.Migrate();
-
-    var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-    if(!userManager.Users.Any())
-    {
-        userManager.CreateAsync(new ApplicationUser
-        {
-            Name  = "Admin",
-            Surname = "Mentorile.com",
-            UserName = "admin",
-            Email = "admin@mentorile.com",
-            EmailConfirmed = true,
-            PhoneNumber = "05554443322"
-        }, "Password12*").Wait();
-    }
-
+    
     app.Run();
 }
 catch (Exception ex) when (ex is not HostAbortedException)

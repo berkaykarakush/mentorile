@@ -43,7 +43,7 @@ public class OrderService : IOrderService
         };
 
         var orderCreateInput = new OrderCreateInput(){
-            BuyerId = _sharedIdentityService.GetUserId,
+            BuyerId = _sharedIdentityService.GetUserId.ToString(),
             Address = addressCreateInput,
         };
 
@@ -93,7 +93,7 @@ public class OrderService : IOrderService
         };
 
         var orderCreateInput = new OrderCreateInput(){
-            BuyerId = _sharedIdentityService.GetUserId,
+            BuyerId = _sharedIdentityService.GetUserId.ToString(),
             Address = addressCreateInput,
         };
 

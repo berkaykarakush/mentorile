@@ -11,4 +11,5 @@ public interface IServiceApiSettings
     public ServiceApi Payment { get; set; }
     public ServiceApi Order { get; set; }
     public ServiceApi Study { get; set; }
+    public ServiceApi User { get; set; }
 }

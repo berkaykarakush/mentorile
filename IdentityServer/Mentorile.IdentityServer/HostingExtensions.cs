@@ -1,6 +1,7 @@
 using Duende.IdentityServer;
 using MassTransit;
 using MediatR;
+using Mentorile.IdentityServer.BackgroundServices;
 using Mentorile.IdentityServer.Data;
 using Mentorile.IdentityServer.Models;
 using Mentorile.IdentityServer.Services;
@@ -100,6 +101,7 @@ internal static class HostingExtensions
         builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
         builder.Services.AddScoped<IAuthService, AuthService>();
         builder.Services.AddScoped<IExecutor, Executor>();
+        builder.Services.AddHostedService<AdminSyncBackgroundService>();
 
         return builder.Build();
     }
