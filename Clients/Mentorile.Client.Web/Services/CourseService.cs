@@ -9,7 +9,7 @@ public class CourseService : ICourseService
     private readonly HttpClient _httpClient;
     private readonly IPhotoStockService _photoStockService;
     private readonly PhotoHelper _photoHelper;
-
+    private const string controllersName = "courses";
     public CourseService(HttpClient httpClient, IPhotoStockService photoStockService, PhotoHelper photoHelper)
     {
         _httpClient = httpClient;
@@ -24,47 +24,42 @@ public class CourseService : ICourseService
         {
             createCourseInput.PhotoUri = resultPhotoService.Data.PhotoUri;
         }
-        var response = await _httpClient.PostAsJsonAsync<CreateCourseInput>("courses", createCourseInput);
+        var response = await _httpClient.PostAsJsonAsync<CreateCourseInput>($"{controllersName}", createCourseInput);
         return response.IsSuccessStatusCode;
     }
 
     public async Task<bool> DeleteCourseAsync(string courseId)
     {
-        var response = await _httpClient.DeleteAsync($"courses/{courseId}");
+        var response = await _httpClient.DeleteAsync($"{controllersName}?id={courseId}");
         return response.IsSuccessStatusCode;
     }
 
-    public async Task<List<CourseViewModel>> GetAllCourseAsync()
+    public async Task<PagedResult<CourseViewModel>> GetAllCourseAsync()
     {
         // http://localhost:5000/services/course/courses
-        var response = await _httpClient.GetAsync("courses");
-        if(!response.IsSuccessStatusCode) return null;
+        var response = await _httpClient.GetAsync($"{controllersName}");
+        if(!response.IsSuccessStatusCode) return new PagedResult<CourseViewModel>();
 
-        var result = await response.Content.ReadFromJsonAsync<Result<List<CourseViewModel>>>();
-        result.Data.ForEach(x => {
-            x.PhotoUri = _photoHelper.GetPhotoStockUri(x.PhotoUri);
-        });
-
+        var result = await response.Content.ReadFromJsonAsync<Result<PagedResult<CourseViewModel>>>();
+        if(result != null) result.Data.Data.ForEach(x => { x.PhotoUri = _photoHelper.GetPhotoStockUri(x.PhotoUri); });
         return result.Data;
     }
 
-    public async Task<List<CourseViewModel>> GetAllCourseByUserIdAsync(string userId)
+    public async Task<PagedResult<CourseViewModel>> GetAllCourseByUserIdAsync(string userId)
     {
         // [controller]/GetAllByUserId/{userId}
-        var response = await _httpClient.GetAsync($"courses/GetAllByUserId/{userId}");
-        if(!response.IsSuccessStatusCode) return null;
+        var response = await _httpClient.GetAsync($"{controllersName}/user/{userId}?pageSize=10&pageNumber=1");
+        if(!response.IsSuccessStatusCode) return new PagedResult<CourseViewModel>();
 
-        var result = await response.Content.ReadFromJsonAsync<Result<List<CourseViewModel>>>();
-        result.Data.ForEach(x => {
-            x.PhotoUri = _photoHelper.GetPhotoStockUri(x.PhotoUri);
-        });
+        var result = await response.Content.ReadFromJsonAsync<Result<PagedResult<CourseViewModel>>>();
+        if(result != null) result.Data.Data.ForEach(x => { x.PhotoUri = _photoHelper.GetPhotoStockUri(x.PhotoUri); });
         return result.Data;
     }
 
     public async Task<CourseViewModel> GetCourseByIdAsync(string courseId)
     {
-        var response = await _httpClient.GetAsync($"courses/{courseId}");
-        if(!response.IsSuccessStatusCode) return null;
+        var response = await _httpClient.GetAsync($"{controllersName}/{courseId}");
+        if(!response.IsSuccessStatusCode) return new CourseViewModel();
 
         var result = await response.Content.ReadFromJsonAsync<Result<CourseViewModel>>();
         return result.Data;
@@ -78,7 +73,7 @@ public class CourseService : ICourseService
             await _photoStockService.DeletePhotoAsync(updateCourseInput.PhotoUri);
             updateCourseInput.PhotoUri = resultPhotoService.Data.PhotoUri;
         }
-        var response = await _httpClient.PutAsJsonAsync<UpdateCourseInput>("courses", updateCourseInput);
+        var response = await _httpClient.PutAsJsonAsync<UpdateCourseInput>($"{controllersName}", updateCourseInput);
         return response.IsSuccessStatusCode;
     }
 }

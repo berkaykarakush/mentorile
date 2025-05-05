@@ -1,5 +1,6 @@
 using Mentorile.Client.Web.Services.Abstracts;
 using Mentorile.Client.Web.ViewModels.Courses;
+using Mentorile.Shared.Common;
 using Mentorile.Shared.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,10 +23,44 @@ public class CoursesController : Controller
         _sharedIdentityService = sharedIdentityService;
     }
     [HttpGet("index")]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(PagingParams pagingParams)
     {
         var courses = await _courseService.GetAllCourseByUserIdAsync(_sharedIdentityService.GetUserId);
-        return View(courses ?? new List<CourseViewModel>());
+        ViewBag.Paging = pagingParams;
+        if(courses == null){
+            var emptyResult = new PagedResult<CourseViewModel>(
+                new List<CourseViewModel>(),
+                0,
+                pagingParams,
+                200,
+                "No data available"
+            );
+            return View(emptyResult);
+        }
+
+        var totalCount = courses.TotalCount;
+        var statusCode = 200;
+        var message = "Success";
+
+        var listCourses = new List<CourseViewModel>();
+        foreach (var item in courses.Data)
+            listCourses.Add(new CourseViewModel(){
+                Id = item.Id,
+                Name = item.Name,
+                UserId = item.UserId,
+                PhotoUri = item.PhotoUri,
+                CreatedTime = item.CreatedTime,
+                TopicIds = item.TopicIds
+            });
+
+        var pagedResult = new PagedResult<CourseViewModel>(
+            listCourses,
+            totalCount,
+            pagingParams,
+            statusCode,
+            message
+        );        
+        return View(pagedResult);
     }
 
     [HttpGet("create")]
@@ -54,7 +89,7 @@ public class CoursesController : Controller
             //mesaj göster
             RedirectToAction(nameof(Index));
         }
-        ViewBag.Topics = new SelectList(topicIds, "Id", "Name", course.Id);
+        ViewBag.Topics = new SelectList(topicIds.Data, "Id", "Name", course.Id);
         UpdateCourseInput updateCourseInput = new()
         {
             Id = course.Id,
@@ -73,7 +108,7 @@ public class CoursesController : Controller
         {
             // ViewBag.Topics tekrar set edilmeli
             var allTopics = await _courseService.GetAllCourseAsync(); 
-            ViewBag.Topics = allTopics.Select(t => new SelectListItem
+            ViewBag.Topics = allTopics.Data.Select(t => new SelectListItem
             {
                 Value = t.Id,
                 Text = t.Name

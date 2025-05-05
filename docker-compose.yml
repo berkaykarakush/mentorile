@@ -1,6 +1,6 @@
 services:
   coursedb:
-    image: mongo:latest
+    image: postgres
   basketdb:
     image: redis:latest
   discountdb:
@@ -19,7 +19,7 @@ services:
     image: course.api.image
     build:
       context: .
-      dockerfile: Services/Course/Mentorile.Services.Course/Dockerfile
+      dockerfile: Services/Course/Mentorile.Services.Course.API/Dockerfile
   identityserver.api:
     image: identityserver.api.image
     build:

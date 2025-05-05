@@ -1,14 +1,10 @@
 services:
-  coursedb:
-    container_name: coursedb
+  rabbitmq: 
+    container_name: rabbitmq
     restart: always
     ports:
-      - "27017:27017"
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=Password12
-    volumes:
-      - coursedb_data:/data/db
+      - "5672:5672"
+      - "15672:15672"
   basketdb:
     container_name: basketdb
     restart: always
@@ -46,12 +42,6 @@ services:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=Password12
       - POSTGRES_DB=orderdb
-  rabbitmq: 
-    container_name: rabbitmq
-    restart: always
-    ports:
-      - "5672:5672"
-      - "15672:15672"
   studydb:
     container_name: studydb 
     restart: always
@@ -74,15 +64,26 @@ services:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=Password12
       - POSTGRES_DB=userdb
+  coursedb:
+    container_name: coursedb
+    restart: always
+    ports:
+      - "5436:5432"
+    volumes:
+      - coursedb_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=Password12
+      - POSTGRES_DB=coursedb
   course.api:
     container_name: course.api
     restart: on-failure
-    command: ["dotnet", "watch", "--project", "Services/Course/Mentorile.Services.Course/Mentorile.Services.Course.csproj", "run", "--no-launch-profile", "--urls", "http://0.0.0.0:5010"]
+    command: ["dotnet", "watch", "--project", "Services/Course/Mentorile.Services.Course.API/Mentorile.Services.Course.API.csproj", "run", "--no-launch-profile", "--urls", "http://0.0.0.0:5010"]
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - RabbitMQUri=rabbitmq
       - Authority=http://identityserver.api
-      - DatabaseSettings:ConnectionString=mongodb://admin:Password12@coursedb:27017
+      - ConnectionStrings:DefaultConnection=User ID=admin;Password=Password12;Host=coursedb;Port=5432;Database=coursedb
     ports:
       - "5010:80"
     depends_on:
@@ -183,7 +184,6 @@ services:
       - ServiceApiSettings:GatewayBaseUri=http://gateway.api
     ports:
       - "5002:80"
-      - "9229:9229"      # Debugger port
     depends_on:
       - course.api
       - identityserver.api
