@@ -10,15 +10,11 @@
 </head>
 <body>
     <header>
-        
-        @* <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3 justify-content-center"> *@
-            @* <div class="container-fluid"> *@
         <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container"> <!-- container-xxl / container-xl de olabilir -->
+            <div class="container">
                 <div class="row w-100">
                     <div class="col d-flex align-items-center justify-content-between">
                         <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Mentorile</a>
-
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
@@ -36,7 +32,7 @@
                                 @if (User.Identity.IsAuthenticated)
                                 {
                                     <li class="nav-item">
-                                    <a class="nav-link" asp-controller="Baskets" asp-action="Index">Sepetim</a>
+                                        <a class="nav-link" asp-controller="Baskets" asp-action="Index">Sepetim</a>
                                     </li>
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
@@ -50,7 +46,7 @@
                                             <li><a class="dropdown-item" asp-controller="Home" asp-action="Index">Hafıza Kartlarım</a></li>
                                             <li><a class="dropdown-item" asp-controller="Home" asp-action="Index">Ders Programım</a></li>
                                             <li><a class="dropdown-item" asp-controller="Home" asp-action="Index">Yol Haritam</a></li>
-                                            <li><a class="dropdown-item" asp-controller="Orders" asp-action="CheckoutHistory">Satin Alma Geçmişim</a></li>
+                                            <li><a class="dropdown-item" asp-controller="Orders" asp-action="CheckoutHistory">Satın Alma Geçmişim</a></li>
                                             <li><a class="dropdown-item" asp-controller="Discounts" asp-action="Index">Kupon Kodlarım</a></li>
                                             <li><a class="dropdown-item" asp-controller="Auth" asp-action="Logout">Çıkış</a></li>
                                         </ul>
@@ -62,7 +58,6 @@
                                         <a class="nav-link" asp-controller="Auth" asp-action="SignIn">Giriş Yap</a>
                                     </li>
                                 }
-                                
                             </ul>
                         </div>
                     </div>
@@ -70,17 +65,36 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 bg-light">
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action active" aria-current="true">Kullanıcılar</a>
+                    <a href="#" class="list-group-item list-group-item-action">Kurslar</a>
+                    <a href="#" class="list-group-item list-group-item-action">Dersler</a>
+                    <a href="#" class="list-group-item list-group-item-action">Satın Alımlar</a>
+                    <a href="#" class="list-group-item list-group-item-action">İndirim Kuponları</a>
+                    <a class="list-group-item list-group-item-action disabled" aria-disabled="true">Hafıza Kartları</a>
+                </div>
+            </div>
+
+            <!-- Main content -->
+            <div class="col-md-9 col-lg-10 p-3">
+                <main role="main">
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted mt-3">
         <div class="container">
             &copy; 2025 - Mentorile.com - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
