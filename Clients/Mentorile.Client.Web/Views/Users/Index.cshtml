@@ -23,12 +23,12 @@
     </div>
     <div class="col-md 3">
         <div class="list-group"></div>
-            <a asp-controller="Courses" asp-action="Index" class="list-group-item list-group-item-action active" aria-current="true">
+            <a asp-area="User" asp-controller="Courses" asp-action="Index" class="list-group-item list-group-item-action active" aria-current="true">
                 Kurslarım
             </a>
-            <a href="#" class="list-group-item list-group-item-action">A second link item</a>
-            <a href="#" class="list-group-item list-group-item-action">A third link item</a>
-            <a href="#" class="list-group-item list-group-item-action">A fourth link item</a>
+            <a asp-area="User" class="list-group-item list-group-item-action">A second link item</a>
+            <a asp-area="User" class="list-group-item list-group-item-action">A third link item</a>
+            <a asp-area="User" class="list-group-item list-group-item-action">A fourth link item</a>
             <a class="list-group-item list-group-item-action disabled" aria-disabled="true">A disabled link item</a>
         </div>
     </div>

@@ -4,7 +4,7 @@ services:
   basketdb:
     image: redis:latest
   discountdb:
-    image: mongo:latest
+    image: postgres
   identitydb:
     image: postgres
   orderdb:
@@ -39,7 +39,7 @@ services:
     image: discount.api.image
     build:
       context: .
-      dockerfile: Services/Discount/Mentorile.Services.Discount/Dockerfile
+      dockerfile: Services/Discount/Mentorile.Services.Discount.API/Dockerfile
   payment.api:
     image: payment.api.image
     build: 

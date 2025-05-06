@@ -2,7 +2,49 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container my-5">
+    <!-- Hero Section -->
+    <div class="p-5 mb-4 bg-light rounded-3">
+        <div class="container-fluid py-5 text-center">
+            <h1 class="display-5 fw-bold">Mentorile'ye Hoş Geldiniz</h1>
+            <p class="fs-4">Öğrenmeye açılan kapınız! Uzman mentorler eşliğinde gelişin, büyüyün.</p>
+             <a asp-controller="Auth" asp-action="SignIn" class="btn btn-primary btn-lg">Hemen Başla</a>
+
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="row text-center">
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Uzman Mentorler</h5>
+                    <p class="card-text">Alanında uzman kişilerden bire bir destek alarak hedeflerine ulaş.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Esnek Program</h5>
+                    <p class="card-text">Kendi zamanına uygun şekilde dersleri seç, öğrenme hızını sen belirle.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Topluluk Desteği</h5>
+                    <p class="card-text">Seninle aynı yolda ilerleyen insanlarla bağlantı kur, ilham al.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="text-center my-5">
+        <h2>Sen de aramıza katıl!</h2>
+        <p class="lead">Bugün kaydol, öğrenmeye hemen başla.</p>
+         <a asp-controller="Auth" asp-action="Register" class="btn btn-success btn-lg">Ücretsiz Kayıt Ol</a>
+    </div>
 </div>

@@ -4,8 +4,9 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Mentorile.Client.Web.Controllers;
-[Route("auth")]
+namespace Mentorile.Client.WebControllers;
+
+[Route("[controller]")]
 public class AuthController : Controller
 {
     private readonly IIdentityService _identityService;
@@ -15,10 +16,10 @@ public class AuthController : Controller
         _identityService = identityService;
     }
 
-    [HttpGet("signin")]
+    [HttpGet("SignIn")]
     public IActionResult SignIn() => View();
 
-    [HttpPost("signin")]
+    [HttpPost("SignIn")]
     public async Task<IActionResult> SignIn(SignInInput signInInput)
     {
         if(!ModelState.IsValid) return View();

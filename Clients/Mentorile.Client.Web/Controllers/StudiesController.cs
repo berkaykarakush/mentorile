@@ -4,8 +4,9 @@ using Mentorile.Shared.Common;
 using Mentorile.Shared.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Mentorile.Client.Web.Controllers;
+namespace Mentorile.Client.WebControllers;
 [Route("[controller]")]
+
 public class StudiesController : Controller
 {
     private readonly ILogger<StudiesController> _logger;

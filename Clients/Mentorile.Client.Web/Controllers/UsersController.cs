@@ -3,10 +3,10 @@ using Mentorile.Shared.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Mentorile.Client.Web.Controllers;
-
+namespace Mentorile.Client.WebControllers;
 [Authorize]
 [Route("[controller]")]
+
 public class UsersController : Controller
 {
     private readonly IUserService _userService;

@@ -36,7 +36,7 @@
             <div class="container">
                 <div class="row w-100">
                     <div class="col d-flex align-items-center justify-content-between">
-                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Mentorile</a>
+                        <a class="navbar-brand" asp-controller="Home" asp-action="Index">Mentorile</a>
 
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,9 +48,6 @@
                                 <li class="nav-item">
                                     <a class="nav-link" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-controller="Home" asp-action="Privacy">Gizlilik</a>
-                                </li>
 
                                 @if (User.Identity.IsAuthenticated)
                                 {
@@ -58,33 +55,33 @@
                                         <a class="nav-link" asp-area="Admin" asp-controller="Home" asp-action="Index">Admin Paneli</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" asp-controller="Baskets" asp-action="Index">Sepetim</a>
+                                        <a class="nav-link"  asp-controller="Baskets" asp-action="Index">Sepetim</a>
                                     </li>
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                                             @User.Identity.Name
                                         </a>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" asp-controller="Users" asp-action="Index">Profil</a></li>
-                                            <li><a class="dropdown-item" asp-controller="Courses" asp-action="Index">Kurslarım</a></li>
-                                            <li><a class="dropdown-item" asp-controller="Studies" asp-action="Index">Derslerim</a></li>
-                                            <li><a class="dropdown-item" asp-controller="Home" asp-action="Index">Konularım</a></li>
-                                            <li><a class="dropdown-item" asp-controller="Home" asp-action="Index">Hafıza Kartlarım</a></li>
-                                            <li><a class="dropdown-item" asp-controller="Home" asp-action="Index">Ders Programım</a></li>
-                                            <li><a class="dropdown-item" asp-controller="Home" asp-action="Index">Yol Haritam</a></li>
-                                            <li><a class="dropdown-item" asp-controller="Orders" asp-action="CheckoutHistory">Satin Alma Geçmişim</a></li>
-                                            <li><a class="dropdown-item" asp-controller="Discounts" asp-action="Index">Kupon Kodlarım</a></li>
-                                            <li><a class="dropdown-item" asp-controller="Auth" asp-action="Logout">Çıkış</a></li>
+                                            <li><a class="dropdown-item"  asp-controller="Users" asp-action="Index">Profil</a></li>
+                                            <li><a class="dropdown-item"  asp-controller="Courses" asp-action="Index">Kurslarım</a></li>
+                                            <li><a class="dropdown-item"  asp-controller="Studies" asp-action="Index">Derslerim</a></li>
+                                            <li><a class="dropdown-item"  asp-controller="Home" asp-action="Index">Konularım</a></li>
+                                            <li><a class="dropdown-item"  asp-controller="Home" asp-action="Index">Hafıza Kartlarım</a></li>
+                                            <li><a class="dropdown-item"  asp-controller="Home" asp-action="Index">Ders Programım</a></li>
+                                            <li><a class="dropdown-item"  asp-controller="Home" asp-action="Index">Yol Haritam</a></li>
+                                            <li><a class="dropdown-item"  asp-controller="Orders" asp-action="CheckoutHistory">Satin Alma Geçmişim</a></li>
+                                            <li><a class="dropdown-item"  asp-controller="Discounts" asp-action="Index">Kupon Kodlarım</a></li>
+                                            <li><a class="dropdown-item"  asp-controller="Auth" asp-action="Logout">Çıkış</a></li>
                                         </ul>
                                     </li>
                                 }
                                 else
                                 {
                                     <li class="nav-item">
-                                        <a class="nav-link" asp-controller="Auth" asp-action="SignIn">Giriş Yap</a>
+                                        <a class="nav-link"  asp-controller="Auth" asp-action="SignIn">Giriş Yap</a>
                                     </li> 
                                     <li class="nav-item">
-                                        <a class="nav-link" asp-controller="Auth" asp-action="Register">Kayıt Ol</a>
+                                        <a class="nav-link"   asp-controller="Auth" asp-action="Register">Kayıt Ol</a>
                                     </li>
                                 }
                             </ul>
@@ -114,13 +111,13 @@
                 <div class="col-md-2">
                     <h5>Kurumsal</h5>
                     <ul class="list-unstyled">
-                        <li><a class="text-muted" asp-controller="Home" asp-action="Index">Biz Kimiz?</a></li>
-                        <li><a class="text-muted" asp-controller="Home" asp-action="Index">Blog</a></li>
-                        <li><a class="text-muted" asp-controller="Home" asp-action="Index">SSS</a></li>
-                        <li><a class="text-muted" asp-controller="Home" asp-action="Index">İletişim</a></li>
-                        <li><a class="text-muted" asp-controller="Home" asp-action="Index">KVKK</a></li>
-                        <li><a class="text-muted" asp-controller="Home" asp-action="Index">Gizlilik Sözleşmesi</a></li>
-                        <li><a class="text-muted" asp-controller="Home" asp-action="Index">Kullanım Koşulları</a></li>
+                        <li><a class="text-muted"  asp-controller="Home" asp-action="Index">Biz Kimiz?</a></li>
+                        <li><a class="text-muted"  asp-controller="Home" asp-action="Index">Blog</a></li>
+                        <li><a class="text-muted"  asp-controller="Home" asp-action="Index">SSS</a></li>
+                        <li><a class="text-muted"  asp-controller="Home" asp-action="Index">İletişim</a></li>
+                        <li><a class="text-muted"  asp-controller="Home" asp-action="Index">KVKK</a></li>
+                        <li><a class="text-muted"  asp-controller="Home" asp-action="Index">Gizlilik Sözleşmesi</a></li>
+                        <li><a class="text-muted"  asp-controller="Home" asp-action="Index">Kullanım Koşulları</a></li>
                     </ul>
                 </div>
 
@@ -157,7 +154,7 @@
             </div>
 
             <div class="text-center mt-3">
-                &copy; 2025 - Mentorile.com - <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-muted">Privacy</a>
+                &copy; 2025 - Mentorile.com
             </div>
         </div>
     </footer>

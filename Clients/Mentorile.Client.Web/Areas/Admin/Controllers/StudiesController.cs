@@ -1,10 +1,13 @@
 using Mentorile.Client.Web.Services.Abstracts;
 using Mentorile.Client.Web.ViewModels.Studies;
 using Mentorile.Shared.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mentorile.Client.Web.Areas.Admin.Controllers;
-[Route("Admin")]
+
+[Authorize]
+[Area("Admin")]
 [Route("Admin/[controller]")]
 public class StudiesController : Controller
 {

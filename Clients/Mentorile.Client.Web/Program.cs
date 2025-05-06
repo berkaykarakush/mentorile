@@ -55,6 +55,16 @@ builder.WebHost.UseUrls("http://+:80");
 
 var app = builder.Build();
 
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path == "/")
+    {
+        context.Response.Redirect("/Home/Index");
+        return;
+    }
+    await next();
+});
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment()){
     app.UseExceptionHandler("/Home/Error");

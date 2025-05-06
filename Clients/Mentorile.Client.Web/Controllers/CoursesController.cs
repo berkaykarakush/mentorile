@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Mentorile.Client.Web.Controllers;
-
+namespace Mentorile.Client.WebControllers;
 [Authorize]
 [Route("[controller]")]
+
 public class CoursesController : Controller
 {
     private readonly ICourseService _courseService;

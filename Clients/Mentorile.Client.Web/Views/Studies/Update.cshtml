@@ -8,7 +8,7 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title"></h5>
-                <form asp-controller="Studies" asp-action="Update" method="post" enctype="multipart/form-data">
+                <form asp-area="User" asp-controller="Studies" asp-action="Update" method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="UserId" value="@User.FindFirst("sub")?.Value" />
                 <input type="hidden" asp-for="Id"/>

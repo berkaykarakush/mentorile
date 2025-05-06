@@ -11,7 +11,7 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Derslerim</h5>
-                <a asp-controller="Studies" asp-action="Create" class="btn btn-primary mb-3">Ders Oluştur</a>
+                <a asp-area="User" asp-controller="Studies" asp-action="Create" class="btn btn-primary mb-3">Ders Oluştur</a>
                 
                 @if(Model.Data.Any())
                 {
@@ -30,8 +30,8 @@
                                     <td>@item.Name</td>
                                     <td>@item.CreatedDate</td>
                                     <td>
-                                        <a asp-controller="Studies" asp-action="Update" asp-route-studyId="@item.Id" class="btn btn-success btn-sm">Güncelle</a>
-                                        <a asp-controller="Studies" asp-action="Delete" asp-route-studyId="@item.Id" class="btn btn-danger btn-sm">Sil</a>
+                                        <a asp-area="User" asp-controller="Studies" asp-action="Update" asp-route-studyId="@item.Id" class="btn btn-success btn-sm">Güncelle</a>
+                                        <a asp-area="User" asp-controller="Studies" asp-action="Delete" asp-route-studyId="@item.Id" class="btn btn-danger btn-sm">Sil</a>
                                     </td>
                                 </tr>
                             }

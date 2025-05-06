@@ -2,7 +2,7 @@ using Mentorile.Client.Web.Services.Abstracts;
 using Mentorile.Client.Web.ViewModels.Baskets;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Mentorile.Client.Web.Controllers;
+namespace Mentorile.Client.WebControllers;
 
 [Route("[controller]")]
 public class BasketsController : Controller

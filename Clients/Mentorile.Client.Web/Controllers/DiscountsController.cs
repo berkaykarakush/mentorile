@@ -1,12 +1,13 @@
 using Mentorile.Client.Web.Services.Abstracts;
 using Mentorile.Client.Web.ViewModels.Discounts;
+using Mentorile.Shared.Common;
 using Mentorile.Shared.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Mentorile.Client.Web.Controllers;
-
+namespace Mentorile.Client.WebControllers;
 [Route("[controller]")]
+
 public class DiscountsController : Controller
 {
     private readonly ILogger<DiscountsController> _logger;
@@ -22,17 +23,95 @@ public class DiscountsController : Controller
     }
 
     [HttpGet("all-discount-codes")]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(PagingParams pagingParams)
     {
         var discounts = await _discountService.GetAllDiscountAsync();
-        return View(discounts);
+        ViewBag.Paging = pagingParams;
+        if(discounts == null)
+        {
+            var emptyResult = new PagedResult<DiscountViewModel>
+            (
+                new List<DiscountViewModel>(),
+                0,
+                pagingParams,
+                200,
+                "No data available"
+            );
+            return View(emptyResult);
+        }
+
+        var totalCount = discounts.TotalCount;
+        var statusCode = 200;
+        var message = "Success";
+        var listDiscounts = new List<DiscountViewModel>();
+        foreach (var item in discounts.Data)
+            listDiscounts.Add(new DiscountViewModel()
+            {
+                Id = item.Id,
+                UserIds = item.UserIds,
+                Rate = item.Rate,
+                Code = item.Code,
+                IsActive = item.IsActive,
+                ExpirationDate = item.ExpirationDate,
+                CreateAt = item.CreateAt,
+            });
+
+        var pagedResult = new PagedResult<DiscountViewModel>
+        ( 
+            listDiscounts,
+            totalCount,
+            pagingParams,
+            statusCode,
+            message
+        );
+
+        return View(pagedResult);
     }
 
     [HttpGet("user-discount-codes")]
-    public async Task<IActionResult> UserDiscountCodes()
+    public async Task<IActionResult> UserDiscountCodes(PagingParams pagingParams)
     {
-        var discountCodes = await _discountService.GetAllDiscountByUserIdAsync(_sharedIdentityService.GetUserId);
-        return View(discountCodes);
+        var discounts = await _discountService.GetAllDiscountByUserIdAsync(_sharedIdentityService.GetUserId);
+        ViewBag.Paging = pagingParams;
+        if(discounts == null)
+        {
+            var emptyResult = new PagedResult<DiscountViewModel>
+            (
+                new List<DiscountViewModel>(),
+                0,
+                pagingParams,
+                200,
+                "No data available"
+            );
+            return View(emptyResult);
+        }
+
+        var totalCount = discounts.TotalCount;
+        var statusCode = 200;
+        var message = "Success";
+        var listDiscounts = new List<DiscountViewModel>();
+        foreach (var item in discounts.Data)
+            listDiscounts.Add(new DiscountViewModel()
+            {
+                Id = item.Id,
+                UserIds = item.UserIds,
+                Rate = item.Rate,
+                Code = item.Code,
+                IsActive = item.IsActive,
+                ExpirationDate = item.ExpirationDate,
+                CreateAt = item.CreateAt,
+            });
+
+        var pagedResult = new PagedResult<DiscountViewModel>
+        ( 
+            listDiscounts,
+            totalCount,
+            pagingParams,
+            statusCode,
+            message
+        );
+
+        return View(pagedResult);
     } 
 
     [HttpGet("create")]

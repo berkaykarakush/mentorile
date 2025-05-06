@@ -22,40 +22,19 @@
 
                         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                             <ul class="navbar-nav">
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-controller="Home" asp-action="Privacy">Gizlilik</a>
+                                <li class="nav-item"></li>
+                                    <a class="nav-link" asp-area="Admin" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
                                 </li>
 
                                 @if (User.Identity.IsAuthenticated)
                                 {
-                                    <li class="nav-item">
-                                        <a class="nav-link" asp-controller="Baskets" asp-action="Index">Sepetim</a>
-                                    </li>
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                                             @User.Identity.Name
                                         </a>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" asp-controller="Users" asp-action="Index">Profil</a></li>
-                                            <li><a class="dropdown-item" asp-controller="Courses" asp-action="Index">Kurslarım</a></li>
-                                            <li><a class="dropdown-item" asp-area="Admin" asp-controller="Studies" asp-action="Index">Admin Derslerim</a></li>
-                                            <li><a class="dropdown-item" asp-controller="Home" asp-action="Index">Konularım</a></li>
-                                            <li><a class="dropdown-item" asp-controller="Home" asp-action="Index">Hafıza Kartlarım</a></li>
-                                            <li><a class="dropdown-item" asp-controller="Home" asp-action="Index">Ders Programım</a></li>
-                                            <li><a class="dropdown-item" asp-controller="Home" asp-action="Index">Yol Haritam</a></li>
-                                            <li><a class="dropdown-item" asp-controller="Orders" asp-action="CheckoutHistory">Satın Alma Geçmişim</a></li>
-                                            <li><a class="dropdown-item" asp-controller="Discounts" asp-action="Index">Kupon Kodlarım</a></li>
                                             <li><a class="dropdown-item" asp-controller="Auth" asp-action="Logout">Çıkış</a></li>
                                         </ul>
-                                    </li>
-                                }
-                                else
-                                {
-                                    <li class="nav-item">
-                                        <a class="nav-link" asp-controller="Auth" asp-action="SignIn">Giriş Yap</a>
                                     </li>
                                 }
                             </ul>
@@ -75,7 +54,7 @@
                     <a href="#" class="list-group-item list-group-item-action">Kurslar</a>
                     <a href="#" class="list-group-item list-group-item-action">Dersler</a>
                     <a href="#" class="list-group-item list-group-item-action">Satın Alımlar</a>
-                    <a href="#" class="list-group-item list-group-item-action">İndirim Kuponları</a>
+                    <a asp-area="Admin" asp-controller="Discounts" asp-action="Index" class="list-group-item list-group-item-action">İndirim Kuponları</a>
                     <a class="list-group-item list-group-item-action disabled" aria-disabled="true">Hafıza Kartları</a>
                 </div>
             </div>
@@ -91,7 +70,7 @@
 
     <footer class="border-top footer text-muted mt-3">
         <div class="container">
-            &copy; 2025 - Mentorile.com - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2025 - Mentorile.com - <a  asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
 

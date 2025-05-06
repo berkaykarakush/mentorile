@@ -1,6 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mentorile.Client.Web.Areas.Admin.Controllers;
+
+[Authorize]
 [Area("Admin")]
 [Route("Admin/[controller]")]
 public class HomeController : Controller
