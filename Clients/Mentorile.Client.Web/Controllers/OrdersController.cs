@@ -31,20 +31,26 @@ public class OrdersController : Controller
     {
         // 1. yol senkron iletisim
         // var orderStatus = await _orderService.CreateOrderAsync(checkoutInfoInput);
+        
         // 2. yol asenkron iletisim
         var orderSuspend = await _orderService.SuspenOrderAsnyc(checkoutInfoInput);
-        if(!orderSuspend.IsSuccessful){
-            var basket = await _basketService.GetBasketAsync();
-            ViewBag.basket = basket;
-            ViewBag.error = orderSuspend.Error;
-            return View();
+
+        if (orderSuspend.IsSuccessful)
+        {
+            // Başarılı sipariş → Success ekranına yönlendir
+            return RedirectToAction(nameof(SuccessfulCheckout), new { orderId = orderSuspend.OrderId });
         }
 
-        // 1. yol senkron iletisim
-        // return RedirectToAction(nameof(SuccessfulCheckout), new {orderId = orderStatus.OrderId});
-        // TODO: Burada daha sonra OrderId degerini donecegiz
-        return RedirectToAction(nameof(SuccessfulCheckout), new {orderId = Guid.NewGuid().ToString()});
+        // Sipariş başarısız → Sepet bilgilerini ve hata mesajını tekrar göster
+        var basket = await _basketService.GetBasketAsync();
+        ViewBag.basket = basket;
+        ViewBag.error = orderSuspend.Error;
+
+        return View(checkoutInfoInput);
     }
+
+
+
 
     [HttpGet("successful-checkout")]
     public IActionResult SuccessfulCheckout(string orderId)

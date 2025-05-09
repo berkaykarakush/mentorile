@@ -32,7 +32,7 @@ public class OrderService : IOrderService
             TotalPrice = basket.FinalAmount
         };
         var responsePayment = await _paymentService.ReceivePaymentAsync(paymentInfoInput);
-        if(!responsePayment) return new OrderCreatedViewModel() { Error = "Ödeme alınamadı.", IsSuccessful = false};
+        if(responsePayment == null) return new OrderCreatedViewModel() { Error = "Ödeme alınamadı.", IsSuccessful = false};
 
         var addressCreateInput = new AddressCreateInput(){
             Province = checkoutInfoInput.Province,
@@ -110,10 +110,17 @@ public class OrderService : IOrderService
             TotalPrice = basket.FinalAmount,
             Order = orderCreateInput
         };
-        var responsePayment = await _paymentService.ReceivePaymentAsync(paymentInfoInput);
-        if(!responsePayment) return new OrderSuspendViewModel() { Error = "Ödeme alınamadı.", IsSuccessful = false};
-        
-        await _basketService.ClearBasketAsync();
-        return new OrderSuspendViewModel() { Error = "Ödeme başarılı.", IsSuccessful = true};
+
+        var responsePayment = await _paymentService.CreatePaymentAsync(new CreatePaymentInput { UserId = paymentInfoInput.Order.BuyerId, TotalPrice = paymentInfoInput.TotalPrice});
+        if(responsePayment != null)
+        {
+            paymentInfoInput.Order.PaymentId = responsePayment;
+            var receivePayment = await _paymentService.ReceivePaymentAsync(paymentInfoInput);
+            if(receivePayment == null) return new OrderSuspendViewModel() { Error = "Ödeme alınamadı.", IsSuccessful = false};
+            
+            await _basketService.ClearBasketAsync();
+            return new OrderSuspendViewModel() { OrderId = paymentInfoInput.Order.OrderId , Error = "Ödeme başarılı.", IsSuccessful = true};
+        }
+        return new OrderSuspendViewModel() { Error = "Ödeme alınamadı.", IsSuccessful = true};
     }
 }

@@ -36,6 +36,7 @@
                                     <td>
                                         <a asp-controller="Courses" asp-action="Update" asp-route-Id="@item.Id" class="btn btn-success btn-sm">Güncelle</a>
                                         <a asp-controller="Courses" asp-action="Delete" asp-route-Id="@item.Id" class="btn btn-danger btn-sm">Sil</a>
+                                        <a asp-controller="Baskets" asp-action="AddBasketItem" asp-route-itemid="@item.Id" class="btn btn-primary btn-sm">Sepete Ekle</a>
                                     </td>
                                 </tr>
                             }

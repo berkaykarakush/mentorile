@@ -1,58 +1,69 @@
-using System.Net.Sockets;
-using System.Threading.Tasks;
-using MassTransit;
-using Mentorile.Services.Payment.API.DTOs;
+using Mentorile.Services.Payment.Application.Commands;
+using Mentorile.Services.Payment.Application.Queries;
+using Mentorile.Services.Payment.Domain.Enums;
 using Mentorile.Shared.Common;
 using Mentorile.Shared.ControllerBases;
-using Mentorile.Shared.Messages.Commands;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mentorile.Services.Payment.API.Controllers;
+
 [ApiController]
 [Route("api/[controller]")]
 public class PaymentsController : CustomControllerBase
 {
-    private readonly ISendEndpointProvider _sendEndpointProvider;
+   private readonly MediatR.IMediator _mediator;
 
-    public PaymentsController(ISendEndpointProvider sendEndpointProvider)
+    public PaymentsController(MediatR.IMediator mediator)
     {
-        _sendEndpointProvider = sendEndpointProvider;
+        _mediator = mediator;
     }
 
     [HttpPost]
-    public async Task<IActionResult> ReceivePayment(PaymentDTO paymentDTO)
+    public async Task<IActionResult> Create([FromBody] CreatePaymentCommand command)
+        => CreateActionResultInstance(await _mediator.Send(command));
+
+    [HttpPost("receive")]
+    public async Task<IActionResult> Receive([FromBody] ReceivePaymentCommand command)
+        // => CreateActionResultInstance(await _mediator.Send(command));
     {
-        var sendEndpoint = await _sendEndpointProvider.GetSendEndpoint(new Uri("queue:create-order-service"));
-
-        var createOrderMessageCommand = new CreateOrderMessageCommand();
-        createOrderMessageCommand.BuyerId = paymentDTO.Order.BuyerId;
-        
-        createOrderMessageCommand.Address = new Address()
+            if (!ModelState.IsValid)
         {
-            Province = paymentDTO.Order.Address.Province,
-            District = paymentDTO.Order.Address.District,
-            Street = paymentDTO.Order.Address.Street,
-            ZipCode = paymentDTO.Order.Address.ZipCode,
-            Line = paymentDTO.Order.Address.Line
-        };
+            var errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage);
+            System.Console.WriteLine(errors);
+            return BadRequest(errors);
+        }
 
-        // createOrderMessageCommand.OrderItems.ForEach(x => {
-        //     createOrderMessageCommand.OrderItems.Add(new OrderItem(){
-        //         ItemId = x.ItemId,
-        //         ItemName = x.ItemName,
-        //         PictureUri = x.PictureUri,
-        //         Price = x.Price
-        //     });
-        // });
-        createOrderMessageCommand.OrderItems = paymentDTO.Order.OrderItems.Select(x => new OrderItem{
-            ItemId = x.ItemId,
-            ItemName = x.ItemName,
-            PictureUri = x.PictureUri,
-            Price = x.Price
-        }).ToList();
-
-        await sendEndpoint.Send<CreateOrderMessageCommand>(createOrderMessageCommand);
-        // TODO: Burada daha sonra OrderId degerini donecegiz
-        return CreateActionResultInstance(Result<string>.Success("Odeme basarili"));
+        var result = await _mediator.Send(command);
+        return result.IsSuccess ? Ok(result) : BadRequest(result);
     }
+
+    [HttpPut]
+    public async Task<IActionResult> Update([FromBody] UpdatePaymentCommand command)
+        => CreateActionResultInstance(await _mediator.Send(command));
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll([FromQuery] PagingParams pagingParams)
+        => CreateActionResultInstance(await _mediator.Send(new GetAllPaymentsQuery {PagingParams = pagingParams}));
+    
+    [HttpGet("by-user/{userId}")]
+    public async Task<IActionResult> GetAllByOrderId(string userId, [FromQuery] PagingParams pagingParams)
+        => CreateActionResultInstance(await _mediator.Send(new GetAllPaymentByUserIdQuery { UserId = userId, PagingParams = pagingParams}));
+
+    [HttpGet("by-status/{paymentStatus}")]
+    public async Task<IActionResult> GetAllByOrderId(PaymentStatus paymentStatus, [FromQuery] PagingParams pagingParams)
+        => CreateActionResultInstance(await _mediator.Send(new GetAllPaymentsByStatusQuery { PaymentStatus = paymentStatus, PagingParams = pagingParams}));
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(string id)
+        => CreateActionResultInstance(await _mediator.Send(new GetPaymentByIdQuery { Id = id }));
+
+    [HttpGet("by-order/{orderId}")]
+    public async Task<IActionResult> GetByOrderId(string orderId)
+        => CreateActionResultInstance(await _mediator.Send(new GetPaymentByOrderIdQuery { OrderId = orderId}));
+
+    [HttpGet("by-transaction/{transactionId}")]
+    public async Task<IActionResult> GetByTransactionId(string transactionId)
+        => CreateActionResultInstance(await _mediator.Send(new GetPaymentByTransactionIdQuery { TransactionId = transactionId}));
+
+    
 }

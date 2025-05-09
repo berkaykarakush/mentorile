@@ -76,6 +76,17 @@ services:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=Password12
       - POSTGRES_DB=discountdb
+  paymentdb:
+    container_name: paymentdb
+    restart: always
+    ports:
+      - "5438:5432"
+    volumes:
+      - paymentdb_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=Password12
+      - POSTGRES_DB=paymentdb
   course.api:
     container_name: course.api
     restart: on-failure
@@ -151,8 +162,11 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - Authority=http://identityserver.api
       - RabbitMQUri=rabbitmq
+      - ConnectionStrings:DefaultConnection=User ID=admin;Password=Password12;Host=paymentdb;Port=5432;Database=paymentdb
     ports:
       - "5015:80"
+    depends_on:
+      - paymentdb
   order.api:
     container_name: order.api
     restart: on-failure

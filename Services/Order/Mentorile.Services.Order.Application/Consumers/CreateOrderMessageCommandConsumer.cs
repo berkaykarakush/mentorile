@@ -22,7 +22,7 @@ public class CreateOrderMessageCommandConsumer : IConsumer<CreateOrderMessageCom
             context.Message.Address.ZipCode
         );
 
-        var order = new Domain.OrderAggreagate.Order(context.Message.BuyerId, newAddress);
+        var order = new Domain.OrderAggreagate.Order(context.Message.OrderId, context.Message.BuyerId, newAddress);
         context.Message.OrderItems.ForEach(x => {
             order.AddOrderItem(x.ItemId, x.ItemName, x.Price, x.PictureUri);
         });

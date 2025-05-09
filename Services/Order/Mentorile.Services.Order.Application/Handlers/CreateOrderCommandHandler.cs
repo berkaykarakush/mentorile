@@ -18,7 +18,7 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Res
     public async Task<Result<CreatedOrderDTO>> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
         var newAddress = new Address(request.Address.Province, request.Address.District, request.Address.Street, request.Address.Line, request.Address.ZipCode);
-        Domain.OrderAggreagate.Order newOrder = new Domain.OrderAggreagate.Order(request.BuyerId, newAddress);
+        Domain.OrderAggreagate.Order newOrder = new Domain.OrderAggreagate.Order(Guid.NewGuid().ToString(), request.BuyerId, newAddress);
 
         request.OrderItems.ForEach(x =>{
             newOrder.AddOrderItem(x.ItemId, x.ItemName, x.Price, x.PictureUri);

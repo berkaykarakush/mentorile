@@ -85,6 +85,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.Discount
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.Discount.Infrastructure", "Services\Discount\Mentorile.Services.Discount.Infrastructure\Mentorile.Services.Discount.Infrastructure.csproj", "{941ECAAF-5D66-4844-8FB6-400BC56CDEF2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.Payment.Application", "Services\Payment\Mentorile.Services.Payment.Application\Mentorile.Services.Payment.Application.csproj", "{B1767227-892E-4C65-B1F2-3315851794F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.Payment.Domain", "Services\Payment\Mentorile.Services.Payment.Domain\Mentorile.Services.Payment.Domain.csproj", "{40425A22-2229-49A1-AA7C-A2C2A7DD6F3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.Payment.Infrastructure", "Services\Payment\Mentorile.Services.Payment.Infrastructure\Mentorile.Services.Payment.Infrastructure.csproj", "{C168766B-FD91-46AF-A9B8-48FA2BDFB644}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -206,6 +212,22 @@ Global
 		{941ECAAF-5D66-4844-8FB6-400BC56CDEF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{941ECAAF-5D66-4844-8FB6-400BC56CDEF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{941ECAAF-5D66-4844-8FB6-400BC56CDEF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1767227-892E-4C65-B1F2-3315851794F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1767227-892E-4C65-B1F2-3315851794F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1767227-892E-4C65-B1F2-3315851794F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1767227-892E-4C65-B1F2-3315851794F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40425A22-2229-49A1-AA7C-A2C2A7DD6F3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40425A22-2229-49A1-AA7C-A2C2A7DD6F3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40425A22-2229-49A1-AA7C-A2C2A7DD6F3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40425A22-2229-49A1-AA7C-A2C2A7DD6F3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56AD67BE-4344-4C6C-B2BA-D23BB79A2906}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56AD67BE-4344-4C6C-B2BA-D23BB79A2906}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56AD67BE-4344-4C6C-B2BA-D23BB79A2906}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56AD67BE-4344-4C6C-B2BA-D23BB79A2906}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C168766B-FD91-46AF-A9B8-48FA2BDFB644}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C168766B-FD91-46AF-A9B8-48FA2BDFB644}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C168766B-FD91-46AF-A9B8-48FA2BDFB644}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C168766B-FD91-46AF-A9B8-48FA2BDFB644}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B0672021-4893-4FC5-A595-4AFA52DE8A36} = {C3CBC960-F897-459C-AD92-015D260C63F4}
@@ -221,8 +243,6 @@ Global
 		{DB315C75-58E2-4D0F-B7A1-D12599EFE200} = {1782FEBF-8D45-47B2-993C-3EB254E812F4}
 		{468D891A-AC82-4650-AB86-5B8B8D63A754} = {1782FEBF-8D45-47B2-993C-3EB254E812F4}
 		{2521426E-1984-42A9-A0F2-A75F6795EBE4} = {1782FEBF-8D45-47B2-993C-3EB254E812F4}
-		{0FB1AE73-FD7F-43D3-9E76-CCF3ABD34898} = {C3CBC960-F897-459C-AD92-015D260C63F4}
-		{869A1659-8D92-4B69-8379-7BCA25C0FD8B} = {0FB1AE73-FD7F-43D3-9E76-CCF3ABD34898}
 		{D8C3D579-99BE-4C60-BBB7-5697E2F3A05E} = {2266F9EA-CBDA-4C11-8F7F-A4BD706FAFE6}
 		{984ADE34-B781-4953-AE21-A3A218EAEC2E} = {A9A5D21F-BB59-4EB4-9699-5F55D821B963}
 		{3F081514-B192-4E25-BDC5-8C852DC12BAD} = {C3CBC960-F897-459C-AD92-015D260C63F4}

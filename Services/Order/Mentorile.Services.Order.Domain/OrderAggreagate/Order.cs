@@ -1,13 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Mentorile.Services.Order.Domain.Core;
 
 namespace Mentorile.Services.Order.Domain.OrderAggreagate
 {
     public class Order : Entity, IAggregateRoot
     {
-        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public string Id { get; set; }
         public DateTime CreatedDate { get; private set; }
         public Address Address { get; private set; }
         public string BuyerId { get; private set; }
@@ -21,10 +18,11 @@ namespace Mentorile.Services.Order.Domain.OrderAggreagate
         }
 
         // Parametreli constructor (Domain logic için)
-        public Order(string buyerId, Address address)
+        public Order(string orderId, string buyerId, Address address)
         {
             _orderItems = new List<OrderItem>();
             CreatedDate = DateTime.UtcNow;
+            Id = orderId;
             BuyerId = buyerId;  // Doğru parametre ataması
             Address = address;  // Doğru parametre ataması
         }

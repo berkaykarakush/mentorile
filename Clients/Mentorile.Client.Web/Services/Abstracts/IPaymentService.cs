@@ -3,5 +3,6 @@ using Mentorile.Client.Web.ViewModels.Payments;
 namespace Mentorile.Client.Web.Services.Abstracts;
 public interface IPaymentService
 {
-    Task<bool> ReceivePaymentAsync(PaymentInfoInput paymentInfoInput);    
+    Task<string> CreatePaymentAsync(CreatePaymentInput createPaymentInput);
+    Task<string> ReceivePaymentAsync(PaymentInfoInput paymentInfoInput);    
 }

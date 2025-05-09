@@ -2,6 +2,7 @@ namespace Mentorile.Shared.Messages.Commands;
 public class CreateOrderMessageCommand
 {
     public string BuyerId { get; set; }
+    public string OrderId { get; set; } = Guid.NewGuid().ToString();
     public List<OrderItem> OrderItems { get; set; } = new();
     public Address Address { get; set; } = new();
 }

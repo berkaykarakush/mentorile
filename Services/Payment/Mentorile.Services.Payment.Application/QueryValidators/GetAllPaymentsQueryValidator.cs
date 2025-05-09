@@ -1,0 +1,15 @@
+using FluentValidation;
+using Mentorile.Services.Payment.Application.Queries;
+
+namespace Mentorile.Services.Payment.Application.QueryValidators;
+public class GetAllPaymentsQueryValidator : AbstractValidator<GetAllPaymentsQuery>
+{
+    public GetAllPaymentsQueryValidator()
+    {
+        RuleFor(x => x.PagingParams.PageNumber)
+            .GreaterThan(0).WithMessage("Page number must be greather than 0.");
+        
+        RuleFor(x => x.PagingParams.PageSize)
+            .InclusiveBetween(1, 100).WithMessage("Page size must be between 1 and 100.");
+    }
+}

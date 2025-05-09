@@ -2,8 +2,6 @@ using AutoMapper;
 using MediatR;
 using Mentorile.Services.Course.Application.DTOs;
 using Mentorile.Services.Course.Application.Queries;
-using Mentorile.Services.Course.Domain.Entities;
-using Mentorile.Services.Course.Domain.Exceptions;
 using Mentorile.Services.Course.Domain.Interfaces;
 using Mentorile.Shared.Common;
 
@@ -24,9 +22,7 @@ public class GetCourseByIdQueryHandler : IRequestHandler<GetCourseByIdQuery, Res
         var course = await _courseRepository.GetByIdAsync(request.Id);
         if(course == null) return Result<CourseDTO>.Failure("Course not found.");
 
-        var dto = _mapper.Map<CourseDTO>(course);
-        if(dto == null) return Result<CourseDTO>.Failure("Mapping failed.");
-
+        var dto = _mapper.Map<CourseDTO>(course.Data);
         return Result<CourseDTO>.Success(dto);
     }
 }

@@ -1,27 +1,51 @@
 using MassTransit;
+using MediatR;
+using Mentorile.Services.Payment.Domain.Interfaces;
+using Mentorile.Services.Payment.Infrastrucutre.Persistence;
+using Mentorile.Services.Payment.Infrastrucutre.Repository;
+using Mentorile.Shared.Behaviors;
 using Mentorile.Shared.Services;
+using Mentorile.Shared.Services.Abstracts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.JsonWebTokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c => 
-{
-    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Payment API", Version = "v1" });
+builder.Services.AddSwaggerGen(c => {
+    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Payment API", Version = "v1.0.0" });
 });
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"), cfg => {
+        cfg.MigrationsAssembly("Mentorile.Services.Payment.Infrastructure");
+}));
+
+// Add MediatR
+builder.Services.AddMediatR(cfg => { 
+    cfg.RegisterServicesFromAssembly(typeof(Mentorile.Services.Payment.Application.CommandHandlers.CreatePaymentCommandHandler).Assembly); 
+});
+// Add LoggingBehavior
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 
 // Identity ve context
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<ISharedIdentityService, SharedIdentityService>();
 
+// Dependency Injection
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+builder.Services.AddScoped<IExecutor, Executor>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 // Authorization
 var requireAuthorizePolicy = new AuthorizationPolicyBuilder()
     .RequireAuthenticatedUser()
     .Build();
+
 builder.Services.AddControllers(opt => 
 {
     opt.Filters.Add(new AuthorizeFilter(requireAuthorizePolicy));
@@ -44,25 +68,25 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     };
 });
 
-// Automapper
-builder.Services.AddAutoMapper(typeof(Program));
-
-builder.Services.AddMassTransit(x => 
-{
-    // default port 5672
-    x.UsingRabbitMq((contex, configuration) => 
+builder.Services.AddMassTransit(x => {
+    x.UsingRabbitMq((context, cfg) =>
     {
-        configuration.Host(builder.Configuration["RabbitMQUri"], "/", host => 
+        cfg.Host(builder.Configuration["RabbitMQUri"], "/", h =>
         {
-            // default settings
-            host.Username("guest");
-            host.Password("guest");
+            h.Username("guest");
+            h.Password("guest");
         });
     });
 });
+
 builder.WebHost.UseUrls("http://+:80");
 
 var app = builder.Build();
+
+// automatic migrate database
+using var scope = app.Services.CreateScope();
+var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+dbContext.Database.Migrate();
 
 // Middlewares
 if (app.Environment.IsDevelopment())

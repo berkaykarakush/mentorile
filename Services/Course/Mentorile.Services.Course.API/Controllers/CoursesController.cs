@@ -18,13 +18,13 @@ public class CoursesController : CustomControllerBase
         _mediator = mediator;
     }
 
-    // [HttpGet]
-    // public async Task<IActionResult> GetAll(GetAllCoursesQuery query)
-    //     => CreateActionResultInstance(await _mediator.Send(query));
+    [HttpGet]
+    public async Task<IActionResult> GetAll(GetAllCoursesQuery query)
+        => CreateActionResultInstance(await _mediator.Send(query));
 
-    // [HttpGet("by-id")]
-    // public async Task<IActionResult> GetById(string id)
-    //     => CreateActionResultInstance(await _mediator.Send(new GetCourseByIdQuery{ Id = id}));
+    [HttpGet("{courseId}")]
+    public async Task<IActionResult> GetById(string courseId)
+        => CreateActionResultInstance(await _mediator.Send(new GetCourseByIdQuery{ Id = courseId}));
     
     [HttpGet("user/{userId}")]
     public async Task<IActionResult> GetByUserId(string userId)
