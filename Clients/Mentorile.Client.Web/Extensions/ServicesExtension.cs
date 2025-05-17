@@ -20,7 +20,7 @@ public static class ServicesExtension
 
         services.AddHttpClient<IPhotoStockService, PhotoStockService>(opt => {
             opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.PhotoStock.Path}"); 
-        }).AddHttpMessageHandler<ClientCredentialsTokenHandler>();
+        }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
         services.AddHttpClient<IBasketService, BasketService>(opt => {
             opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Basket.Path}"); 

@@ -87,6 +87,17 @@ services:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=Password12
       - POSTGRES_DB=paymentdb
+  photodb:
+    container_name: photodb
+    restart: always
+    ports:
+      - "5439:5432"
+    volumes:
+      - photodb_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=Password12
+      - POSTGRES_DB=photodb
   course.api:
     container_name: course.api
     restart: on-failure
@@ -132,16 +143,15 @@ services:
   photostock.api:
     container_name: photostock.api
     restart: on-failure
-    command: ["dotnet", "watch", "--project", "Services/PhotoStock/Mentorile.Services.PhotoStock/Mentorile.Services.PhotoStock.csproj", "run", "--no-launch-profile", "--urls", "http://0.0.0.0:5011"]
+    command: ["dotnet", "watch", "--project", "Services/PhotoStock/Mentorile.Services.PhotoStock/Mentorile.Services.PhotoStock.API.csproj", "run", "--no-launch-profile", "--urls", "http://0.0.0.0:5011"]
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - Authority=http://identityserver.api
+      - ConnectionStrings:DefaultConnection=User ID=admin;Password=Password12;Host=photodb;Port=5432;Database=photodb
     ports:
       - "5011:80"
-    volumes:
-      - type: bind
-        source: /home/karakus/photos
-        target: /app/wwwroot/photos
+    depends_on:
+      - photodb
   discount.api:
     container_name: discount.api
     restart: on-failure

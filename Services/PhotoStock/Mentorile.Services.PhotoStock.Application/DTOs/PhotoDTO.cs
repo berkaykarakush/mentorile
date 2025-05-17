@@ -1,5 +1,5 @@
-namespace Mentorile.Client.Web.ViewModels.PhotoStocks;
-public class PhotoViewModel
+namespace Mentorile.Services.PhotoStock.Application.DTOs;
+public class PhotoDTO
 {
     public string Id { get; set; } 
     public string? UserId { get; set; }

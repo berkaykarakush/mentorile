@@ -12,7 +12,7 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="UserId" value="@User.FindFirst("sub")?.Value" />
                 <input type="hidden" asp-for="Id"/>
-                <input type="hidden" asp-for="PhotoUri"/>
+                <input type="hidden" asp-for="PublicUri"/>
                 @* Select list kismi *@
                     @* <div class="mb-3"> *@
                         @* <label asp-for="CategoryId" for="exampleFormControlInput1" class="form-label"></label> *@

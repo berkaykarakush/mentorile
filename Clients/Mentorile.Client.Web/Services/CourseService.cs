@@ -19,10 +19,10 @@ public class CourseService : ICourseService
 
     public async Task<bool> CreateCourseAsync(CreateCourseInput createCourseInput)
     {
-        var resultPhotoService = await _photoStockService.UploadPhotoAsync(createCourseInput.PhotoFormFile);
+        var resultPhotoService = await _photoStockService.UploadPhotoAsync(createCourseInput.PhotoFormFile, true);
         if(resultPhotoService != null)
         {
-            createCourseInput.PhotoUri = resultPhotoService.Data.PhotoUri;
+            createCourseInput.PhotoUri = resultPhotoService.Data.PublicUri;
         }
         var response = await _httpClient.PostAsJsonAsync<CreateCourseInput>($"{controllersName}", createCourseInput);
         return response.IsSuccessStatusCode;
@@ -70,8 +70,8 @@ public class CourseService : ICourseService
         var resultPhotoService = await _photoStockService.UploadPhotoAsync(updateCourseInput.PhotoFormFile);
         if(resultPhotoService != null)
         {
-            await _photoStockService.DeletePhotoAsync(updateCourseInput.PhotoUri);
-            updateCourseInput.PhotoUri = resultPhotoService.Data.PhotoUri;
+            await _photoStockService.DeletePhotoAsync(updateCourseInput.PublicUri);
+            updateCourseInput.PublicUri = resultPhotoService.Data.PublicUri;
         }
         var response = await _httpClient.PutAsJsonAsync<UpdateCourseInput>($"{controllersName}", updateCourseInput);
         return response.IsSuccessStatusCode;

@@ -62,7 +62,6 @@ public static class Config
                     "gateway_fullpermission",
                     "course_fullpermission",
                     "topic_fullpermission",
-                    "photo_stock_fullpermission",
                     IdentityServerConstants.LocalApi.ScopeName
                 }
             },
@@ -75,6 +74,7 @@ public static class Config
                 AllowOfflineAccess = true,
                 AllowedScopes = {
                     "gateway_fullpermission",
+                    "photo_stock_fullpermission",
                     "basket_fullpermission",
                     "discount_fullpermission",
                     "order_fullpermission",

@@ -95,7 +95,7 @@ public class CoursesController : Controller
             Id = course.Id,
             Name = course.Name,
             UserId = course.UserId,
-            PhotoUri = course.PhotoUri,
+            PublicUri = course.PhotoUri,
             TopicIds = course.TopicIds
         };
         return View(updateCourseInput);

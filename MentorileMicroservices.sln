@@ -91,6 +91,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.Payment.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.Payment.Infrastructure", "Services\Payment\Mentorile.Services.Payment.Infrastructure\Mentorile.Services.Payment.Infrastructure.csproj", "{C168766B-FD91-46AF-A9B8-48FA2BDFB644}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.PhotoStock.API", "Services\PhotoStock\Mentorile.Services.PhotoStock.API\Mentorile.Services.PhotoStock.API.csproj", "{D0949A1C-5A8A-4684-A0C5-48EC5A153377}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.PhotoStock.Application", "Services\PhotoStock\Mentorile.Services.PhotoStock.Application\Mentorile.Services.PhotoStock.Application.csproj", "{65A78D73-8DC4-48F6-8BD5-F8648E17B214}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.PhotoStock.Domain", "Services\PhotoStock\Mentorile.Services.PhotoStock.Domain\Mentorile.Services.PhotoStock.Domain.csproj", "{AD846B3C-0F8C-47F4-ABF6-D8D7135B8A73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.PhotoStock.Infrastructure", "Services\PhotoStock\Mentorile.Services.PhotoStock.Infrastructure\Mentorile.Services.PhotoStock.Infrastructure.csproj", "{EF840176-8C38-4419-BE01-4253FC6FC407}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.PhotoStock.Abstractions", "Services\PhotoStock\Mentorile.Services.PhotoStock.Abstractions\Mentorile.Services.PhotoStock.Abstractions.csproj", "{1B6345AD-BB54-447A-BA20-6B48E1D76308}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -228,6 +238,26 @@ Global
 		{C168766B-FD91-46AF-A9B8-48FA2BDFB644}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C168766B-FD91-46AF-A9B8-48FA2BDFB644}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C168766B-FD91-46AF-A9B8-48FA2BDFB644}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0949A1C-5A8A-4684-A0C5-48EC5A153377}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0949A1C-5A8A-4684-A0C5-48EC5A153377}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0949A1C-5A8A-4684-A0C5-48EC5A153377}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0949A1C-5A8A-4684-A0C5-48EC5A153377}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65A78D73-8DC4-48F6-8BD5-F8648E17B214}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65A78D73-8DC4-48F6-8BD5-F8648E17B214}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65A78D73-8DC4-48F6-8BD5-F8648E17B214}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65A78D73-8DC4-48F6-8BD5-F8648E17B214}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD846B3C-0F8C-47F4-ABF6-D8D7135B8A73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD846B3C-0F8C-47F4-ABF6-D8D7135B8A73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD846B3C-0F8C-47F4-ABF6-D8D7135B8A73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD846B3C-0F8C-47F4-ABF6-D8D7135B8A73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF840176-8C38-4419-BE01-4253FC6FC407}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF840176-8C38-4419-BE01-4253FC6FC407}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF840176-8C38-4419-BE01-4253FC6FC407}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF840176-8C38-4419-BE01-4253FC6FC407}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B6345AD-BB54-447A-BA20-6B48E1D76308}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B6345AD-BB54-447A-BA20-6B48E1D76308}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B6345AD-BB54-447A-BA20-6B48E1D76308}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B6345AD-BB54-447A-BA20-6B48E1D76308}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B0672021-4893-4FC5-A595-4AFA52DE8A36} = {C3CBC960-F897-459C-AD92-015D260C63F4}
@@ -264,5 +294,10 @@ Global
 		{3F615C9D-0608-4BD9-9918-D904A28FDD95} = {AAAE1899-FD68-4AE4-96C2-45C4206B1F82}
 		{3EDD7B6A-A578-468B-840C-0DB1C1097D34} = {AAAE1899-FD68-4AE4-96C2-45C4206B1F82}
 		{941ECAAF-5D66-4844-8FB6-400BC56CDEF2} = {AAAE1899-FD68-4AE4-96C2-45C4206B1F82}
+		{D0949A1C-5A8A-4684-A0C5-48EC5A153377} = {E1123D34-0F84-42FA-B373-C668807A17A3}
+		{65A78D73-8DC4-48F6-8BD5-F8648E17B214} = {E1123D34-0F84-42FA-B373-C668807A17A3}
+		{AD846B3C-0F8C-47F4-ABF6-D8D7135B8A73} = {E1123D34-0F84-42FA-B373-C668807A17A3}
+		{EF840176-8C38-4419-BE01-4253FC6FC407} = {E1123D34-0F84-42FA-B373-C668807A17A3}
+		{1B6345AD-BB54-447A-BA20-6B48E1D76308} = {E1123D34-0F84-42FA-B373-C668807A17A3}
 	EndGlobalSection
 EndGlobal

@@ -12,7 +12,7 @@ public class UpdateCourseInput
     public string UserId { get; set; }
 
     [Display(Name = "Resim Url")]
-    public string? PhotoUri { get; set; }
+    public string? PublicUri { get; set; }
 
     [Display(Name = "Resim")]
     public IFormFile? PhotoFormFile { get; set; }

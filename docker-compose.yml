@@ -17,6 +17,8 @@ services:
     image: postgres
   paymentdb:
     image: postgres
+  photodb:
+    image: postgres
   course.api:
     image: course.api.image
     build:
@@ -36,7 +38,7 @@ services:
     image: photostock.api.image
     build:
       context: .
-      dockerfile: Services/PhotoStock/Mentorile.Services.PhotoStock/Dockerfile
+      dockerfile: Services/PhotoStock/Mentorile.Services.PhotoStock.API/Dockerfile
   discount.api:
     image: discount.api.image
     build:
@@ -81,3 +83,4 @@ volumes:
   studydb_data:
   userdb_data:
   paymentdb_data:
+  photodb_data:
