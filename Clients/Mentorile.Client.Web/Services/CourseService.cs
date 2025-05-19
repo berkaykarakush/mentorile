@@ -41,7 +41,7 @@ public class CourseService : ICourseService
         if(!response.IsSuccessStatusCode) return new PagedResult<CourseViewModel>();
 
         var result = await response.Content.ReadFromJsonAsync<Result<PagedResult<CourseViewModel>>>();
-        if(result != null) result.Data.Data.ForEach(x => { x.PhotoUri = _photoHelper.GetPhotoStockUri(x.PhotoUri); });
+        if(result != null) result.Data.Data.ForEach(x => { x.PhotoUri = _photoHelper.GetDriveThumbnailUri(x.PhotoUri); });
         return result.Data;
     }
 
@@ -52,7 +52,7 @@ public class CourseService : ICourseService
         if(!response.IsSuccessStatusCode) return new PagedResult<CourseViewModel>();
 
         var result = await response.Content.ReadFromJsonAsync<Result<PagedResult<CourseViewModel>>>();
-        if(result != null) result.Data.Data.ForEach(x => { x.PhotoUri = _photoHelper.GetPhotoStockUri(x.PhotoUri); });
+        if(result != null) result.Data.Data.ForEach(x => { x.PhotoUri = _photoHelper.GetDriveThumbnailUri(x.PhotoUri); });
         return result.Data;
     }
 

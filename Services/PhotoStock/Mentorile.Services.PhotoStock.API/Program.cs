@@ -3,12 +3,14 @@ using Mentorile.Services.PhotoStock.Domain.Interfaces;
 using Mentorile.Services.PhotoStock.Infrastructure.Persistence;
 using Mentorile.Services.PhotoStock.Infrastructure.Repositories;
 using Mentorile.Services.PhotoStock.Infrastructure.Services;
+using Mentorile.Services.PhotoStock.Infrastructure.Settings;
 using Mentorile.Shared.Services;
 using Mentorile.Shared.Services.Abstracts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -87,6 +89,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 builder.WebHost.UseUrls("http://+:80");
 
 // Dependency Injection
+builder.Services.Configure<GoogleDriveSettings>(builder.Configuration.GetSection("GoogleDriveSettings"));
+builder.Services.AddSingleton<IGoogleDriveSettings>(sp => sp.GetRequiredService<IOptions<GoogleDriveSettings>>().Value);
 builder.Services.AddScoped<IPhotoRepository, PhotoRepository>();
 builder.Services.AddScoped<ICloudStorageService, CloudStorageService>();
 builder.Services.AddScoped<IExecutor, Executor>();

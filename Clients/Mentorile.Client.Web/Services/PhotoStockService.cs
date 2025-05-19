@@ -30,12 +30,9 @@ public class PhotoStockService : IPhotoStockService
     {
         if (formFile == null || formFile.Length <= 0) return null;
 
-        // example 2039453243242.jpg
-        // var randomFileName = $"{Guid.NewGuid().ToString()}{Path.GetExtension(formFile.FileName)}";
         using var memoryStream = new MemoryStream();
         await formFile.CopyToAsync(memoryStream);
         var multipartContent = new MultipartFormDataContent();
-        // multipartContent.Add(new ByteArrayContent(memoryStream.ToArray()), "photo", randomFileName);
         var byteArrayContent = new ByteArrayContent(memoryStream.ToArray());
         byteArrayContent.Headers.ContentType = new MediaTypeHeaderValue(formFile.ContentType);
         byteArrayContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
@@ -44,7 +41,6 @@ public class PhotoStockService : IPhotoStockService
             FileName = $"\"{formFile.FileName}\""
         };
 
-        // multipartContent.Add(new ByteArrayContent(memoryStream.ToArray()), "file");
         multipartContent.Add(byteArrayContent, "file", formFile.FileName);
         var response = await _httpClient.PostAsync($"{controllersName}?isPublic={isPublic}", multipartContent);
         if (!response.IsSuccessStatusCode) return null;

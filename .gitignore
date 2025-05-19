@@ -42,3 +42,6 @@ bld/
 msbuild.log
 msbuild.err
 msbuild.wrn
+
+# Google drive credentials
+**/mentorilecom-460112-369f160eb530.json

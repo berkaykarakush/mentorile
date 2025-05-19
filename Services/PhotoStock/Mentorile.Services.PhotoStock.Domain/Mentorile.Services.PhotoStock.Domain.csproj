@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\Mentorile.Shared\Mentorile.Shared.csproj" />
+    <ProjectReference Include="..\Mentorile.Services.PhotoStock.Abstractions\Mentorile.Services.PhotoStock.Abstractions.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

@@ -25,13 +25,15 @@ public class UploadPhotoCommandHandler : IRequestHandler<UploadPhotoCommand, Res
 
     public async Task<Result<PhotoDTO>> Handle(UploadPhotoCommand request, CancellationToken cancellationToken)
     {
-        var uploadResult = await _cloudStorageService.UploadAsync(request.Content, request.FileName, request.ContentType);
+        var generatedFileName = $"{DateTime.UtcNow:yyyyMMdd_HHmmss}_{Guid.NewGuid()}{Path.GetExtension(request.FileName)}";
+
+        var uploadResult = await _cloudStorageService.UploadAsync(request.Content, generatedFileName, request.ContentType, _sharedIdentityService.GetUserId);
         if(string.IsNullOrEmpty(uploadResult?.Uri)) return Result<PhotoDTO>.Failure("Failed to upload photo.");
 
         var photo = new Photo()
         {
             UserId = _sharedIdentityService.GetUserId,
-            FileName = request.FileName,
+            FileName = generatedFileName,
             IsPublic = request.IsPublic,
             StoragePath = uploadResult.StoragePath,
             PublicUri = request.IsPublic ? uploadResult.Uri : null,
