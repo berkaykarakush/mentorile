@@ -128,7 +128,7 @@ services:
   basket.api:
     container_name: basket.api
     restart: on-failure
-    command: ["dotnet", "watch", "--project", "Services/Basket/Mentorile.Services.Basket/Mentorile.Services.Basket.csproj", "run", "--no-launch-profile", "--urls", "http://0.0.0.0:5012"]
+    command: ["dotnet", "watch", "--project", "Services/Basket/Mentorile.Services.Basket.API/Mentorile.Services.Basket.API.csproj", "run", "--no-launch-profile", "--urls", "http://0.0.0.0:5012"]
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - RedisSettings:Host=basketdb

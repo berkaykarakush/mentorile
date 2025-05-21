@@ -33,7 +33,7 @@ services:
     image: basket.api.image
     build: 
       context: .
-      dockerfile: Services/Basket/Mentorile.Services.Basket/Dockerfile
+      dockerfile: Services/Basket/Mentorile.Services.Basket.API/Dockerfile
   photostock.api:
     image: photostock.api.image
     build:
