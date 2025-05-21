@@ -95,7 +95,7 @@ internal static class HostingExtensions
 
         // Add MediatR
         builder.Services.AddMediatR(cfg => { 
-            cfg.RegisterServicesFromAssembly(typeof(Mentorile.IdentityServer.Handlers.RegisterUserCommandHandler).Assembly); 
+            cfg.RegisterServicesFromAssembly(typeof(CommandHandlers.RegisterUserCommandHandler).Assembly); 
         });
         // Add LoggingBehavior
         builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));

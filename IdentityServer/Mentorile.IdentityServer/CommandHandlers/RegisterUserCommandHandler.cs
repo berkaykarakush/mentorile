@@ -1,8 +1,9 @@
 using MediatR;
+using Mentorile.IdentityServer.Commands;
 using Mentorile.IdentityServer.Services;
 using Mentorile.Shared.Common;
 
-namespace Mentorile.IdentityServer.Handlers;
+namespace Mentorile.IdentityServer.CommandHandlers;
 public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, Result<Guid>>
 {
     private readonly IAuthService _authService;

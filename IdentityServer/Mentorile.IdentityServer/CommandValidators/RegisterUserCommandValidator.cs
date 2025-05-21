@@ -1,6 +1,7 @@
 using FluentValidation;
+using Mentorile.IdentityServer.Commands;
 
-namespace Mentorile.IdentityServer.Handlers;
+namespace Mentorile.IdentityServer.CommandValidators;
 public class RegisterUserCommandValidator : AbstractValidator<RegisterUserCommand>
 {
     public RegisterUserCommandValidator()

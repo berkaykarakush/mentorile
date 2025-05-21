@@ -25,38 +25,6 @@ public class IdentityService : IIdentityService
         _serviceApiSettings = serviceApiSettings;
     }
 
-    // public async Task<TokenResponse> GetAccessTokenByRefreshToken()
-    // {
-    //     var discovery = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest{
-    //         Address = _serviceApiSettings.IdentityBaseUri,
-    //         Policy = new DiscoveryPolicy { RequireHttps = false }
-    //     });
-    //     if(discovery.IsError) throw discovery.Exception;
-
-    //     var refreshToken = await _httpContextAccessor.HttpContext.GetTokenAsync(OpenIdConnectParameterNames.RefreshToken);
-    //     var refreshTokenRequest = new RefreshTokenRequest(){
-    //         ClientId = _clientSettings.ResourceOwnerPassword.ClientId,
-    //         ClientSecret = _clientSettings.ResourceOwnerPassword.ClientSecret,
-    //         RefreshToken = refreshToken,
-    //         Address = discovery.TokenEndpoint
-    //     }; 
-    //     var token = await _httpClient.RequestRefreshTokenAsync(refreshTokenRequest);
-    //     if(token.IsError) throw token.Exception;
-
-    //     var authenticationTokens = new List<AuthenticationToken>(){
-    //         new AuthenticationToken() { Name = OpenIdConnectParameterNames.AccessToken, Value = token.AccessToken }, 
-    //         new AuthenticationToken() { Name = OpenIdConnectParameterNames.RefreshToken, Value = token.RefreshToken }, 
-    //         new AuthenticationToken() { Name = OpenIdConnectParameterNames.ExpiresIn, Value = DateTime.UtcNow.AddSeconds(token.ExpiresIn).ToString("o", CultureInfo.InvariantCulture) }, 
-    //     };
-        
-    //     var authenticationResult = await _httpContextAccessor.HttpContext.AuthenticateAsync();
-    //     var properties = authenticationResult.Properties;
-    //     properties.StoreTokens(authenticationTokens);
-
-    //     await _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, authenticationResult.Principal, properties);
-
-    //     return token;
-    // }
     public async Task<TokenResponse> GetAccessTokenByRefreshToken()
     {
         var discovery = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest{
@@ -99,7 +67,6 @@ public class IdentityService : IIdentityService
 
         return token;
     }
-
 
     public async Task RevokeRefreshToken()
     {
@@ -184,7 +151,9 @@ public class IdentityService : IIdentityService
 
     public async Task<Result<Guid>> Register(RegisterInput registerInput)
     {
-        var response = await _httpClient.PostAsJsonAsync($"{_serviceApiSettings.IdentityBaseUri}/api/users/register", new
+        // TODO: /api/users/register degil de /api/auth/register yapmak gerekebilir
+        // var response = await _httpClient.PostAsJsonAsync($"{_serviceApiSettings.IdentityBaseUri}/api/users/register", new
+        var response = await _httpClient.PostAsJsonAsync($"{_serviceApiSettings.IdentityBaseUri}/api/auth/register", new
         {
             Name = registerInput.Name,
             Surname = registerInput.Surname,

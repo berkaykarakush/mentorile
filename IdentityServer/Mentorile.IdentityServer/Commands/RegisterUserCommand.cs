@@ -1,7 +1,7 @@
 using MediatR;
 using Mentorile.Shared.Common;
 
-namespace Mentorile.IdentityServer.Handlers;
+namespace Mentorile.IdentityServer.Commands;
 public class RegisterUserCommand : IRequest<Result<Guid>>
 {
     public string Name { get; set; }
