@@ -21,9 +21,9 @@ public class BasketsController : Controller
     }
 
     [HttpGet("add-item")]
-    public async Task<IActionResult> AddBasketItem(BasketItemViewModel item)
+    public async Task<IActionResult> AddBasketItem(AddBasketItemInput input)
     {
-        var result = await _basketService.AddItemToBasketAsync(item);
+        var result = await _basketService.AddItemToBasketAsync(input);
         return RedirectToAction(nameof(Index));
     }
 

@@ -52,7 +52,7 @@ public class ReceivePaymentCommandHandler : IRequestHandler<ReceivePaymentComman
             createOrderMessageCommand.OrderItems = request.Order.OrderItems.Select(x => new OrderItem{
                 ItemId = x.ItemId,
                 ItemName = x.ItemName,
-                PictureUri = x.PictureUri,
+                PhotoUri = x.PhotoUri,
                 Price = x.Price
             }).ToList();
             await sendEndpoint.Send<CreateOrderMessageCommand>(createOrderMessageCommand);

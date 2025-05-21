@@ -48,7 +48,7 @@ public class OrderService : IOrderService
         };
 
         basket.Items.ForEach(x => {
-            var orderItem = new OrderItemCreateInput() { ItemId = x.ItemId, ItemName = x.ItemName, PictureUri = "", Price = x.Price};
+            var orderItem = new OrderItemCreateInput() { ItemId = x.ItemId, ItemName = x.ItemName, PhotoUri = "", Price = x.Price};
             orderCreateInput.OrderItems.Add(orderItem);
         });
 
@@ -98,7 +98,7 @@ public class OrderService : IOrderService
         };
 
         basket.Items.ForEach(x => {
-            var orderItem = new OrderItemCreateInput() { ItemId = x.ItemId, ItemName = x.ItemName, PictureUri = "", Price = x.Price};
+            var orderItem = new OrderItemCreateInput() { ItemId = x.ItemId, ItemName = x.ItemName, PhotoUri = "", Price = x.Price};
             orderCreateInput.OrderItems.Add(orderItem);
         });
 

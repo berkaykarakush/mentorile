@@ -58,7 +58,7 @@ namespace Mentorile.Services.Order.Infrastructure.Migrations
                     b.Property<string>("OrderId")
                         .HasColumnType("text");
 
-                    b.Property<string>("PictureUri")
+                    b.Property<string>("PhotoUri")
                         .IsRequired()
                         .HasColumnType("text");
 

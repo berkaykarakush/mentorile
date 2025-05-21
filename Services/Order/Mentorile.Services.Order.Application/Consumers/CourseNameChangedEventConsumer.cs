@@ -17,7 +17,7 @@ public class CourseNameChangedEventConsumer : IConsumer<CourseNameChangedEvent>
     {
         var orderItems = await _orderDbContext.OrderItems.Where(x => x.ItemId == context.Message.CourseId).ToListAsync();
         orderItems.ForEach(x => {
-            x.UpdateOrderItem(context.Message.UpdatedName, x.PictureUri, x.Price);
+            x.UpdateOrderItem(context.Message.UpdatedName, x.PhotoUri, x.Price);
         });
         await _orderDbContext.SaveChangesAsync();
     }

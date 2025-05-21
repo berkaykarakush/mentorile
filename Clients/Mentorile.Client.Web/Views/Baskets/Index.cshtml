@@ -23,7 +23,7 @@
                             <tr>
                                 <td>@item.ItemName</td>
                                 <td>
-                                    @item.GetCurrentPrice TL @(Model.HasDiscount ? $"(%{Model.DiscountPercentage} uygulandı)" : "")
+                                    @item.TotalPrice TL @(Model.HasDiscount ? $"(%{Model.DiscountPercentage} uygulandı)" : "")
                                 </td>
                                 <td>
                                     <a class="btn btn-danger" asp-controller="Baskets" asp-action="RemoveBasketItem" asp-route-itemId="@item.ItemId">Sil</a>

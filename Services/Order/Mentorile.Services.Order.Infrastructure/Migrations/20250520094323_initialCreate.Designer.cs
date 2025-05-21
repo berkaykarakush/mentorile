@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Mentorile.Services.Order.Infrastructure.Migrations
 {
     [DbContext(typeof(OrderDbContext))]
-    [Migration("20250413100105_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250520094323_initialCreate")]
+    partial class initialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,7 +61,7 @@ namespace Mentorile.Services.Order.Infrastructure.Migrations
                     b.Property<string>("OrderId")
                         .HasColumnType("text");
 
-                    b.Property<string>("PictureUri")
+                    b.Property<string>("PhotoUri")
                         .IsRequired()
                         .HasColumnType("text");
 

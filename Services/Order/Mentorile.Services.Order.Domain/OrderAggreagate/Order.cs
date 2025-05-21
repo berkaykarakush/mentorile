@@ -27,12 +27,12 @@ namespace Mentorile.Services.Order.Domain.OrderAggreagate
             Address = address;  // Doğru parametre ataması
         }
 
-        public void AddOrderItem(string itemId, string itemName, decimal price, string pictureUri)
+        public void AddOrderItem(string itemId, string itemName, decimal price, string photoUri)
         {
             var existProduct = _orderItems.Any(x => x.ItemId == itemId);
             if (!existProduct)
             {
-                var newOrderItem = new OrderItem(itemId, itemName, pictureUri, price);
+                var newOrderItem = new OrderItem(itemId, itemName, photoUri, price);
                 _orderItems.Add(newOrderItem);
             }
         }

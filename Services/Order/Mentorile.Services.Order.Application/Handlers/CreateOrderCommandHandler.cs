@@ -21,7 +21,7 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Res
         Domain.OrderAggreagate.Order newOrder = new Domain.OrderAggreagate.Order(Guid.NewGuid().ToString(), request.BuyerId, newAddress);
 
         request.OrderItems.ForEach(x =>{
-            newOrder.AddOrderItem(x.ItemId, x.ItemName, x.Price, x.PictureUri);
+            newOrder.AddOrderItem(x.ItemId, x.ItemName, x.Price, x.PhotoUri);
         });
 
         await _context.Orders.AddAsync(newOrder);

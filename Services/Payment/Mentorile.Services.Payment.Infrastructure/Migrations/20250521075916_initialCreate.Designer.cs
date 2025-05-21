@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Mentorile.Services.Payment.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250508091942_initialCreate")]
+    [Migration("20250521075916_initialCreate")]
     partial class initialCreate
     {
         /// <inheritdoc />

@@ -24,7 +24,7 @@ public class CreateOrderMessageCommandConsumer : IConsumer<CreateOrderMessageCom
 
         var order = new Domain.OrderAggreagate.Order(context.Message.OrderId, context.Message.BuyerId, newAddress);
         context.Message.OrderItems.ForEach(x => {
-            order.AddOrderItem(x.ItemId, x.ItemName, x.Price, x.PictureUri);
+            order.AddOrderItem(x.ItemId, x.ItemName, x.Price, x.PhotoUri);
         });
 
         await _orderDbContext.Orders.AddAsync(order);
