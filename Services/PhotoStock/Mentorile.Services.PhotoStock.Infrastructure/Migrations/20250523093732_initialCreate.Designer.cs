@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Mentorile.Services.PhotoStock.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250517113845_initialCreate")]
+    [Migration("20250523093732_initialCreate")]
     partial class initialCreate
     {
         /// <inheritdoc />
