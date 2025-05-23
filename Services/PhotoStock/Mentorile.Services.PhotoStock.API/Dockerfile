@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:8.0-bookworm-slim as build
+FROM mcr.microsoft.com/dotnet/sdk:8.0-bookworm-slim AS build
 WORKDIR /app
 EXPOSE 80
 COPY Shared/Mentorile.Shared/*.csproj Shared/Mentorile.Shared/
@@ -10,7 +10,7 @@ COPY Services/PhotoStock/Mentorile.Services.PhotoStock.Abstractions/*.csproj Ser
 RUN dotnet restore Services/PhotoStock/Mentorile.Services.PhotoStock.API/*.csproj
 COPY . .
 RUN dotnet publish Services/PhotoStock/Mentorile.Services.PhotoStock.API/*.csproj -c Release -o out
-FROM mcr.microsoft.com/dotnet/aspnet:8.0-bookworm-slim as runtime
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-bookworm-slim AS runtime
 WORKDIR /app
 COPY --from=build /app/out .
 ENTRYPOINT [ "dotnet", "Mentorile.Services.PhotoStock.API.dll" ]

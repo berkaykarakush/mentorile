@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:8.0-bookworm-slim as build
+FROM mcr.microsoft.com/dotnet/sdk:8.0-bookworm-slim AS build
 WORKDIR /app
 EXPOSE 80
 COPY Shared/Mentorile.Shared/*.csproj Shared/Mentorile.Shared/
@@ -9,7 +9,7 @@ COPY Services/Basket/Mentorile.Services.Basket.Infrastructure/*.csproj Services/
 RUN dotnet restore Services/Basket/Mentorile.Services.Basket.API/*.csproj
 COPY . .
 RUN dotnet publish Services/Basket/Mentorile.Services.Basket.API/*.csproj -c Release -o out
-FROM mcr.microsoft.com/dotnet/aspnet:8.0-bookworm-slim as runtime
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-bookworm-slim AS runtime
 WORKDIR /app
 COPY --from=build /app/out .
 ENTRYPOINT [ "dotnet", "Mentorile.Services.Basket.API.dll" ]
