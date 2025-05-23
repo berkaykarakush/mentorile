@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Mentorile.Services.Course.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250505080335_initialCreate")]
+    [Migration("20250523104517_initialCreate")]
     partial class initialCreate
     {
         /// <inheritdoc />
@@ -45,7 +45,6 @@ namespace Mentorile.Services.Course.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("PhotoUri")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<List<string>>("TopicIds")

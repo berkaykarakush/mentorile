@@ -8,17 +8,16 @@ public class Course
     public DateTime? UpdatedAt { get; private set; }
     public DateTime? DeletedAt { get; private set; }
     public bool IsDeleted { get; set; } = false;
-    public string PhotoUri { get; private set; }
+    public string? PhotoUri { get; private set; }
     public List<string> TopicIds { get; private set; } = new();
 
     private Course() { }
 
-    public Course(string name, string userId, string photoUri)
+    public Course(string name, string userId)
     {
         Id = Guid.NewGuid().ToString();
         Name = name;
         UserId = userId;
-        PhotoUri = photoUri;
         CreateAt = DateTime.UtcNow;
     }
 

@@ -42,7 +42,6 @@ namespace Mentorile.Services.Course.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("PhotoUri")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<List<string>>("TopicIds")

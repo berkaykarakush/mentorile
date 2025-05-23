@@ -27,7 +27,7 @@ namespace Mentorile.Services.Course.Infrastructure.Migrations
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    PhotoUri = table.Column<string>(type: "text", nullable: false),
+                    PhotoUri = table.Column<string>(type: "text", nullable: true),
                     TopicIds = table.Column<List<string>>(type: "text[]", nullable: false)
                 },
                 constraints: table =>
