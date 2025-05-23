@@ -98,6 +98,17 @@ services:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=Password12
       - POSTGRES_DB=photodb
+  emaildb:
+    container_name: emaildb
+    restart: always
+    ports:
+      - "5440:5432"
+    volumes:
+      - emaildb_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=Password12
+      - POSTGRES_DB=emaildb
   course.api:
     container_name: course.api
     restart: on-failure
@@ -244,4 +255,27 @@ services:
       - "5017:80"
     depends_on:
       - userdb
+  email.api:
+    container_name: email.api
+    restart: on-failure
+    command: ["dotnet", "watch", "--project", "Services/Email/Mentorile.Services.Email.API/Mentorile.Services.Email.API.csproj", "run", "--no-launch-profile", "--urls", "http://0.0.0.0:5018"]
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Authority=http://identityserver.api
+      - ConnectionStrings:DefaultConnection=User ID=admin;Password=Password12;Host=emaildb;Port=5432;Database=emaildb
+    ports:
+      - "5018:80"
+    depends_on:
+      - emaildb
+  email.workerservice:
+    container_name: email.workerservice
+    restart: on-failure
+    command: ["dotnet", "watch", "--project", "Services/Email/Mentorile.Services.Email.WorkerService/Mentorile.Services.Email.WorkerService.csproj", "run", "--no-launch-profile"]
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - RabbitMQUri=rabbitmq
+      - ConnectionStrings:DefaultConnection=User ID=admin;Password=Password12;Host=emaildb;Port=5432;Database=emaildb
+    depends_on:
+      - emaildb
+  
   

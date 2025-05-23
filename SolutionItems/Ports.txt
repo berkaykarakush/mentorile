@@ -10,3 +10,4 @@ Services
     - Payment: 5015 /http 5115 /https
     - Study: 5016 /http 5116 /https
     - User: 5017 /http 5117 /https
+    - Email: 5018 /http 5118 /https
