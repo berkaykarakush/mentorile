@@ -181,9 +181,25 @@ public class IdentityService : IIdentityService
         if (!response.IsSuccessStatusCode)
         {
             var errorContent = await response.Content.ReadAsStringAsync();
-            return Result<bool>.Failure($"Registration failed: {errorContent}");
+            return Result<bool>.Failure($"Confirmation failed: {errorContent}");
         }
 
+
+        var result = await response.Content.ReadFromJsonAsync<Result<bool>>();
+        if (!result.IsSuccess) return Result<bool>.Failure("Failed to deserialize confirmation response.");
+
+        return Result<bool>.Success(result.Data);
+    }
+
+    public async Task<Result<bool>> ResendConfirmEmail(string userId)
+    {
+        var response = await _httpClient.GetAsync($"{_serviceApiSettings.IdentityBaseUri}/api/auth/resendConfirmEmail/{userId}");
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var errorContent = await response.Content.ReadAsStringAsync();
+            return Result<bool>.Failure($"Resend failed: {errorContent}");
+        }
 
         var result = await response.Content.ReadFromJsonAsync<Result<bool>>();
         if (!result.IsSuccess) return Result<bool>.Failure("Failed to deserialize confirmation response.");

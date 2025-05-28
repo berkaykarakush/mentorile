@@ -55,7 +55,7 @@ public class AuthController : Controller
         // return RedirectToAction(nameof(Index), "Home");
 
         // Eğer kullanıcı status'ü Pending ise ConfirmEmail ekranına yönlendir
-        
+
         return RedirectToAction(nameof(ConfirmEmail), "Auth");
     }
 
@@ -86,5 +86,18 @@ public class AuthController : Controller
             return View();
         }
         return RedirectToAction(nameof(Index), "Home");
+    }
+
+    [HttpGet("reConfirmEmail")]
+    public async Task<IActionResult> ResendConfirmEmail()
+    {
+        var userId = _sharedIdentityService.GetUserId;
+        if (string.IsNullOrEmpty(userId)) return RedirectToAction(nameof(SignIn));
+
+        var response = await _identityService.ResendConfirmEmail(userId);
+        if (!response.IsSuccess) TempData["ReConfirmError"] = string.Join(", ", response.ErrorDetails);
+        else TempData["ReConfirmSuccess"] = "Doğrulama kodunuz tekrar gönderildi.";
+
+        return RedirectToAction(nameof(ConfirmEmail));
     }
 }

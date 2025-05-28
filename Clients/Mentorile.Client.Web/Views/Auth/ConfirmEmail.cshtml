@@ -18,11 +18,20 @@
         <div class="card">
             <div class="card-body">
                 <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                @if (TempData["ReConfirmError"] != null)
+                {
+                    <div class="alert alert-danger">@TempData["ReConfirmError"]</div>
+                }
+                else if (TempData["ReConfirmSuccess"] != null)
+                {
+                    <div class="alert alert-success">@TempData["ReConfirmSuccess"]</div>
+                }
                 <form asp-controller="Auth" asp-action="ConfirmEmail" method="Post" >
                     <div class="mb-3">
                         <input type="text" asp-for="ConfirmationCode" class="form-control" id="ConfirmationCode" placeholder="Doğrulama Kodu">
                     </div>
                     <button type="submit" class="btn btn-success w-100 rounded">Gönder</button>
+                    <a asp-controller="Auth" asp-action="ReConfirmEmail" class="small">Kodu Yeninden Gönder</a>
                 </form>
             </div>
         </div>

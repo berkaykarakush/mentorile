@@ -72,31 +72,8 @@ public class AuthService : IAuthService
         var result = await _userManager.CreateAsync(user, password);
         if (!result.Succeeded) throw new Exception("Kullanıcı oluşturulamadı.");
 
-        // Confirmation code oluştur ve kaydet (1 saat geçerli)
-        var confirmationCode = new Random().Next(100000, 999999).ToString();
-        var expireAt = DateTime.UtcNow.AddMinutes(10);
-
-        var tokenPayload = $"{confirmationCode}|{expireAt:O}";
-        await _userManager.SetAuthenticationTokenAsync(user, "email", "confirmation_code", tokenPayload);
-
-        // Kullanıcıyı güncelle
-        await _userManager.UpdateAsync(user);
-
-        // Kullanıcı otomatik login olabilir
-        await _signInManager.SignInAsync(user, isPersistent: false);
-
-        // Mail gönderimi için event publish et (RabbitMQ veya başka mekanizma)
-        await _publishEndpoint.Publish<UserRegisteredEvent>(new UserRegisteredEvent()
-        {
-            UserId = user.Id,
-            Name = name,
-            Surname = surname,
-            Email = email,
-            PhoneNumber = phoneNumber,
-            ConfirmationCode = confirmationCode,
-            EmailConfirmationCodeExpireAt = expireAt,
-            CreateAt = DateTime.UtcNow
-        });
+        var generateResult = await GenerateAndSendConfirmationCodeAsync(user);
+        if (!generateResult) throw new Exception("Doğrulama kodu oluşturulamadı.");
 
         // ✅ Kayıttan sonra token almak için arkaplanda connect/token endpoint'ine istek at
         var tokenResponse = await RequestTokenAsync(email, password);
@@ -124,13 +101,13 @@ public class AuthService : IAuthService
             if (string.IsNullOrEmpty(tokenPayload)) throw new Exception("Confirmation code not found.");
 
             var parts = tokenPayload.Split('|');
-            if(parts.Length != 2) throw new Exception("Confirmation code format invalid.");
+            if (parts.Length != 2) throw new Exception("Confirmation code format invalid.");
 
 
             var code = parts[0];
             var expireAt = DateTime.Parse(parts[1]);
-            if(code != confirmationCode) throw new Exception("Confirmation code failed.");
-            if(DateTime.UtcNow > expireAt) throw new Exception("Confirmation code date invalid.");
+            if (code != confirmationCode) throw new Exception("Confirmation code failed.");
+            if (DateTime.UtcNow > expireAt) throw new Exception("Confirmation code date invalid.");
 
             // kullanciyi aktif yap
             user.Active();
@@ -168,7 +145,49 @@ public class AuthService : IAuthService
 
         var tokenResponse = await client.RequestPasswordTokenAsync(tokenRequest);
 
-        if(tokenResponse.IsError) throw new Exception($"Token error: {tokenResponse.Error}");
+        if (tokenResponse.IsError) throw new Exception($"Token error: {tokenResponse.Error}");
         return tokenResponse;
     }
+
+    public async Task<Result<bool>> ResendConfirmEmailAsync(string userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+        if (user == null) throw new Exception("User not found.");
+
+        var result = await GenerateAndSendConfirmationCodeAsync(user);
+        if (!result) throw new Exception("Confirmation code not sent.");
+
+        return Result<bool>.Success(result);
+    }
+
+    private async Task<bool> GenerateAndSendConfirmationCodeAsync(ApplicationUser user)
+    {
+        // Confirmation code oluştur ve kaydet (1 saat geçerli)
+        var confirmationCode = new Random().Next(100000, 999999).ToString();
+        var expireAt = DateTime.UtcNow.AddMinutes(10);
+
+        var tokenPayload = $"{confirmationCode}|{expireAt:O}";
+        await _userManager.SetAuthenticationTokenAsync(user, "email", "confirmation_code", tokenPayload);
+
+        // Kullanıcıyı güncelle
+        await _userManager.UpdateAsync(user);
+
+        // Kullanıcı otomatik login olabilir
+        await _signInManager.SignInAsync(user, isPersistent: false);
+
+        // Mail gönderimi için event publish et (RabbitMQ veya başka mekanizma)
+        await _publishEndpoint.Publish<UserRegisteredEvent>(new UserRegisteredEvent()
+        {
+            UserId = user.Id,
+            Name = user.Name,
+            Surname = user.Surname,
+            Email = user.Email,
+            PhoneNumber = user.PhoneNumber,
+            ConfirmationCode = confirmationCode,
+            EmailConfirmationCodeExpireAt = expireAt,
+            CreateAt = DateTime.UtcNow
+        });
+        return true;
+    }
+
 }

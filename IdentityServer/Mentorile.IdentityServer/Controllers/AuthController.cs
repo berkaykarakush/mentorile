@@ -2,6 +2,7 @@ using MediatR;
 using Mentorile.IdentityServer.Commands;
 using Mentorile.Shared.ControllerBases;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mentorile.IdentityServer.Controllers;
@@ -32,7 +33,13 @@ public class AuthController : CustomControllerBase
     public async Task<IActionResult> ChangePassword(ChangePasswordCommand command)
         => CreateActionResultInstance(await _mediator.Send(command));
 
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> ConfirmEmail(ConfirmEmailCommand command)
         => CreateActionResultInstance(await _mediator.Send(command));
+
+    [HttpGet("{userId}")]
+    public async Task<IActionResult> ResendConfirmEmail(string userId)
+        => CreateActionResultInstance(await _mediator.Send(new ResendConfirmEmailCommand { UserId = userId}));
+
 }
