@@ -1,8 +1,9 @@
 using MediatR;
+using Mentorile.IdentityServer.DTOs;
 using Mentorile.Shared.Common;
 
 namespace Mentorile.IdentityServer.Commands;
-public class RegisterUserCommand : IRequest<Result<Guid>>
+public class RegisterUserCommand : IRequest<Result<UserAuthenticatedDto>>
 {
     public string Name { get; set; }
     public string Surname { get; set; }

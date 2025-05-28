@@ -6,5 +6,7 @@ public class UserRegisteredEvent
     public string Surname { get; set; }
     public string Email { get; set; }
     public string PhoneNumber { get; set; }
+    public string ConfirmationCode { get; set; }
+    public DateTime? EmailConfirmationCodeExpireAt { get; set; }
     public DateTime CreateAt { get; set; }
 }

@@ -3,6 +3,7 @@ using MassTransit;
 using MediatR;
 using Mentorile.IdentityServer.BackgroundServices;
 using Mentorile.IdentityServer.Data;
+using Mentorile.IdentityServer.Middlewares;
 using Mentorile.IdentityServer.Models;
 using Mentorile.IdentityServer.Services;
 using Mentorile.Shared.Behaviors;
@@ -123,6 +124,9 @@ internal static class HostingExtensions
         app.UseIdentityServer();
         app.UseAuthentication();
         app.UseAuthorization();
+
+        // Email doğrulama middleware'i
+        // app.UseMiddleware<EmailConfirmationMiddleware>();
         
         app.MapRazorPages()
             .RequireAuthorization();

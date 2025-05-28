@@ -6,7 +6,8 @@ namespace Mentorile.Client.Web.Services.Abstracts;
 public interface IIdentityService
 {
     Task<Result<bool>>  SignIn(SignInInput signInInput);
-    Task<Result<Guid>> Register(RegisterInput registerInput);
+    Task<Result<UserAuthenticatedModel>> Register(RegisterInput registerInput);
+    Task<Result<bool>> ConfirmEmail(ConfirmEmailInput emailInput);
     Task<TokenResponse> GetAccessTokenByRefreshToken();
     Task RevokeRefreshToken();   
 }

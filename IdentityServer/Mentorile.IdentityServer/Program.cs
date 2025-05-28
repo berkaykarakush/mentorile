@@ -1,6 +1,8 @@
 ﻿using Mentorile.IdentityServer;
 using Mentorile.IdentityServer.Data;
+using Mentorile.IdentityServer.Settings;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -18,6 +20,10 @@ try
         .Enrich.FromLogContext()
         .ReadFrom.Configuration(ctx.Configuration));
     
+    
+    builder.Services.Configure<Settings>(builder.Configuration.GetSection("Settings"));
+    builder.Services.AddSingleton<ISettings>(sp => sp.GetRequiredService<IOptions<Settings>>().Value);
+
     builder.WebHost.UseUrls("http://+:80");
 
     var app = builder

@@ -1,19 +1,23 @@
 using Mentorile.Client.Web.Models;
 using Mentorile.Client.Web.Services.Abstracts;
+using Mentorile.Shared.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mentorile.Client.WebControllers;
+
 
 [Route("[controller]")]
 public class AuthController : Controller
 {
     private readonly IIdentityService _identityService;
-
-    public AuthController(IIdentityService identityService)
+    private readonly ISharedIdentityService _sharedIdentityService;
+    public AuthController(IIdentityService identityService, ISharedIdentityService sharedIdentityService)
     {
         _identityService = identityService;
+        _sharedIdentityService = sharedIdentityService;
     }
 
     [HttpGet("SignIn")]
@@ -22,11 +26,12 @@ public class AuthController : Controller
     [HttpPost("SignIn")]
     public async Task<IActionResult> SignIn(SignInInput signInInput)
     {
-        if(!ModelState.IsValid) return View();
+        if (!ModelState.IsValid) return View();
 
         var response = await _identityService.SignIn(signInInput);
-        if(!response.IsSuccess){
-            response.ErrorDetails.ForEach(x => {  ModelState.AddModelError(String.Empty, x); });
+        if (!response.IsSuccess)
+        {
+            response.ErrorDetails.ForEach(x => { ModelState.AddModelError(String.Empty, x); });
             return View();
         }
 
@@ -41,14 +46,17 @@ public class AuthController : Controller
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterInput registerInput)
     {
-        if(!ModelState.IsValid) return View();
-
         var response = await _identityService.Register(registerInput);
-        if(!response.IsSuccess){
+        if (!response.IsSuccess)
+        {
             response.ErrorDetails.ForEach(x => { ModelState.AddModelError(string.Empty, x); });
             return View();
         }
-        return RedirectToAction(nameof(Index), "Home");
+        // return RedirectToAction(nameof(Index), "Home");
+
+        // Eğer kullanıcı status'ü Pending ise ConfirmEmail ekranına yönlendir
+        
+        return RedirectToAction(nameof(ConfirmEmail), "Auth");
     }
 
     [HttpGet("error")]
@@ -60,5 +68,23 @@ public class AuthController : Controller
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         await _identityService.RevokeRefreshToken();
         return RedirectToAction(nameof(SignIn), "Auth");
+    }
+
+    // [Authorize]
+    [HttpGet("confirmEmail")]
+    public IActionResult ConfirmEmail() => View();
+
+    // [Authorize]
+    [HttpPost("confirmEmail")]
+    public async Task<IActionResult> ConfirmEmail(ConfirmEmailInput emailInput)
+    {
+        emailInput.UserId = _sharedIdentityService.GetUserId;
+        var response = await _identityService.ConfirmEmail(emailInput);
+        if (!response.IsSuccess)
+        {
+            response.ErrorDetails.ForEach(x => { ModelState.AddModelError(string.Empty, x); });
+            return View();
+        }
+        return RedirectToAction(nameof(Index), "Home");
     }
 }

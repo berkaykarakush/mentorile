@@ -31,4 +31,8 @@ public class AuthController : CustomControllerBase
     [HttpPost]
     public async Task<IActionResult> ChangePassword(ChangePasswordCommand command)
         => CreateActionResultInstance(await _mediator.Send(command));
+
+    [HttpPost]
+    public async Task<IActionResult> ConfirmEmail(ConfirmEmailCommand command)
+        => CreateActionResultInstance(await _mediator.Send(command));
 }

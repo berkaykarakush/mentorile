@@ -1,10 +1,11 @@
 using MediatR;
 using Mentorile.IdentityServer.Commands;
+using Mentorile.IdentityServer.DTOs;
 using Mentorile.IdentityServer.Services;
 using Mentorile.Shared.Common;
 
 namespace Mentorile.IdentityServer.CommandHandlers;
-public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, Result<Guid>>
+public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, Result<UserAuthenticatedDto>>
 {
     private readonly IAuthService _authService;
 
@@ -13,10 +14,10 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, R
         _authService = authService;
     }
 
-    public async Task<Result<Guid>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result<UserAuthenticatedDto>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
         var response = await _authService.RegisterAsync(request.Name, request.Surname, request.Email, request.PhoneNumber, request.Password);
-        if(!response.IsSuccess) return Result<Guid>.Failure("Failed to user registration.");
-        return Result<Guid>.Success(response.Data, "User registered successfully.");
+        if(!response.IsSuccess) return Result<UserAuthenticatedDto>.Failure("Failed to user registration.");
+        return Result<UserAuthenticatedDto>.Success(response.Data, "User registered successfully.");
     }
 }

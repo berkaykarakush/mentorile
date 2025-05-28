@@ -78,7 +78,7 @@ builder.Services.AddMassTransit(x =>
             host.Password("guest");
         });
 
-        configuration.ReceiveEndpoint("user-registered-event-queue", e => {
+        configuration.ReceiveEndpoint("user-api-user-registered-queue", e => {
             e.ConfigureConsumer<UserRegistedEventConsumer>(context);
         });
     });

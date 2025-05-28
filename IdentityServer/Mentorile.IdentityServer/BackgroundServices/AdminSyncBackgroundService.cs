@@ -1,9 +1,9 @@
 
 using MassTransit;
+using Mentorile.IdentityServer.Enums;
 using Mentorile.IdentityServer.Models;
 using Mentorile.Shared.Messages.Events;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.OpenApi.Writers;
 
 namespace Mentorile.IdentityServer.BackgroundServices;
 public class AdminSyncBackgroundService : BackgroundService
@@ -24,18 +24,19 @@ public class AdminSyncBackgroundService : BackgroundService
 
         using var scope = _serviceProvider.CreateScope();
         var _userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-        var _publishEndpoint = scope.ServiceProvider.GetRequiredService<IPublishEndpoint>(); // <-- Scoped olarak alındı
+        var _publishEndpoint = scope.ServiceProvider.GetRequiredService<IPublishEndpoint>();
 
         if(!_userManager.Users.Any())
         {
             var adminUser =  new ApplicationUser
             {
-                Name  = "Admin",
+                Name = "Admin",
                 Surname = "Mentorile.com",
                 UserName = "admin",
                 Email = "admin@mentorile.com",
                 EmailConfirmed = true,
-                PhoneNumber = "05554443322"
+                PhoneNumber = "05554443322",
+                Status = UserStatus.Active
             };
 
             var result = await _userManager.CreateAsync(adminUser, "Password12*");

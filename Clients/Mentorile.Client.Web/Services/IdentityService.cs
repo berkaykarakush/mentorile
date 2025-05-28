@@ -56,7 +56,7 @@ public class IdentityService : IIdentityService
         var authenticationTokens = new List<AuthenticationToken>(){
             new AuthenticationToken() { Name = OpenIdConnectParameterNames.AccessToken, Value = token.AccessToken }, 
             new AuthenticationToken() { Name = OpenIdConnectParameterNames.RefreshToken, Value = token.RefreshToken }, 
-            new AuthenticationToken() { Name = OpenIdConnectParameterNames.ExpiresIn, Value = DateTime.UtcNow.AddSeconds(token.ExpiresIn).ToString("o", CultureInfo.InvariantCulture) }, 
+            new AuthenticationToken() { Name = OpenIdConnectParameterNames.ExpiresIn, Value = DateTime.UtcNow.AddDays(token.ExpiresIn).ToString("o", CultureInfo.InvariantCulture) }, 
         };
         
         var authenticationResult = await _httpContextAccessor.HttpContext.AuthenticateAsync();
@@ -136,7 +136,7 @@ public class IdentityService : IIdentityService
             new AuthenticationToken{Name = OpenIdConnectParameterNames.RefreshToken, Value = token.RefreshToken},
             new AuthenticationToken{
                 Name = OpenIdConnectParameterNames.ExpiresIn,
-                Value = DateTime.UtcNow.AddSeconds(token.ExpiresIn).ToString("o", CultureInfo.InvariantCulture)
+                Value = DateTime.UtcNow.AddDays(token.ExpiresIn).ToString("o", CultureInfo.InvariantCulture)
             },
         });
 
@@ -149,32 +149,45 @@ public class IdentityService : IIdentityService
         return Result<bool>.Success(true);
     }
 
-    public async Task<Result<Guid>> Register(RegisterInput registerInput)
+    public async Task<Result<UserAuthenticatedModel>> Register(RegisterInput registerInput)
     {
-        // TODO: /api/users/register degil de /api/auth/register yapmak gerekebilir
-        // var response = await _httpClient.PostAsJsonAsync($"{_serviceApiSettings.IdentityBaseUri}/api/users/register", new
-        var response = await _httpClient.PostAsJsonAsync($"{_serviceApiSettings.IdentityBaseUri}/api/auth/register", new
-        {
-            Name = registerInput.Name,
-            Surname = registerInput.Surname,
-            Email = registerInput.Email,
-            PhoneNumber = registerInput.PhoneNumber,
-            Password = registerInput.Password,
-            RePassword = registerInput.RePassword
-        });
+        var response = await _httpClient.PostAsJsonAsync($"{_serviceApiSettings.IdentityBaseUri}/api/auth/register", registerInput);
 
         if (!response.IsSuccessStatusCode)
         {
             var errorContent = await response.Content.ReadAsStringAsync();
-            return Result<Guid>.Failure($"Registration failed: {errorContent}");
+            return Result<UserAuthenticatedModel>.Failure($"Registration failed: {errorContent}");
         }
 
-        var result = await response.Content.ReadFromJsonAsync<Result<Guid>>();
-        if (result == null)
+        var resultData = await response.Content.ReadFromJsonAsync<Result<UserAuthenticatedModel>>();
+        var authDto = resultData!.Data;
+
+        var signInResult = await SignIn(new SignInInput()
         {
-            return Result<Guid>.Failure("Failed to deserialize registration response.");
+            Email = registerInput.Email,
+            Password = registerInput.Password,
+            IsRemember = true
+        });
+
+        if (!signInResult.IsSuccess) return Result<UserAuthenticatedModel>.Failure($"Registration succeeded but automatic login failed: {signInResult.ErrorDetails}");
+        
+        return Result<UserAuthenticatedModel>.Success(authDto);
+    }
+
+    public async Task<Result<bool>> ConfirmEmail(ConfirmEmailInput emailInput)
+    {
+        var response = await _httpClient.PostAsJsonAsync($"{_serviceApiSettings.IdentityBaseUri}/api/auth/confirmEmail", emailInput);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var errorContent = await response.Content.ReadAsStringAsync();
+            return Result<bool>.Failure($"Registration failed: {errorContent}");
         }
 
-        return result;
+
+        var result = await response.Content.ReadFromJsonAsync<Result<bool>>();
+        if (!result.IsSuccess) return Result<bool>.Failure("Failed to deserialize confirmation response.");
+
+        return Result<bool>.Success(result.Data);
     }
 }
