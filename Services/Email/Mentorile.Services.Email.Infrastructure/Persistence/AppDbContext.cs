@@ -10,10 +10,12 @@ public class AppDbContext : DbContext
 
     public DbSet<EmailMessage> EmailMessages { get; set; }
     public DbSet<EmailLog> EmailLogs { get; set; }
+    public DbSet<EmailUser> EmailUsers { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<EmailMessage>().ToTable("EmailMessages", DEFAULT_SCHEMA);
         modelBuilder.Entity<EmailLog>().ToTable("EmailLogs", DEFAULT_SCHEMA);
+        modelBuilder.Entity<EmailUser>().ToTable("EmailUsers", DEFAULT_SCHEMA);
 
         base.OnModelCreating(modelBuilder);
     }

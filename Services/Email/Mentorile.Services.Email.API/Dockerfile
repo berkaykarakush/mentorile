@@ -7,6 +7,7 @@ COPY Services/Email/Mentorile.Services.Email.API/*.csproj Services/Email/Mentori
 COPY Services/Email/Mentorile.Services.Email.Application/*.csproj Services/Email/Mentorile.Services.Email.Application/
 COPY Services/Email/Mentorile.Services.Email.Domain/*.csproj Services/Email/Mentorile.Services.Email.Domain/
 COPY Services/Email/Mentorile.Services.Email.Infrastructure/*.csproj Services/Email/Mentorile.Services.Email.Infrastructure/
+COPY Services/Email/Mentorile.Services.Email.Templates/*.csproj Services/Email/Mentorile.Services.Email.Templates/
 RUN dotnet restore Services/Email/Mentorile.Services.Email.API/*.csproj
 COPY . .
 RUN dotnet publish Services/Email/Mentorile.Services.Email.API/*.csproj -c Release -o out

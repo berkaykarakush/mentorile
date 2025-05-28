@@ -1,5 +1,7 @@
 using MediatR;
 using Mentorile.Services.Email.Abstractions;
+using Mentorile.Services.Email.Application.Services;
+using Mentorile.Services.Email.Application.Services.Abstractions;
 using Mentorile.Services.Email.Domain.Interfaces;
 using Mentorile.Services.Email.Infrastructure.Persistence;
 using Mentorile.Services.Email.Infrastructure.Repository;
@@ -40,6 +42,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IEmailLogRepository, EmailLogRepository>();
+builder.Services.AddScoped<IEmailUserRepository, EmailUserRepository>();
+builder.Services.AddScoped<IEmailTemplateLoader, EmailTemplateLoader>();
+builder.Services.AddScoped<IEmailTemplateService, EmailTemplateService>();
 builder.Services.AddScoped<IExecutor, Executor>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>

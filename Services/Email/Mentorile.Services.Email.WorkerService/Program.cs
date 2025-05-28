@@ -2,12 +2,16 @@ using MassTransit;
 using MediatR;
 using Mentorile.Services.Email.Abstractions;
 using Mentorile.Services.Email.Application.Consumers;
+using Mentorile.Services.Email.Application.Services;
+using Mentorile.Services.Email.Application.Services.Abstractions;
 using Mentorile.Services.Email.Domain.Interfaces;
 using Mentorile.Services.Email.Infrastructure.Persistence;
 using Mentorile.Services.Email.Infrastructure.Repository;
 using Mentorile.Services.Email.Infrastructure.Settings;
 using Mentorile.Services.Email.WorkerService;
 using Mentorile.Shared.Behaviors;
+using Mentorile.Shared.Services;
+using Mentorile.Shared.Services.Abstracts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -17,6 +21,10 @@ builder.Services.AddHostedService<Worker>();
 
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IEmailLogRepository, EmailLogRepository>();
+builder.Services.AddScoped<IEmailUserRepository, EmailUserRepository>();
+builder.Services.AddScoped<IEmailTemplateLoader, EmailTemplateLoader>();
+builder.Services.AddScoped<IEmailTemplateService, EmailTemplateService>();
+builder.Services.AddScoped<IExecutor, Executor>();
 
 builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
 builder.Services.AddSingleton<ISmtpSettings>(sp => sp.GetRequiredService<IOptions<SmtpSettings>>().Value);
@@ -49,26 +57,26 @@ builder.Services.AddMediatR(cfg =>
 builder.Services.AddMassTransit(x => 
 {
     x.AddConsumer<OrderCreatedEventConsumer>();
-
+    x.AddConsumer<UserRegisteredEventConsumer>();
     // default port 5672
-    x.UsingRabbitMq((context, configuration) => 
+    x.UsingRabbitMq((context, configuration) =>
     {
-        configuration.Host(builder.Configuration["RabbitMQUri"], "/", host => 
+        configuration.Host(builder.Configuration["RabbitMQUri"], "/", host =>
         {
             // default settings
             host.Username("guest");
             host.Password("guest");
         });
 
-        configuration.ReceiveEndpoint("order-created-event-queue", e => {
+        configuration.ReceiveEndpoint("order-created-event-queue", e =>
+        {
             e.ConfigureConsumer<OrderCreatedEventConsumer>(context);
         });
-    });
-});
 
-builder.Services.AddHttpClient("UserAPI", client =>
-{
-    client.BaseAddress = new Uri(builder.Configuration["UserAPI"]);
+        configuration.ReceiveEndpoint("email-api-user-registered-queue", e => {
+            e.ConfigureConsumer<UserRegisteredEventConsumer>(context);
+        });
+    });
 });
 
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));

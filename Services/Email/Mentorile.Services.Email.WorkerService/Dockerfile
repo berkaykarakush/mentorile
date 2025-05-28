@@ -5,6 +5,7 @@ COPY Shared/Mentorile.Shared/*.csproj Shared/Mentorile.Shared/
 COPY Services/Email/Mentorile.Services.Email.Application/*.csproj Services/Email/Mentorile.Services.Email.Application/
 COPY Services/Email/Mentorile.Services.Email.Domain/*.csproj Services/Email/Mentorile.Services.Email.Domain/
 COPY Services/Email/Mentorile.Services.Email.Infrastructure/*.csproj Services/Email/Mentorile.Services.Email.Infrastructure/
+COPY Services/Email/Mentorile.Services.Email.Templates/*.csproj Services/Email/Mentorile.Services.Email.Templates/
 COPY Services/Email/Mentorile.Services.Email.WorkerService/*.csproj Services/Email/Mentorile.Services.Email.WorkerService/
 RUN dotnet restore Services/Email/Mentorile.Services.Email.WorkerService/*.csproj
 COPY . .

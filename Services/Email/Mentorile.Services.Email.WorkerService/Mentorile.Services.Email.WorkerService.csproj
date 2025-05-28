@@ -20,5 +20,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\Mentorile.Shared\Mentorile.Shared.csproj" />
     <ProjectReference Include="..\Mentorile.Services.Email.Application\Mentorile.Services.Email.Application.csproj" />
+    <ProjectReference Include="..\Mentorile.Services.Email.Templates\Mentorile.Services.Email.Templates.csproj" />
   </ItemGroup>
 </Project>
