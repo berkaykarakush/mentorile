@@ -1,15 +1,18 @@
 using MassTransit;
 using Mentorile.Services.Order.Infrastructure.Contexts;
 using Mentorile.Shared.Messages.Commands;
+using Mentorile.Shared.Messages.Events;
 
 namespace Mentorile.Services.Order.Application.Consumers;
 public class CreateOrderMessageCommandConsumer : IConsumer<CreateOrderMessageCommand>
 {
     private readonly OrderDbContext _orderDbContext;
+    private readonly IPublishEndpoint _publishEndpoint;
 
-    public CreateOrderMessageCommandConsumer(OrderDbContext orderDbContext)
+    public CreateOrderMessageCommandConsumer(OrderDbContext orderDbContext, IPublishEndpoint publishEndpoint)
     {
         _orderDbContext = orderDbContext;
+        _publishEndpoint = publishEndpoint;
     }
 
     public async Task Consume(ConsumeContext<CreateOrderMessageCommand> context)
@@ -23,11 +26,17 @@ public class CreateOrderMessageCommandConsumer : IConsumer<CreateOrderMessageCom
         );
 
         var order = new Domain.OrderAggreagate.Order(context.Message.OrderId, context.Message.BuyerId, newAddress);
-        context.Message.OrderItems.ForEach(x => {
+        context.Message.OrderItems.ForEach(x =>
+        {
             order.AddOrderItem(x.ItemId, x.ItemName, x.Price, x.PhotoUri);
         });
 
         await _orderDbContext.Orders.AddAsync(order);
         await _orderDbContext.SaveChangesAsync();
+        await _publishEndpoint.Publish<OrderCreatedEvent>(new OrderCreatedEvent
+        {
+            OrderId = order.Id,
+            BuyerId = context.Message.BuyerId
+        });
     }
 }

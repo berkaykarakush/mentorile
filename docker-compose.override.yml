@@ -232,7 +232,7 @@ services:
   study.api:
     container_name: study.api
     restart: on-failure
-    command: ["dotnet", "watch", "--project", "Services/Study/Mentorile.Services.Study.API/Mentorile.Services.Study.API.csproj", "run", "--no-launch-profile", "--urls", "http://0.0.0.0:5014"]
+    command: ["dotnet", "watch", "--project", "Services/Study/Mentorile.Services.Study.API/Mentorile.Services.Study.API.csproj", "run", "--no-launch-profile", "--urls", "http://0.0.0.0:5016"]
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - Authority=http://identityserver.api

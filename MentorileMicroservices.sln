@@ -119,6 +119,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.Email.Ab
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.Email.API", "Services\Email\Mentorile.Services.Email.API\Mentorile.Services.Email.API.csproj", "{1BAD995A-EF62-45C9-A048-D68A295F8B3E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.Email.Templates", "Services\Email\Mentorile.Services.Email.Templates\Mentorile.Services.Email.Templates.csproj", "{C1988098-AD97-4693-B9E8-596984D93C84}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -312,6 +314,10 @@ Global
 		{1BAD995A-EF62-45C9-A048-D68A295F8B3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BAD995A-EF62-45C9-A048-D68A295F8B3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BAD995A-EF62-45C9-A048-D68A295F8B3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1988098-AD97-4693-B9E8-596984D93C84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1988098-AD97-4693-B9E8-596984D93C84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1988098-AD97-4693-B9E8-596984D93C84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1988098-AD97-4693-B9E8-596984D93C84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B0672021-4893-4FC5-A595-4AFA52DE8A36} = {C3CBC960-F897-459C-AD92-015D260C63F4}
@@ -361,5 +367,6 @@ Global
 		{9376A386-6C76-4BF6-9222-6F614E4E3BB1} = {1E49FC2B-9C03-4520-8A22-AA1B64336100}
 		{058EA7B1-2EA2-400F-A173-810C4DEFF9DA} = {1E49FC2B-9C03-4520-8A22-AA1B64336100}
 		{1BAD995A-EF62-45C9-A048-D68A295F8B3E} = {1E49FC2B-9C03-4520-8A22-AA1B64336100}
+		{C1988098-AD97-4693-B9E8-596984D93C84} = {1E49FC2B-9C03-4520-8A22-AA1B64336100}
 	EndGlobalSection
 EndGlobal
