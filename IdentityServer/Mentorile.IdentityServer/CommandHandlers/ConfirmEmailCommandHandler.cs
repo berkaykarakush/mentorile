@@ -17,7 +17,7 @@ public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, R
     public async Task<Result<bool>> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
     {
         var response = await _authService.ConfirmEmailAsync(request.UserId, request.ConfirmationCode);
-        if (response.IsSuccess) return Result<bool>.Failure("Failed to email confirmation.");
+        if (!response.IsSuccess) return Result<bool>.Failure("Failed to email confirmation.");
         return Result<bool>.Success(response.Data, "Email confirmation successfully.");
     }
 }

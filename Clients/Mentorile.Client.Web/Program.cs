@@ -3,6 +3,7 @@ using FluentValidation.AspNetCore;
 using Mentorile.Client.Web.Extensions;
 using Mentorile.Client.Web.Handlers;
 using Mentorile.Client.Web.Helpers;
+using Mentorile.Client.Web.Middlewares;
 using Mentorile.Client.Web.Settings;
 using Mentorile.Client.Web.Validators.Courses;
 using Mentorile.Shared.Services;
@@ -77,6 +78,8 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseMiddleware<ExceptionRedirectMiddleware>();
 
 app.MapControllerRoute(
     name: "areas",

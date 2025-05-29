@@ -111,10 +111,14 @@ public class AuthService : IAuthService
 
             // kullanciyi aktif yap
             user.Active();
+            user.ConfirmEmail();
             await _userManager.UpdateAsync(user);
 
             // kod gecerliligini kaldir
             await _userManager.RemoveAuthenticationTokenAsync(user, "email", "confirmation_code");
+
+            await _signInManager.SignOutAsync();
+            await _signInManager.SignInAsync(user, isPersistent: true);
 
             return true;
         });
@@ -171,6 +175,14 @@ public class AuthService : IAuthService
 
         // Kullanıcıyı güncelle
         await _userManager.UpdateAsync(user);
+
+        // Doğrulama: Token gerçekten kaydedildi mi?
+        for (int i = 0; i < 5; i++)
+        {
+            var check = await _userManager.GetAuthenticationTokenAsync(user, "email", "confirmation_code");
+            if (!string.IsNullOrEmpty(check)) break;
+            await Task.Delay(100); // minik delay ile tekrar dene
+        }
 
         // Kullanıcı otomatik login olabilir
         await _signInManager.SignInAsync(user, isPersistent: false);

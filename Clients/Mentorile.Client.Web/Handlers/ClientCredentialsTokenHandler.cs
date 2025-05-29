@@ -1,7 +1,6 @@
 
 using System.Net;
 using System.Net.Http.Headers;
-using Duende.AccessTokenManagement;
 using Mentorile.Client.Web.Exceptions;
 using Mentorile.Client.Web.Services.Abstracts;
 
@@ -21,6 +20,9 @@ public class ClientCredentialsTokenHandler : DelegatingHandler
 
         var response = await base.SendAsync(request, cancellationToken);
         if(response.StatusCode == HttpStatusCode.Unauthorized) throw new UnAuthorizeException();
+
+        if(response.StatusCode == HttpStatusCode.Forbidden) throw new EmailNotConfirmedException();
+
         return response;
     }
 }

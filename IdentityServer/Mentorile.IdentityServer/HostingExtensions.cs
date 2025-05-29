@@ -2,8 +2,8 @@ using Duende.IdentityServer;
 using MassTransit;
 using MediatR;
 using Mentorile.IdentityServer.BackgroundServices;
+using Mentorile.IdentityServer.Consumers;
 using Mentorile.IdentityServer.Data;
-using Mentorile.IdentityServer.Middlewares;
 using Mentorile.IdentityServer.Models;
 using Mentorile.IdentityServer.Services;
 using Mentorile.Shared.Behaviors;
@@ -81,15 +81,21 @@ internal static class HostingExtensions
 
 
         builder.Services.AddMassTransit(x => 
-        {   
+        {
+            x.AddConsumer<UserAccessCheckQueryConsumer>();
+
             // default port 5672
-            x.UsingRabbitMq((context, configuration) => 
+            x.UsingRabbitMq((context, cfg) =>
             {
-                configuration.Host(builder.Configuration["RabbitMQUri"], "/", host => 
+                cfg.Host(builder.Configuration["RabbitMQUri"], "/", host =>
                 {
                     // default settings
                     host.Username("guest");
                     host.Password("guest");
+                });
+
+                cfg.ReceiveEndpoint("user-access-check-queue", e => {
+                    e.ConfigureConsumer<UserAccessCheckQueryConsumer>(context);
                 });
             });
         });
@@ -101,6 +107,7 @@ internal static class HostingExtensions
         // Add LoggingBehavior
         builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
         builder.Services.AddScoped<IAuthService, AuthService>();
+        builder.Services.AddScoped<IUserAccessService, UserAccessService>();
         builder.Services.AddScoped<IExecutor, Executor>();
         builder.Services.AddHostedService<AdminSyncBackgroundService>();
 
@@ -125,9 +132,6 @@ internal static class HostingExtensions
         app.UseAuthentication();
         app.UseAuthorization();
 
-        // Email doğrulama middleware'i
-        // app.UseMiddleware<EmailConfirmationMiddleware>();
-        
         app.MapRazorPages()
             .RequireAuthorization();
 

@@ -1,5 +1,9 @@
+using MassTransit;
+using Mentorile.Gateway.API.Handlers;
+using Mentorile.Gateway.API.Services;
+using Mentorile.Gateway.API.Services.Abstracts;
+using Mentorile.Shared.Messages.Queries;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.JsonWebTokens;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
@@ -16,7 +20,26 @@ builder.Services.AddSwaggerGen(c =>
 builder.Configuration
         .AddJsonFile($"configuration.{builder.Environment.EnvironmentName.ToLower()}.json", optional: false, reloadOnChange: true)
         .AddEnvironmentVariables();
-builder.Services.AddOcelot(builder.Configuration);
+
+builder.Services.AddScoped<IUserAccessService, UserAccessService>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<AccessControlDelegatingHandler>();
+
+
+builder.Services.AddMassTransit(x =>
+{
+    x.AddRequestClient<UserAccessCheckQuery>();
+
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host(builder.Configuration["RabbitMQUri"], "/", h =>
+        {
+            h.Username("guest");
+            h.Password("guest");
+        });
+    });
+
+});
 
 // Authorization
 // var requireAuthorizePolicy = new AuthorizationPolicyBuilder()
@@ -46,7 +69,10 @@ builder.Services
     };
     });
 
+
 builder.WebHost.UseUrls("http://+:80");
+
+builder.Services.AddOcelot(builder.Configuration).AddDelegatingHandler<AccessControlDelegatingHandler>();
 
 var app = builder.Build();
 

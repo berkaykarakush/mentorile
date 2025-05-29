@@ -128,6 +128,7 @@ public class IdentityService : IIdentityService
             "name",
             "role"
         ); 
+        
         var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
         var authenitcationProperties = new AuthenticationProperties();

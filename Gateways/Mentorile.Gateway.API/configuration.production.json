@@ -1,132 +1,153 @@
 {
     "Routes": [
         {
-        "DownstreamPathTemplate": "/api/{everything}",
-        "DownstreamScheme": "http",
-        "DownstreamHostAndPorts": [
-            {
-                "Host": "course.api",
-                "Port": 80
+            "DownstreamPathTemplate": "/api/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "course.api",
+                    "Port": 80
+                }
+            ],
+            "UpstreamPathTemplate": "/services/course/{everything}",
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+            "AuthenticationOptions":{
+                "AuthenticationProviderKey":"GatewayAuthenticationScheme",
+                "AllowedScopes":["course_fullpermission"]
             }
-        ],
-        "UpstreamPathTemplate": "/services/course/{everything}",
-        "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-        "AuthenticationOptions":{
-            "AuthenticationProviderKey":"GatewayAuthenticationScheme",
-            "AllowedScopes":["course_fullpermission"]
-        }
         },
         {
-        "DownstreamPathTemplate": "/api/{everything}",
-        "DownstreamScheme": "http",
-        "DownstreamHostAndPorts": [
-            {
-                "Host": "photostock.api",
-                "Port": 80
-            }
-        ],
-        "UpstreamPathTemplate": "/services/photostock/{everything}",
-        "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-        "AuthenticationOptions":{
-            "AuthenticationProviderKey":"GatewayAuthenticationScheme",
-            "AllowedScopes":["photo_stock_fullpermission"]
-        }
+            "DownstreamPathTemplate": "/api/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "photostock.api",
+                    "Port": 80
+                }
+            ],
+            "UpstreamPathTemplate": "/services/photostock/{everything}",
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+            "AuthenticationOptions":{
+                "AuthenticationProviderKey":"GatewayAuthenticationScheme",
+                "AllowedScopes":["photo_stock_fullpermission"]
+            },
+            "DelegatingHandlers": [
+                "AccessControlDelegatingHandler"
+            ]
         },
         {
-        "DownstreamPathTemplate": "/api/{everything}",
-        "DownstreamScheme": "http",
-        "DownstreamHostAndPorts": [
-            {
-                "Host": "basket.api",
-                "Port": 80
-            }
-        ],
-        "UpstreamPathTemplate": "/services/basket/{everything}",
-        "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-        "AuthenticationOptions":{
-            "AuthenticationProviderKey":"GatewayAuthenticationScheme",
-            "AllowedScopes":["basket_fullpermission"]
-        }
+            "DownstreamPathTemplate": "/api/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "basket.api",
+                    "Port": 80
+                }
+            ],
+            "UpstreamPathTemplate": "/services/basket/{everything}",
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+            "AuthenticationOptions":{
+                "AuthenticationProviderKey":"GatewayAuthenticationScheme",
+                "AllowedScopes":["basket_fullpermission"]
+            },
+            "DelegatingHandlers": [
+                "AccessControlDelegatingHandler"
+            ]
         },
         {
-        "DownstreamPathTemplate": "/api/{everything}",
-        "DownstreamScheme": "http",
-        "DownstreamHostAndPorts": [
-            {
-                "Host": "discount.api",
-                "Port": 80
-            }
-        ],
-        "UpstreamPathTemplate": "/services/discount/{everything}",
-        "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-        "AuthenticationOptions":{
-            "AuthenticationProviderKey":"GatewayAuthenticationScheme",
-            "AllowedScopes":["discount_fullpermission"]
-        }
+            "DownstreamPathTemplate": "/api/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "discount.api",
+                    "Port": 80
+                }
+            ],
+            "UpstreamPathTemplate": "/services/discount/{everything}",
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+            "AuthenticationOptions":{
+                "AuthenticationProviderKey":"GatewayAuthenticationScheme",
+                "AllowedScopes":["discount_fullpermission"]
+            },
+            "DelegatingHandlers": [
+                "AccessControlDelegatingHandler"
+            ]
         },
         {
-        "DownstreamPathTemplate": "/api/{everything}",
-        "DownstreamScheme": "http",
-        "DownstreamHostAndPorts": [
-            {
-                "Host": "order.api",
-                "Port": 80
-            }
-        ],
-        "UpstreamPathTemplate": "/services/order/{everything}",
-        "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-        "AuthenticationOptions":{
-            "AuthenticationProviderKey":"GatewayAuthenticationScheme",
-            "AllowedScopes":["order_fullpermission"]
-        }
+            "DownstreamPathTemplate": "/api/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "order.api",
+                    "Port": 80
+                }
+            ],
+            "UpstreamPathTemplate": "/services/order/{everything}",
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+            "AuthenticationOptions":{
+                "AuthenticationProviderKey":"GatewayAuthenticationScheme",
+                "AllowedScopes":["order_fullpermission"]
+            },
+            "DelegatingHandlers": [
+                "AccessControlDelegatingHandler"
+            ]
         },
         {
-        "DownstreamPathTemplate": "/api/{everything}",
-        "DownstreamScheme": "http",
-        "DownstreamHostAndPorts": [
-            {
-                "Host": "payment.api",
-                "Port": 80
-            }
-        ],
-        "UpstreamPathTemplate": "/services/payment/{everything}",
-        "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-        "AuthenticationOptions":{
-            "AuthenticationProviderKey":"GatewayAuthenticationScheme",
-            "AllowedScopes":["payment_fullpermission"]
-        }
+            "DownstreamPathTemplate": "/api/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "payment.api",
+                    "Port": 80
+                }
+            ],
+            "UpstreamPathTemplate": "/services/payment/{everything}",
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+            "AuthenticationOptions":{
+                "AuthenticationProviderKey":"GatewayAuthenticationScheme",
+                "AllowedScopes":["payment_fullpermission"]
+            },
+            "DelegatingHandlers": [
+                "AccessControlDelegatingHandler"
+            ]
         },
         {
-        "DownstreamPathTemplate": "/api/{everything}",
-        "DownstreamScheme": "http",
-        "DownstreamHostAndPorts": [
-            {
-                "Host": "study.api",
-                "Port": 80
-            }
-        ],
-        "UpstreamPathTemplate": "/services/study/{everything}",
-        "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-        "AuthenticationOptions":{
-            "AuthenticationProviderKey":"GatewayAuthenticationScheme",
-            "AllowedScopes":["study_fullpermission"]
-        }
+            "DownstreamPathTemplate": "/api/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "study.api",
+                    "Port": 80
+                }
+            ],
+            "UpstreamPathTemplate": "/services/study/{everything}",
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+            "AuthenticationOptions":{
+                "AuthenticationProviderKey":"GatewayAuthenticationScheme",
+                "AllowedScopes":["study_fullpermission"]
+            },
+            "DelegatingHandlers": [
+                "AccessControlDelegatingHandler"
+            ]
         },
         {
-        "DownstreamPathTemplate": "/api/{everything}",
-        "DownstreamScheme": "http",
-        "DownstreamHostAndPorts": [
-            {
-                "Host": "user.api",
-                "Port": 80
-            }
-        ],
-        "UpstreamPathTemplate": "/services/user/{everything}",
-        "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-        "AuthenticationOptions":{
-            "AuthenticationProviderKey":"GatewayAuthenticationScheme",
-            "AllowedScopes":["user_fullpermission"]
-        }
+            "DownstreamPathTemplate": "/api/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "user.api",
+                    "Port": 80
+                }
+            ],
+            "UpstreamPathTemplate": "/services/user/{everything}",
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+            "AuthenticationOptions":{
+                "AuthenticationProviderKey":"GatewayAuthenticationScheme",
+                "AllowedScopes":["user_fullpermission"]
+            },
+            "DelegatingHandlers": [
+                "AccessControlDelegatingHandler"
+            ]
         }
     ],
     "GlobalConfiguration": {

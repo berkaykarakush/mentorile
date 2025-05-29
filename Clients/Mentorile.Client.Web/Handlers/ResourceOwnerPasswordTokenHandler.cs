@@ -32,6 +32,8 @@ public class ResourceOwnerPasswordTokenHandler : DelegatingHandler
         }
         if(response.StatusCode == System.Net.HttpStatusCode.Unauthorized) throw new UnAuthorizeException();
 
+        if(response.StatusCode == System.Net.HttpStatusCode.Forbidden) throw new EmailNotConfirmedException();
+
         return response;
     }
 }

@@ -7,7 +7,6 @@ public static class Config
     public static IEnumerable<ApiResource> ApiResources => new ApiResource[]
     {
         new ApiResource("resource_course"){Scopes = {"course_fullpermission"}},
-        new ApiResource("resource_topic"){Scopes = {"topic_fullpermission"}},
         new ApiResource("resource_photo_stock") {Scopes = {"photo_stock_fullpermission"}},
         new ApiResource("resource_basket") {Scopes = {"basket_fullpermission"}},
         new ApiResource("resource_discount") {Scopes = {"discount_fullpermission"}},
@@ -37,7 +36,6 @@ public static class Config
         new ApiScope[]
         {
             new ApiScope("course_fullpermission", "Course API full access"),
-            new ApiScope("topic_fullpermission", "Topic API full access"),
             new ApiScope("photo_stock_fullpermission", "Photo Stock API full access"),
             new ApiScope("basket_fullpermission", "Basket API full access"),
             new ApiScope("discount_fullpermission", "Discount API full access"),
@@ -61,7 +59,6 @@ public static class Config
                 AllowedScopes = {
                     "gateway_fullpermission",
                     "course_fullpermission",
-                    "topic_fullpermission",
                     IdentityServerConstants.LocalApi.ScopeName
                 }
             },
