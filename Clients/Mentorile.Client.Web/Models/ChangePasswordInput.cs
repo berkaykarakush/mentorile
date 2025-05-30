@@ -1,12 +1,10 @@
-using MediatR;
-using Mentorile.Shared.Common;
+namespace Mentorile.Client.Web.Models;
 
-namespace Mentorile.IdentityServer.Commands;
-
-public class ChangePasswordCommand : IRequest<Result<bool>>
+public class ChangePasswordInput
 {
     public string UserId { get; set; }
     public string CurrentPassword { get; set; }
     public string NewPassword { get; set; }
+    // TODO: Identity kisminda re new password unuttuk eklenecek
     public string ReNewPassword { get; set; }
 }

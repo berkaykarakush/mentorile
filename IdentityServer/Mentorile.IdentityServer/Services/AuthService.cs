@@ -38,10 +38,10 @@ public class AuthService : IAuthService
         return user.Id;
     });
 
-    public async Task<Result<bool>> ChangePasswordAsync(Guid userId, string currentPassword, string newPassword)
+    public async Task<Result<bool>> ChangePasswordAsync(string userId, string currentPassword, string newPassword)
         => await _executor.ExecuteAsync(async () =>
         {
-            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var user = await _userManager.FindByIdAsync(userId);
             if (user == null) throw new Exception("User not found.");
 
             var result = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);

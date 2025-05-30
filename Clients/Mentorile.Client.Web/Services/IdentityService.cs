@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Net;
 using System.Security.Claims;
 using Duende.IdentityModel.Client;
 using Mentorile.Client.Web.Models;
@@ -16,7 +17,6 @@ public class IdentityService : IIdentityService
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IClientSettings _clientSettings;
     private readonly IServiceApiSettings _serviceApiSettings;
-
     public IdentityService(HttpClient httpClient, IHttpContextAccessor httpContextAccessor, IClientSettings clientSettings, IServiceApiSettings serviceApiSettings)
     {
         _httpClient = httpClient;
@@ -107,9 +107,12 @@ public class IdentityService : IIdentityService
 
         var token = await _httpClient.RequestPasswordTokenAsync(passwordTokenRequest);
         if(token.IsError){
-            var errorMessage = !string.IsNullOrEmpty(token.ErrorDescription) 
-            ? token.ErrorDescription 
-            : token.Error ?? token.Raw ?? "Bilinmeyen bir hata olustu";
+            var errorMessage = token.Error switch
+            {
+                "invalid_grant" => "E-posta adresi veya şifre hatalı.",
+                "unauthorized_client" => "Yetkisiz istemci. Lütfen sistem yöneticinize başvurun.",
+                _ => "Giriş yapılamadı. Lütfen bilgilerinizi kontrol edin ve tekrar deneyin."
+            };
 
             return Result<bool>.Failure(errorMessage);
         }
@@ -157,7 +160,15 @@ public class IdentityService : IIdentityService
         if (!response.IsSuccessStatusCode)
         {
             var errorContent = await response.Content.ReadAsStringAsync();
-            return Result<UserAuthenticatedModel>.Failure($"Registration failed: {errorContent}");
+
+            var userFriendlyMessage = response.StatusCode switch
+            {
+                HttpStatusCode.BadRequest => "Kayıt sırasında bir hata oluştu. Lütfen bilgilerinizi kontrol edin.",
+                HttpStatusCode.Conflict => "Bu e-posta adresiyle zaten kayıt olunmuş.",
+                _ => "Kayıt işlemi başarısız oldu. Lütfen daha sonra tekrar deneyin."
+            };
+
+            return Result<UserAuthenticatedModel>.Failure(userFriendlyMessage);
         }
 
         var resultData = await response.Content.ReadFromJsonAsync<Result<UserAuthenticatedModel>>();
@@ -172,6 +183,7 @@ public class IdentityService : IIdentityService
 
         if (!signInResult.IsSuccess) return Result<UserAuthenticatedModel>.Failure($"Registration succeeded but automatic login failed: {signInResult.ErrorDetails}");
         
+        
         return Result<UserAuthenticatedModel>.Success(authDto);
     }
 
@@ -182,7 +194,8 @@ public class IdentityService : IIdentityService
         if (!response.IsSuccessStatusCode)
         {
             var errorContent = await response.Content.ReadAsStringAsync();
-            return Result<bool>.Failure($"Confirmation failed: {errorContent}");
+            var friendlyError = "E-posta onayı başarısız oldu. Kodun doğru ve süresi geçmemiş olduğundan emin olun.";
+            return Result<bool>.Failure(friendlyError);
         }
 
 
@@ -199,12 +212,28 @@ public class IdentityService : IIdentityService
         if (!response.IsSuccessStatusCode)
         {
             var errorContent = await response.Content.ReadAsStringAsync();
-            return Result<bool>.Failure($"Resend failed: {errorContent}");
+            var friendlyError = "E-posta onayı başarısız oldu. Kodun doğru ve süresi geçmemiş olduğundan emin olun.";
+            return Result<bool>.Failure(friendlyError);
         }
 
         var result = await response.Content.ReadFromJsonAsync<Result<bool>>();
         if (!result.IsSuccess) return Result<bool>.Failure("Failed to deserialize confirmation response.");
 
         return Result<bool>.Success(result.Data);
+    }
+
+    public async Task<Result<bool>> ChangePasswordAsync(ChangePasswordInput passwordInput)
+    {
+        var response = await _httpClient.PostAsJsonAsync($"{_serviceApiSettings.IdentityBaseUri}/api/auth/ChangePassword", passwordInput);
+        if (!response.IsSuccessStatusCode)
+        {
+            var errorContent = await response.Content.ReadAsStringAsync();
+            return Result<bool>.Failure($"Confirmation failed: {errorContent}");
+        }
+
+        var result = await response.Content.ReadFromJsonAsync<Result<bool>>();
+        if (!result.IsSuccess) return Result<bool>.Failure("Failed to deserialize changed response.");
+
+        return Result<bool>.Success(result.Data, result.Message);
     }
 }

@@ -26,6 +26,6 @@ public class RegisterUserCommandValidator : AbstractValidator<RegisterUserComman
 
         RuleFor(x => x.RePassword)
             .NotEmpty().WithMessage("RePassword is required")
-            .Equal(x => x.RePassword).WithMessage("Passwords do not match");
+            .Equal(x => x.Password).WithMessage("Passwords do not match");
     }
 }

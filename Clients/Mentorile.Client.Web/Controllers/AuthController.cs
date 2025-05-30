@@ -100,4 +100,21 @@ public class AuthController : Controller
 
         return RedirectToAction(nameof(ConfirmEmail));
     }
+
+    [HttpGet("changePassword")]
+    public IActionResult ChangePassword() => View();
+
+    [HttpPost("changePassword")]
+    public async Task<IActionResult> changePassword(ChangePasswordInput passwordInput)
+    { 
+        passwordInput.UserId = _sharedIdentityService.GetUserId;
+        var response = await _identityService.ChangePasswordAsync(passwordInput);
+        if (!response.IsSuccess)
+        {
+            response.ErrorDetails.ForEach(x => { ModelState.AddModelError(string.Empty, x); });
+            return View();
+        }
+        return RedirectToAction(nameof(Index), "Home");
+    }
+
 }
