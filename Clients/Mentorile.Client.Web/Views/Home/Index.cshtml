@@ -2,49 +2,199 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="container my-5">
-    <!-- Hero Section -->
-    <div class="p-5 mb-4 bg-light rounded-3">
-        <div class="container-fluid py-5 text-center">
-            <h1 class="display-5 fw-bold">Mentorile'ye Hoş Geldiniz</h1>
-            <p class="fs-4">Öğrenmeye açılan kapınız! Uzman mentorler eşliğinde gelişin, büyüyün.</p>
-             <a asp-controller="Auth" asp-action="SignIn" class="btn btn-primary btn-lg">Hemen Başla</a>
+@if(User.Identity.IsAuthenticated)
+{
+    <div class="container my-5">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
 
-        </div>
-    </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Indirim Kuponlarim</h5>
+                        <p class="card-text">Kampanya ve indirim kuponlarını tanımlayan, doğrulayan ve sepet/ödeme aşamasında indirim uygulayan servis.</p>
+                        <a asp-controller="Discounts" asp-action="Index" class="btn btn-primary">Git</a>
+                        
+                    </div>
+                </div>
+            </div>
 
-    <!-- Features Section -->
-    <div class="row text-center">
-        <div class="col-lg-4 mb-4">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Uzman Mentorler</h5>
-                    <p class="card-text">Alanında uzman kişilerden bire bir destek alarak hedeflerine ulaş.</p>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Siparislerim</h5>
+                        <p class="card-text">Satın alma taleplerini işler, sipariş oluşturur, ödeme sonuçlarını alır, sipariş geçmişini ve faturalandırmayı yönetir.</p>
+                        <a asp-controller="Orders" asp-action="CheckoutHistory" class="btn btn-primary">Git</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Kurslarim</h5>
+                        <p class="card-text">Ders içerikleri, video ve doküman yönetimi, ders kataloğu erişimi gibi kursla ilgili CRUD operasyonlarını barındıran servis.</p>
+                        <a asp-controller="Courses" asp-action="Index" class="btn btn-primary">Git</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Deneme Cozumlerim</h5>
+                        <p class="card-text">Deneme sınavlarını oluşturma, başlatma, süresi boyunca kontrol etme ve sonuç raporları sunma işlevlerini gerçekleştiren servis.</p>
+                        @* <a asp-controller="PracticeTests" asp-action="Index" class="btn btn-primary">Git</a> *@
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-danger">Git</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Haftalik Programim</h5>
+                        <p class="card-text">Haftalık/aylık çalışma takvimini oluşturur, ders programı ve hatırlatıcıları zamanlayarak takvim entegrasyonunu sağlar.</p>
+                        @* <a asp-controller="Schedule" asp-action="Index" class="btn btn-primary">Git</a> *@
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-danger">Git</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Raporlarim</h5>
+                        <p class="card-text">Öğrencilerin çözdüğü sorularla ilgili revizyon geçmişini, tekrar çalışmalarını ve çözüm istatistiklerini kaydeden servis.</p>
+                        @* <a asp-controller="Revisions" asp-action="Index" class="btn btn-primary">Git</a> *@
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-danger">Git</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Konularim</h5>
+                        <p class="card-text">Ders programını oluşturan konu başlıklarını, alt konuları ve konu hiyerarşisini yöneten servis.</p>
+                        @* <a asp-controller="Topics" asp-action="Index" class="btn btn-primary">Git</a> *@
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-danger">Git</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Calismalarim</h5>
+                        <p class="card-text">Öğrencinin günlük çalışma seanslarını, sürelerini ve tamamlanan aktiviteleri takip eden servis.</p>
+                        <a asp-controller="Studies" asp-action="Index" class="btn btn-primary">Git</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Sorularim</h5>
+                        <p class="card-text">Soru bankasını oluşturan, soru ekleme/düzenleme/silme işlemlerini sunan servis. Soru tipleri, zorluk seviyeleri ve etiket yönetimini kapsar.</p>
+                        @* <a asp-controller="Questions" asp-action="Index" class="btn btn-primary">Git</a> *@
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-danger">Git</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Hafiza Kartlarim</h5>
+                        <p class="card-text">Öğrencinin öğrenme kartları (flashcards) oluşturarak tekrar yapabileceği mekanizmayı sağlayan servis.</p>
+                        @* <a asp-controller="Flashcards" asp-action="Index" class="btn btn-primary">Git</a> *@
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-danger">Git</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Yol Haritam</h5>
+                        <p class="card-text">Öğrencinin kişiye özel çalışma yol haritasını oluşturan, hedef tarih ve kilometre taşları (milestones) planlayan servis.</p>
+                        @* <a asp-controller="Roadmaps" asp-action="Index" class="btn btn-primary">Git</a> *@
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-danger">Git</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Ayarlar</h5>
+                        <p class="card-text">Kullanıcı tercihlerine (bildirim ayarları, tema seçimi vb.) ve uygulama genel konfigürasyonlarına yönelik ayarları yönetir.</p>
+                        @* <a asp-controller="Settings" asp-action="Index" class="btn btn-primary">Git</a> *@
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-danger">Git</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Notlarim</h5>
+                        <p class="card-text">Öğrencinin ders notlarını, özetlerini ve metin tabanlı notlamalarını CRUD olarak yöneten servis.</p>
+                        @* <a asp-controller="Notes" asp-action="Index" class="btn btn-primary">Git</a> *@
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-danger">Git</a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 mb-4">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Esnek Program</h5>
-                    <p class="card-text">Kendi zamanına uygun şekilde dersleri seç, öğrenme hızını sen belirle.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 mb-4">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Topluluk Desteği</h5>
-                    <p class="card-text">Seninle aynı yolda ilerleyen insanlarla bağlantı kur, ilham al.</p>
-                </div>
-            </div>
-        </div>
     </div>
+}
+else
+{
+    <div class="container my-5">
+        <!-- Hero Section -->
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <div class="container-fluid py-5 text-center">
+                <h1 class="display-5 fw-bold">Mentorile'ye Hoş Geldiniz</h1>
+                <p class="fs-4">Öğrenmeye açılan kapınız! Uzman mentorler eşliğinde gelişin, büyüyün.</p>
+                <a asp-controller="Auth" asp-action="SignIn" class="btn btn-primary btn-lg">Hemen Başla</a>
 
-    <!-- Call to Action -->
-    <div class="text-center my-5">
-        <h2>Sen de aramıza katıl!</h2>
-        <p class="lead">Bugün kaydol, öğrenmeye hemen başla.</p>
-         <a asp-controller="Auth" asp-action="Register" class="btn btn-success btn-lg">Ücretsiz Kayıt Ol</a>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="row text-center">
+            <div class="col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Uzman Mentorler</h5>
+                        <p class="card-text">Alanında uzman kişilerden bire bir destek alarak hedeflerine ulaş.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Esnek Program</h5>
+                        <p class="card-text">Kendi zamanına uygun şekilde dersleri seç, öğrenme hızını sen belirle.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Topluluk Desteği</h5>
+                        <p class="card-text">Seninle aynı yolda ilerleyen insanlarla bağlantı kur, ilham al.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="text-center my-5">
+            <h2>Sen de aramıza katıl!</h2>
+            <p class="lead">Bugün kaydol, öğrenmeye hemen başla.</p>
+            <a asp-controller="Auth" asp-action="Register" class="btn btn-success btn-lg">Ücretsiz Kayıt Ol</a>
+        </div>
     </div>
-</div>
+}
