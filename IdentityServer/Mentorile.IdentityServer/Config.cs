@@ -15,6 +15,8 @@ public static class Config
         new ApiResource("resource_gateway") {Scopes = {"gateway_fullpermission"}},
         new ApiResource("resource_study") { Scopes = {"study_fullpermission"}},
         new ApiResource("resource_user") { Scopes = {"user_fullpermission"}},
+        new ApiResource("resourse_email") { Scopes = {"email_fullpermission"} },
+        new ApiResource("resource_note") { Scopes = {"note_fullpermission"} },
         new ApiResource(IdentityServerConstants.LocalApi.ScopeName),
     };
     public static IEnumerable<IdentityResource> IdentityResources =>
@@ -44,6 +46,8 @@ public static class Config
             new ApiScope("gateway_fullpermission", "Gateway API full access"),
             new ApiScope("study_fullpermission", "Study API full access"),
             new ApiScope("user_fullpermission", "User API full access"),
+            new ApiScope("email_fullpermission", "Email API full access"),
+            new ApiScope("note_fullpermission", "Note API full access"),
             new ApiScope(IdentityServerConstants.LocalApi.ScopeName),
         };
 
@@ -78,6 +82,8 @@ public static class Config
                     "payment_fullpermission",
                     "study_fullpermission",
                     "user_fullpermission",
+                    "email_fullpermission",
+                    "note_fullpermission",
                     IdentityServerConstants.StandardScopes.Email,
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,

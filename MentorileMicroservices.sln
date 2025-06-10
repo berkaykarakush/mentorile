@@ -121,6 +121,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.Email.AP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.Email.Templates", "Services\Email\Mentorile.Services.Email.Templates\Mentorile.Services.Email.Templates.csproj", "{C1988098-AD97-4693-B9E8-596984D93C84}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Note", "Note", "{CAC19067-B76C-41E8-AA01-70092AFDF6FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.Note.API", "Services\Note\Mentorile.Services.Note.API\Mentorile.Services.Note.API.csproj", "{6059DAFE-FC8A-49CF-9236-862B1ABF3C0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.Note.Application", "Services\Note\Mentorile.Services.Note.Application\Mentorile.Services.Note.Application.csproj", "{01BF04CA-105D-4B65-9FAD-66F2B4EE96F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.Note.Domain", "Services\Note\Mentorile.Services.Note.Domain\Mentorile.Services.Note.Domain.csproj", "{896ECC8C-33D1-4C5C-A54B-D1FD059F8AB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentorile.Services.Note.Infrastructure", "Services\Note\Mentorile.Services.Note.Infrastructure\Mentorile.Services.Note.Infrastructure.csproj", "{4606DCC7-2244-4FB7-9C17-DD6E981787B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -318,6 +328,22 @@ Global
 		{C1988098-AD97-4693-B9E8-596984D93C84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1988098-AD97-4693-B9E8-596984D93C84}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1988098-AD97-4693-B9E8-596984D93C84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6059DAFE-FC8A-49CF-9236-862B1ABF3C0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6059DAFE-FC8A-49CF-9236-862B1ABF3C0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6059DAFE-FC8A-49CF-9236-862B1ABF3C0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6059DAFE-FC8A-49CF-9236-862B1ABF3C0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01BF04CA-105D-4B65-9FAD-66F2B4EE96F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01BF04CA-105D-4B65-9FAD-66F2B4EE96F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01BF04CA-105D-4B65-9FAD-66F2B4EE96F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01BF04CA-105D-4B65-9FAD-66F2B4EE96F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{896ECC8C-33D1-4C5C-A54B-D1FD059F8AB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{896ECC8C-33D1-4C5C-A54B-D1FD059F8AB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{896ECC8C-33D1-4C5C-A54B-D1FD059F8AB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{896ECC8C-33D1-4C5C-A54B-D1FD059F8AB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4606DCC7-2244-4FB7-9C17-DD6E981787B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4606DCC7-2244-4FB7-9C17-DD6E981787B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4606DCC7-2244-4FB7-9C17-DD6E981787B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4606DCC7-2244-4FB7-9C17-DD6E981787B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B0672021-4893-4FC5-A595-4AFA52DE8A36} = {C3CBC960-F897-459C-AD92-015D260C63F4}
@@ -368,5 +394,10 @@ Global
 		{058EA7B1-2EA2-400F-A173-810C4DEFF9DA} = {1E49FC2B-9C03-4520-8A22-AA1B64336100}
 		{1BAD995A-EF62-45C9-A048-D68A295F8B3E} = {1E49FC2B-9C03-4520-8A22-AA1B64336100}
 		{C1988098-AD97-4693-B9E8-596984D93C84} = {1E49FC2B-9C03-4520-8A22-AA1B64336100}
+		{CAC19067-B76C-41E8-AA01-70092AFDF6FA} = {C3CBC960-F897-459C-AD92-015D260C63F4}
+		{6059DAFE-FC8A-49CF-9236-862B1ABF3C0F} = {CAC19067-B76C-41E8-AA01-70092AFDF6FA}
+		{01BF04CA-105D-4B65-9FAD-66F2B4EE96F4} = {CAC19067-B76C-41E8-AA01-70092AFDF6FA}
+		{896ECC8C-33D1-4C5C-A54B-D1FD059F8AB8} = {CAC19067-B76C-41E8-AA01-70092AFDF6FA}
+		{4606DCC7-2244-4FB7-9C17-DD6E981787B5} = {CAC19067-B76C-41E8-AA01-70092AFDF6FA}
 	EndGlobalSection
 EndGlobal

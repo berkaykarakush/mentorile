@@ -21,6 +21,8 @@ services:
     image: postgres
   emaildb:
     image: postgres
+  notedb:
+    image: postgres
   course.api:
     image: course.api.image
     build:
@@ -86,6 +88,11 @@ services:
     build: 
       context: .
       dockerfile: Services/Email/Mentorile.Services.Email.WorkerService/Dockerfile
+  note.api:
+    image: note.api.image
+    build: 
+      context: .
+      dockerfile: Services/Note/Mentorile.Services.Note.API/Dockerfile
 volumes:
   coursedb_data:
   basketdb_data:
@@ -97,3 +104,4 @@ volumes:
   paymentdb_data:
   photodb_data:
   emaildb_data:
+  notedb_data:

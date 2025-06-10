@@ -1,4 +1,5 @@
 namespace Mentorile.Client.Web.Settings;
+
 public class ServiceApiSettings : IServiceApiSettings
 {
     public string GatewayBaseUri { get; set; }
@@ -12,4 +13,6 @@ public class ServiceApiSettings : IServiceApiSettings
     public ServiceApi Order { get; set; }
     public ServiceApi Study { get; set; }
     public ServiceApi User { get; set; }
+    public ServiceApi Email { get; set; }
+    public ServiceApi Note { get; set; }
 }

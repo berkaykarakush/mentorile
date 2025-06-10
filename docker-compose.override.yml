@@ -109,6 +109,17 @@ services:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=Password12
       - POSTGRES_DB=emaildb
+  notedb:
+    container_name: notedb
+    restart: always
+    ports:
+      - "5441:5432"
+    volumes:
+      - notedb_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=Password12
+      - POSTGRES_DB=notedb
   course.api:
     container_name: course.api
     restart: on-failure
@@ -230,6 +241,10 @@ services:
       - payment.api
       - order.api
       - gateway.api
+      - study.api
+      - user.api
+      - email.api
+      - note.api
   study.api:
     container_name: study.api
     restart: on-failure
@@ -278,5 +293,16 @@ services:
       - ConnectionStrings:DefaultConnection=User ID=admin;Password=Password12;Host=emaildb;Port=5432;Database=emaildb
     depends_on:
       - emaildb
-  
-  
+  note.api:
+    container_name: note.api
+    restart: on-failure
+    command: ["dotnet", "watch", "--project", "Services/Note/Mentorile.Services.Note.API/Mentorile.Services.Note.API.csproj", "run", "--no-launch-profile", "--urls", "http://0.0.0.0:5019"]
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Authority=http://identityserver.api
+      - RabbitMQUri=rabbitmq
+      - ConnectionStrings:DefaultConnection=User ID=admin;Password=Password12;Host=notedb;Port=5432;Database=notedb
+    ports:
+      - "5019:80"
+    depends_on:
+      - notedb

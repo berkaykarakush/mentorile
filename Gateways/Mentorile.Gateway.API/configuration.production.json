@@ -148,6 +148,44 @@
             "DelegatingHandlers": [
                 "AccessControlDelegatingHandler"
             ]
+        },
+          {
+            "DownstreamPathTemplate": "/api/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "email.api",
+                    "Port": 80
+                }
+            ],
+            "UpstreamPathTemplate": "/services/email/{everything}",
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+            "AuthenticationOptions":{
+                "AuthenticationProviderKey":"GatewayAuthenticationScheme",
+                "AllowedScopes":["email_fullpermission"]
+            },
+            "DelegatingHandlers": [
+                "AccessControlDelegatingHandler"
+            ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "note.api",
+                    "Port": 80
+                }
+            ],
+            "UpstreamPathTemplate": "/services/note/{everything}",
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+            "AuthenticationOptions":{
+                "AuthenticationProviderKey":"GatewayAuthenticationScheme",
+                "AllowedScopes":["note_fullpermission"]
+            },
+            "DelegatingHandlers": [
+                "AccessControlDelegatingHandler"
+            ]
         }
     ],
     "GlobalConfiguration": {

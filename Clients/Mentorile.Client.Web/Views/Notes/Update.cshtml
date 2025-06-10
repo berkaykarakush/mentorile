@@ -1,0 +1,32 @@
+@{
+    ViewData["Title"] = "Update";
+}
+@model UpdateNoteInput
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"></h5>
+                <form asp-controller="Notes" asp-action="Update" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id"/>
+
+                 <div class="mb-3">
+                    <label asp-for="Title" for="Title" class="form-label"></label>
+                    <input asp-for="Title" class="form-control" id="Title">
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Content" for="Content" class="form-label"></label>
+                    <input asp-for="Content" class="form-control" id="Content">
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+               
+                <button type="submit" class="btn btn-primary">Güncelle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

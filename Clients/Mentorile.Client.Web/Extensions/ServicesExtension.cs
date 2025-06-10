@@ -14,36 +14,54 @@ public static class ServicesExtension
         services.AddScoped<ClientCredentialsTokenHandler>();
 
         var serviceApiSettings = configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
-        services.AddHttpClient<ICourseService, CourseService>(opt => {
-            opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Course.Path}"); 
+        services.AddHttpClient<ICourseService, CourseService>(opt =>
+        {
+            opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Course.Path}");
         }).AddHttpMessageHandler<ClientCredentialsTokenHandler>();
 
-        services.AddHttpClient<IPhotoStockService, PhotoStockService>(opt => {
-            opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.PhotoStock.Path}"); 
+        services.AddHttpClient<IPhotoStockService, PhotoStockService>(opt =>
+        {
+            opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.PhotoStock.Path}");
         }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
-        services.AddHttpClient<IBasketService, BasketService>(opt => {
-            opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Basket.Path}"); 
+        services.AddHttpClient<IBasketService, BasketService>(opt =>
+        {
+            opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Basket.Path}");
         }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
-        services.AddHttpClient<IDiscountService, DiscountService>(opt => {
-            opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Discount.Path}"); 
+        services.AddHttpClient<IDiscountService, DiscountService>(opt =>
+        {
+            opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Discount.Path}");
         }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
-        services.AddHttpClient<IPaymentService, PaymentService>((sp, opt) => {
+        services.AddHttpClient<IPaymentService, PaymentService>((sp, opt) =>
+        {
             opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Payment.Path}");
         }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
-        services.AddHttpClient<IOrderService, OrderService>((sp, opt) => {
+        services.AddHttpClient<IOrderService, OrderService>((sp, opt) =>
+        {
             opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Order.Path}");
         }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
-        services.AddHttpClient<IStudyService, StudyService>((sp, opt) => {
+        services.AddHttpClient<IStudyService, StudyService>((sp, opt) =>
+        {
             opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Study.Path}");
         }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
-        services.AddHttpClient<IUserService, UserService>((sp, opt) => {
+        services.AddHttpClient<IUserService, UserService>((sp, opt) =>
+        {
             opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.User.Path}");
+        }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+        // TODO: Email API required
+        // services.AddHttpClient<IEmailService, EmailService>((sp, opt) =>
+        // {
+        //     opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Email.Path}");
+        // }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+        services.AddHttpClient<INoteService, NoteService>((sp, opt) => {
+            opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Note.Path}");
         }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
     }   
 }
