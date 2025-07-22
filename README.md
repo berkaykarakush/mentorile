@@ -1,7 +1,5 @@
 # Mentorile.com - Uçtan Uca Dijital Öğrenme Platformu
 
-![Mentorile]
-
 **Mentorile.com**, ortaöğretim ve yükseköğretim öğrencilerinin ders çalışma süreçlerini tamamen dijitalleştiren, modern teknolojilerle geliştirilmiş, mikroservis mimarisi tabanlı kapsamlı bir öğrenme ve gelişim platformudur.
 
 Platform, öğrencilere kişiselleştirilmiş bir öğrenme deneyimi sunarken, eğitmenlere de içerik yönetimi ve öğrenci takibi için güçlü araçlar sağlar.
